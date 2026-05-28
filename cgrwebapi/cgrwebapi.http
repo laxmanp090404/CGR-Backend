@@ -1,0 +1,6 @@
+@cgrwebapi_HostAddress = http://localhost:5162
+
+GET {{cgrwebapi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

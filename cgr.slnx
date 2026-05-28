@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="cgrbussinesslogic/cgrbussinesslogic.csproj" />
+  <Project Path="cgrdataaccesslibrary/cgrdataaccesslibrary.csproj" />
+  <Project Path="cgrmodellibrary/cgrmodellibrary.csproj" />
+  <Project Path="cgrwebapi/cgrwebapi.csproj" />
+</Solution>
