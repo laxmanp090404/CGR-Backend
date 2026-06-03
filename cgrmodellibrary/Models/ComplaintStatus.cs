@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 namespace cgrmodellibrary.Models;
+
 public partial class ComplaintStatus
 {
     public short StatusId { get; set; }
@@ -10,11 +11,9 @@ public partial class ComplaintStatus
 
     public bool IsTerminal { get; set; }
 
-    public short DisplayOrder { get; set; }
+    public virtual ICollection<ComplaintHistory> ComplaintHistoryNewStatuses { get; set; } = new List<ComplaintHistory>();
 
-    public virtual ICollection<ComplaintStatusHistory> ComplaintStatusHistoryFromStatuses { get; set; } = new List<ComplaintStatusHistory>();
-
-    public virtual ICollection<ComplaintStatusHistory> ComplaintStatusHistoryToStatuses { get; set; } = new List<ComplaintStatusHistory>();
+    public virtual ICollection<ComplaintHistory> ComplaintHistoryOldStatuses { get; set; } = new List<ComplaintHistory>();
 
     public virtual ICollection<Complaint> Complaints { get; set; } = new List<Complaint>();
 }

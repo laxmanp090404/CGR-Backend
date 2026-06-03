@@ -5,13 +5,11 @@ namespace cgrmodellibrary.Models;
 
 public partial class AuditLog
 {
-    public long AuditId { get; set; }
+    public int AuditLogId { get; set; }
 
     public string TableName { get; set; } = null!;
 
-    public string RecordId { get; set; } = null!;
-
-    public char Operation { get; set; }
+    public long RecordId { get; set; }
 
     public string ColumnName { get; set; } = null!;
 
@@ -19,11 +17,9 @@ public partial class AuditLog
 
     public string? NewValue { get; set; }
 
-    public int? ChangedByEmployeeId { get; set; }
+    public int? ChangedBy { get; set; }
 
     public DateTime ChangedAt { get; set; }
 
-    public string? ApplicationContext { get; set; }
-
-    public virtual Employee? ChangedByEmployee { get; set; }
+    public virtual Employee? ChangedByNavigation { get; set; }
 }

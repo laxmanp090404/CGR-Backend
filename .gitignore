@@ -3,3 +3,6 @@ bin/
 ProjectSetup.md
 ProjectFunctionalities.md
 Project Artificats/Details
+cgrwebapi/appsettings.Development.json
+cgrwebapi/appsettings.json
+Project Artificats/SecurityPractice.txt

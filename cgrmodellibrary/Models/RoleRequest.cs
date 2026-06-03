@@ -2,41 +2,32 @@
 using System.Collections.Generic;
 
 namespace cgrmodellibrary.Models;
+
 public partial class RoleRequest
 {
-    public int RequestId { get; set; }
+    public int RoleRequestId { get; set; }
 
-    public string RequesterName { get; set; } = null!;
+    public int EmployeeId { get; set; }
 
-    public string RequesterEmail { get; set; } = null!;
-
-    public string? RequesterMobile { get; set; }
-
-    public string? RequesterAddressEncrypted { get; set; }
+    public short CurrentRoleId { get; set; }
 
     public short RequestedRoleId { get; set; }
 
-    public int RequestedDeptId { get; set; }
-
-    public string? Justification { get; set; }
-
-    public string Status { get; set; } = null!;
+    public short RequestStatusId { get; set; }
 
     public int? ReviewedBy { get; set; }
 
-    public DateTime? ReviewedAt { get; set; }
-
-    public string? ReviewRemarks { get; set; }
-
-    public int? ApprovedEmployeeId { get; set; }
+    public string? Remarks { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
-    public DateTime UpdatedAt { get; set; }
+    public DateTime? ReviewedAt { get; set; }
 
-    public virtual Employee? ApprovedEmployee { get; set; }
+    public virtual Role CurrentRole { get; set; } = null!;
 
-    public virtual Department RequestedDept { get; set; } = null!;
+    public virtual Employee Employee { get; set; } = null!;
+
+    public virtual RequestStatus RequestStatus { get; set; } = null!;
 
     public virtual Role RequestedRole { get; set; } = null!;
 

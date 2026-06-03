@@ -2,63 +2,58 @@
 using System.Collections.Generic;
 
 namespace cgrmodellibrary.Models;
+
 public partial class Complaint
 {
-    public long ComplaintId { get; set; }
+    public int ComplaintId { get; set; }
 
-    public string ComplaintNumber { get; set; } = null!;
+    public string ComplaintTitle { get; set; } = null!;
 
-    public string Title { get; set; } = null!;
-
-    public string Description { get; set; } = null!;
-
-    public string? ImpactDescription { get; set; }
-
-    public int CategoryId { get; set; }
-
-    public short? PriorityId { get; set; }
-
-    public short StatusId { get; set; }
+    public string ComplaintDescription { get; set; } = null!;
 
     public int RaisedByEmployeeId { get; set; }
 
-    public int? AssignedToEmployeeId { get; set; }
+    public int? CurrentHandlerEmployeeId { get; set; }
 
-    public int DepartmentId { get; set; }
+    public int CategoryId { get; set; }
 
-    public DateTime? SlaDeadline { get; set; }
+    public short PriorityId { get; set; }
 
-    public bool SlaBreached { get; set; }
+    public short StatusId { get; set; }
 
-    public DateTime? ResolvedAt { get; set; }
+    public short EscalationLevel { get; set; }
 
-    public DateTime? ClosedAt { get; set; }
+    public short ReopenedCount { get; set; }
 
-    public string? ResolutionRemarks { get; set; }
+    public DateTime? EscalationDueAt { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
     public DateTime UpdatedAt { get; set; }
 
-    public virtual Employee? AssignedToEmployee { get; set; }
+    public DateTime? ResolvedAt { get; set; }
+
+    public DateTime? ClosedAt { get; set; }
 
     public virtual Category Category { get; set; } = null!;
+
+    public virtual ICollection<ComplaintAssignmentHistory> ComplaintAssignmentHistories { get; set; } = new List<ComplaintAssignmentHistory>();
 
     public virtual ICollection<ComplaintAttachment> ComplaintAttachments { get; set; } = new List<ComplaintAttachment>();
 
     public virtual ICollection<ComplaintComment> ComplaintComments { get; set; } = new List<ComplaintComment>();
 
-    public virtual ComplaintOfficer? ComplaintOfficer { get; set; }
+    public virtual ICollection<ComplaintEscalation> ComplaintEscalations { get; set; } = new List<ComplaintEscalation>();
 
-    public virtual ICollection<ComplaintStatusHistory> ComplaintStatusHistories { get; set; } = new List<ComplaintStatusHistory>();
+    public virtual ICollection<ComplaintHistory> ComplaintHistories { get; set; } = new List<ComplaintHistory>();
 
-    public virtual Department Department { get; set; } = null!;
+    public virtual ICollection<ComplaintRequest> ComplaintRequests { get; set; } = new List<ComplaintRequest>();
 
-    public virtual ICollection<Escalation> Escalations { get; set; } = new List<Escalation>();
+    public virtual Employee? CurrentHandlerEmployee { get; set; }
 
     public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 
-    public virtual Priority? Priority { get; set; }
+    public virtual Priority Priority { get; set; } = null!;
 
     public virtual Employee RaisedByEmployee { get; set; } = null!;
 

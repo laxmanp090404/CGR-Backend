@@ -2,29 +2,28 @@
 using System.Collections.Generic;
 
 namespace cgrmodellibrary.Models;
+
 public partial class Notification
 {
-    public long NotificationId { get; set; }
+    public int NotificationId { get; set; }
 
-    public int RecipientEmployeeId { get; set; }
+    public int EmployeeId { get; set; }
 
-    public long? ComplaintId { get; set; }
+    public short NotificationTypeId { get; set; }
 
-    public string NotificationType { get; set; } = null!;
+    public int? ReferenceComplaintId { get; set; }
 
-    public string Subject { get; set; } = null!;
+    public string Title { get; set; } = null!;
 
-    public string Body { get; set; } = null!;
+    public string Message { get; set; } = null!;
 
-    public string Channel { get; set; } = null!;
-
-    public bool IsSent { get; set; }
-
-    public DateTime? SentAt { get; set; }
+    public bool IsRead { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
-    public virtual Complaint? Complaint { get; set; }
+    public virtual Employee Employee { get; set; } = null!;
 
-    public virtual Employee RecipientEmployee { get; set; } = null!;
+    public virtual NotificationType NotificationType { get; set; } = null!;
+
+    public virtual Complaint? ReferenceComplaint { get; set; }
 }

@@ -9,15 +9,13 @@ public partial class Role
 
     public string RoleName { get; set; } = null!;
 
-    public string? Description { get; set; }
-
-    public bool IsActive { get; set; }
-
     public DateTime CreatedAt { get; set; }
-
+    // it should be a collection as we nede many ie more employee can have same role
+    // admin only one person ie enforded via the partial index
     public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
-
     public virtual ICollection<EscalationRule> EscalationRules { get; set; } = new List<EscalationRule>();
 
-    public virtual ICollection<RoleRequest> RoleRequests { get; set; } = new List<RoleRequest>();
+    public virtual ICollection<RoleRequest> RoleRequestCurrentRoles { get; set; } = new List<RoleRequest>();
+
+    public virtual ICollection<RoleRequest> RoleRequestRequestedRoles { get; set; } = new List<RoleRequest>();
 }
