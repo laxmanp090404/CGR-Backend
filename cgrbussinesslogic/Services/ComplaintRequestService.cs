@@ -7,133 +7,322 @@ using cgrmodellibrary.Models;
 
 namespace cgrbussinesslogic.Services;
 
-/// <summary>
-/// Request type IDs: REJECTION_REQUEST=1, REOPEN_REQUEST=2, ROLE_UPGRADE_REQUEST=3
-/// Request status IDs: PENDING=1, APPROVED=2, REJECTED=3
-/// </summary>
 public class ComplaintRequestService : IComplaintRequestService
 {
     private const short REQUEST_TYPE_REJECTION = 1;
-    private const short REQUEST_TYPE_REOPEN = 2;
+
+    #region Request Statuses
+
     private const short REQUEST_STATUS_PENDING = 1;
     private const short REQUEST_STATUS_APPROVED = 2;
     private const short REQUEST_STATUS_REJECTED = 3;
 
+    #endregion
+    #region  complaint statuses
     private const short STATUS_REJECTED = 7;
+    private const short STATUS_ASSIGNED = 2;
+    private const short STATUS_IN_PROGRESS = 3;
+    private const short STATUS_ESCALATED = 4;
+    private const short STATUS_REOPENED = 8;
+    private const short STATUS_RESOLVED = 5;
+    #endregion
     private const short NOTIF_COMPLAINT_REJECTED = 6;
+    private const short NOTIF_COMPLAINT_REOPENED = 7;
 
     private readonly IComplaintRequestRepository _requestRepository;
     private readonly IComplaintRepository _complaintRepository;
     private readonly INotificationService _notificationService;
+    private readonly ICurrentUserService _currentUserService;
+    private readonly IComplaintAssignmentRepository _assignmentRepository;
+    private readonly IComplaintHistoryRepository _historyRepository;
+    private readonly IEmployeeRepository _employeeRepository;
+
+    private readonly IComplaintAssignmentEngine _assignmentEngine;
 
     public ComplaintRequestService(
         IComplaintRequestRepository requestRepository,
         IComplaintRepository complaintRepository,
-        INotificationService notificationService)
+        INotificationService notificationService,
+        ICurrentUserService currentUserService,
+        IComplaintAssignmentRepository assignmentRepository,
+        IComplaintHistoryRepository historyRepository,
+        IEmployeeRepository employeeRepository,
+        IComplaintAssignmentEngine assignmentEngine)
     {
         _requestRepository = requestRepository;
         _complaintRepository = complaintRepository;
         _notificationService = notificationService;
+        _currentUserService = currentUserService;
+        _assignmentRepository = assignmentRepository;
+        _historyRepository = historyRepository;
+        _employeeRepository = employeeRepository;
+        _assignmentEngine = assignmentEngine;
     }
-
-    public async Task<ComplaintRequestDto> CreateAsync(int complaintId, CreateComplaintRequestDto dto, int employeeId)
+    public async Task<ComplaintRequestDto> CreateAsync(int complaintId, CreateComplaintRequestDto dto)
     {
-        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId)
-            ?? throw new NotFoundException($"Complaint {complaintId}");
+        if (!_currentUserService.IsAuthenticated)
+        {
+            throw new UnauthorizedAccessException();
+        }
+        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId) ?? throw new NotFoundException($"Complaint {complaintId}");
 
-        // Check for duplicate pending request of same type
-        var existing = await _requestRepository.GetPendingByComplaintAndTypeAsync(complaintId, dto.RequestTypeId);
-        if (existing != null)
-            throw new ConflictException("A pending request of this type already exists for this complaint.");
+        if (complaint.CurrentHandlerEmployeeId != _currentUserService.EmployeeId)
+        {
+            throw new ForbiddenException("Only the current handler can raise a rejection request.");
+        }
+
+        if (_currentUserService.Role != "GRO" &&
+            _currentUserService.Role != "DEPARTMENT_HEAD")
+        {
+            throw new ForbiddenException("Only GROs and Department Heads can create rejection requests.");
+        }
+
+        if (dto.RequestTypeId != REQUEST_TYPE_REJECTION)
+        {
+            throw new BusinessRuleException("Only rejection requests are supported.");
+        }
+        if (complaint.StatusId != STATUS_ASSIGNED && complaint.StatusId != STATUS_IN_PROGRESS && complaint.StatusId != STATUS_ESCALATED)
+        {
+            throw new BusinessRuleException("Rejection request cannot be created for this complaint status.");
+        }
+
+        var existingRequest = await _requestRepository.GetPendingByComplaintAndTypeAsync(complaintId, REQUEST_TYPE_REJECTION);
+
+        if (existingRequest != null)
+        {
+            throw new ConflictException("A pending rejection request already exists.");
+        }
 
         var request = new ComplaintRequest
         {
             ComplaintId = complaintId,
-            RequestTypeId = dto.RequestTypeId,
-            RequestedBy = employeeId,
+            RequestTypeId = REQUEST_TYPE_REJECTION,
+            RequestedBy = _currentUserService.EmployeeId,
             RequestStatusId = REQUEST_STATUS_PENDING,
             Remarks = dto.Remarks,
             CreatedAt = DateTime.UtcNow
         };
 
-        var created = await _requestRepository.Create(request);
-        return await ReloadDto(created.RequestId);
+        var createdRequest = await _requestRepository.Create(request);
+
+        return await ReloadDto(createdRequest.RequestId);
     }
 
-    public async Task<PagedResultDto<ComplaintRequestDto>> GetPagedAsync(
-        int page, int pageSize, short? requestTypeId, short? statusId)
+    public async Task<ComplaintRequestDto> ReviewAsync(int requestId, ReviewComplaintRequestDto dto)
     {
-        var (items, total) = await _requestRepository.GetPagedAsync(page, pageSize, requestTypeId, statusId);
+        if (!_currentUserService.IsAuthenticated)
+        {
+            throw new UnauthorizedAccessException();
+        }
+
+        if (_currentUserService.Role != "ADMIN")
+        {
+            throw new ForbiddenException("Only admins can review complaint requests.");
+        }
+
+        var request = await _requestRepository.GetDetailAsync(requestId) ?? throw new NotFoundException($"Complaint request {requestId}");
+        if (request.RequestTypeId != REQUEST_TYPE_REJECTION)
+        {
+            throw new BusinessRuleException("Only rejection requests can be reviewed.");
+        }
+        if (request.RequestStatusId != REQUEST_STATUS_PENDING)
+        {
+            throw new BusinessRuleException(
+                "This request has already been reviewed.");
+        }
+
+        request.ReviewedBy = _currentUserService.EmployeeId;
+        request.ReviewedAt = DateTime.UtcNow;
+        request.RequestStatusId =
+            dto.Approve
+                ? REQUEST_STATUS_APPROVED
+                : REQUEST_STATUS_REJECTED;
+
+        request.Remarks = dto.Remarks ?? request.Remarks;
+
+        await _requestRepository.Update(request, requestId);
+        var complaint = await _complaintRepository.GetDetailByIdAsync(request.ComplaintId) ?? throw new NotFoundException($"Complaint {request.ComplaintId}");
+        var oldStatus = complaint.StatusId;
+        // approve for rejection so complaint request is approved and complaint is rejected
+        if (dto.Approve)
+        {
+            complaint.StatusId = STATUS_REJECTED;
+            complaint.UpdatedAt = DateTime.UtcNow;
+
+            await _complaintRepository.Update(complaint, complaint.ComplaintId);
+            // after updating complaint history is created
+            await _historyRepository.Create(
+                                new ComplaintHistory
+                                {
+                                    ComplaintId = complaint.ComplaintId,
+                                    OldStatusId = oldStatus,
+                                    NewStatusId = STATUS_REJECTED,
+                                    OldHandlerEmployeeId = complaint.CurrentHandlerEmployeeId,
+                                    NewHandlerEmployeeId = complaint.CurrentHandlerEmployeeId,
+                                    ChangedBy = _currentUserService.EmployeeId,
+                                    Remarks = "Rejection request approved :" + dto.Remarks,
+                                    EscalationLevelSnapshot = complaint.EscalationLevel,
+                                    CreatedAt = DateTime.UtcNow,
+                                    RoleIdAtActionTime = _currentUserService.RoleId
+                                });
+
+            await _notificationService.SendAsync(
+                complaint.RaisedByEmployeeId,
+                NOTIF_COMPLAINT_REJECTED,
+                "Complaint Rejected",
+                $"Your complaint '{complaint.ComplaintTitle}' has been rejected.",
+                complaint.ComplaintId);
+        }
+        // not approved rejection is rejected so complaint request is rejected
+        //  and comlainet is openeed with priority bump to compensate for the delay caused
+        else
+        {
+            var oldhandler = complaint.CurrentHandlerEmployeeId;
+
+            // priority bump
+            if (complaint.PriorityId < 4)
+            {
+                complaint.PriorityId += 1;
+            }
+           
+
+             var raisedBy = complaint.RaisedByEmployee ?? throw new NotFoundException($"Employee {complaint.RaisedByEmployeeId} who raised the complaint");
+            var assignment =
+               await _assignmentEngine
+                   .DetermineInitialAssignmentAsync(
+                       complaint.ComplaintId,
+                       complaint.Category.DepartmentId,
+                       raisedBy.RoleId);
+            complaint.ReopenedCount++;
+
+            complaint.StatusId = STATUS_REOPENED;
+            // inserting status reopen history before changing handler to capture old handler in history
+            await _historyRepository.Create(
+                new ComplaintHistory
+                {
+                    ComplaintId = complaint.ComplaintId,
+                    OldStatusId = oldStatus,
+                    NewStatusId = STATUS_REOPENED,
+                    OldHandlerEmployeeId = oldhandler,
+                    NewHandlerEmployeeId = oldhandler,
+                    ChangedBy = _currentUserService.EmployeeId,
+                    RoleIdAtActionTime = _currentUserService.RoleId,
+                    Remarks = "Rejection request rejected. Complaint reopened.",
+                    EscalationLevelSnapshot = complaint.EscalationLevel,
+                    CreatedAt = DateTime.UtcNow
+                });
+            // after assignement new history and assignment history
+            complaint.CurrentHandlerEmployeeId =assignment.HandlerId;
+
+            complaint.StatusId = STATUS_ASSIGNED;
+
+            complaint.EscalationLevel =assignment.EscalationLevel;
+
+            complaint.EscalationDueAt =DateTime.UtcNow.AddHours(complaint.Category.SlaHours);
+
+            complaint.UpdatedAt =
+                DateTime.UtcNow;
+
+            await _complaintRepository.Update(
+                complaint,
+                complaint.ComplaintId);
+
+            await _assignmentRepository.Create(
+                new ComplaintAssignmentHistory
+                {
+                    ComplaintId = complaint.ComplaintId,
+                    OldHandlerEmployeeId = oldhandler,
+                    NewHandlerEmployeeId = assignment.HandlerId,
+                    AssignedBy = null,
+                    AssignmentReason = "REOPEN"
+                });
+
+            await _historyRepository.Create(
+                new ComplaintHistory
+                {
+                    ComplaintId = complaint.ComplaintId,
+                    OldStatusId = STATUS_REOPENED,
+                    NewStatusId = STATUS_ASSIGNED,
+                    OldHandlerEmployeeId = oldhandler,
+                    NewHandlerEmployeeId = assignment.HandlerId,
+                    ChangedBy = null,
+                    RoleIdAtActionTime = null,
+                    Remarks = "Complaint reassigned after reopen.",
+                    EscalationLevelSnapshot = assignment.EscalationLevel,
+                    CreatedAt = DateTime.UtcNow
+                });
+
+            await _notificationService.SendAsync(
+                complaint.RaisedByEmployeeId,
+                NOTIF_COMPLAINT_REOPENED,
+                "Complaint Reopened",
+                $"Your complaint '{complaint.ComplaintTitle}' has been reopened.",
+                complaint.ComplaintId);
+        }
+
+
+        return await ReloadDto(requestId);
+    }
+
+    public async Task<PagedResultDto<ComplaintRequestDto>> GetPagedAsync(int page, int pageSize, short? statusId)
+    {
+        var (items, totalCount) =
+            await _requestRepository.GetPagedAsync(
+                page,
+                pageSize,
+                REQUEST_TYPE_REJECTION,
+                statusId);
+
         return new PagedResultDto<ComplaintRequestDto>
         {
-            Items = items.Select(MapToDto).ToList(),
-            TotalCount = total,
+            Items = items
+                .Select(MapToDto)
+                .ToList(),
+            TotalCount = totalCount,
             Page = page,
             PageSize = pageSize
         };
     }
 
-    public async Task<ComplaintRequestDto> ReviewAsync(int requestId, ReviewComplaintRequestDto dto, int reviewerId, string reviewerRole)
-    {
-        var request = await _requestRepository.Get(requestId);
-        if (request.RequestStatusId != REQUEST_STATUS_PENDING)
-            throw new BusinessRuleException("This request has already been reviewed.");
-
-        request.ReviewedBy = reviewerId;
-        request.ReviewedAt = DateTime.UtcNow;
-        request.RequestStatusId = dto.Approve ? REQUEST_STATUS_APPROVED : REQUEST_STATUS_REJECTED;
-        request.Remarks = dto.Remarks ?? request.Remarks;
-
-        await _requestRepository.Update(request, requestId);
-
-        // If rejection request approved → mark complaint as REJECTED
-        if (dto.Approve && request.RequestTypeId == REQUEST_TYPE_REJECTION)
-        {
-            var complaint = await _complaintRepository.GetDetailByIdAsync(request.ComplaintId)!;
-            if (complaint != null)
-            {
-                complaint.StatusId = STATUS_REJECTED;
-                complaint.UpdatedAt = DateTime.UtcNow;
-                await _complaintRepository.Update(complaint, complaint.ComplaintId);
-
-                await _notificationService.SendAsync(
-                    complaint.RaisedByEmployeeId, NOTIF_COMPLAINT_REJECTED,
-                    "Complaint Rejected",
-                    $"Your complaint '{complaint.ComplaintTitle}' has been rejected. Remarks: {dto.Remarks}",
-                    complaint.ComplaintId);
-            }
-        }
-
-        return await ReloadDto(requestId);
-    }
-
     private async Task<ComplaintRequestDto> ReloadDto(int requestId)
     {
-        var (items, _) = await _requestRepository.GetPagedAsync(1, 1, null, null);
-        var reloaded = items.FirstOrDefault(r => r.RequestId == requestId);
-        if (reloaded == null)
+        var (items, _) =
+            await _requestRepository.GetPagedAsync(
+                1,
+                1,
+                REQUEST_TYPE_REJECTION,
+                null);
+
+        var request = items.FirstOrDefault(r => r.RequestId == requestId);
+
+        if (request == null)
         {
-            var raw = await _requestRepository.Get(requestId);
-            return MapToDto(raw);
+            var rawRequest = await _requestRepository.GetDetailAsync(requestId) ?? throw new NotFoundException($"Complaint request {requestId} not found.");
+
+            return MapToDto(rawRequest);
         }
-        return MapToDto(reloaded);
+
+        return MapToDto(request);
     }
 
-    private static ComplaintRequestDto MapToDto(ComplaintRequest r) => new()
+    private static ComplaintRequestDto MapToDto(ComplaintRequest request)
     {
-        RequestId = r.RequestId,
-        ComplaintId = r.ComplaintId,
-        ComplaintTitle = r.Complaint?.ComplaintTitle,
-        RequestTypeId = r.RequestTypeId,
-        RequestTypeName = r.RequestType?.RequestTypeName ?? string.Empty,
-        RequestedBy = r.RequestedBy,
-        RequestedByName = r.RequestedByNavigation?.EmployeeName ?? string.Empty,
-        ReviewedBy = r.ReviewedBy,
-        ReviewedByName = r.ReviewedByNavigation?.EmployeeName,
-        RequestStatusId = r.RequestStatusId,
-        RequestStatusName = r.RequestStatus?.StatusName ?? string.Empty,
-        Remarks = r.Remarks,
-        CreatedAt = r.CreatedAt,
-        ReviewedAt = r.ReviewedAt
-    };
+        return new ComplaintRequestDto
+        {
+            RequestId = request.RequestId,
+            ComplaintId = request.ComplaintId,
+            ComplaintTitle = request.Complaint?.ComplaintTitle,
+            RequestTypeId = request.RequestTypeId,
+            RequestTypeName = request.RequestType?.RequestTypeName ?? string.Empty,
+            RequestedBy = request.RequestedBy,
+            RequestedByName = request.RequestedByNavigation?.EmployeeName ?? string.Empty,
+            ReviewedBy = request.ReviewedBy,
+            ReviewedByName = request.ReviewedByNavigation?.EmployeeName,
+            RequestStatusId = request.RequestStatusId,
+            RequestStatusName = request.RequestStatus?.StatusName ?? string.Empty,
+            Remarks = request.Remarks,
+            CreatedAt = request.CreatedAt,
+            ReviewedAt = request.ReviewedAt
+        };
+    }
 }

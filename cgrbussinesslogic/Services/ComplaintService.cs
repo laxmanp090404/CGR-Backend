@@ -1,5 +1,8 @@
+using System.Net.Mail;
 using cgrbussinesslogic.Interfaces;
+using cgrdataaccesslibrary.Context;
 using cgrdataaccesslibrary.Interfaces;
+using cgrmodellibrary.DTOs.Attachment;
 using cgrmodellibrary.DTOs.Common;
 using cgrmodellibrary.DTOs.Complaint;
 using cgrmodellibrary.Exceptions;
@@ -7,12 +10,10 @@ using cgrmodellibrary.Models;
 
 namespace cgrbussinesslogic.Services;
 
-/// <summary>
-/// Status IDs (from seed): SUBMITTED=1, ASSIGNED=2, IN_PROGRESS=3, ESCALATED=4,
-/// RESOLVED=5, CLOSED=6, REJECTED=7, REOPENED=8, EXTERNALLY_ESCALATED=9
-/// </summary>
+
 public class ComplaintService : IComplaintService
 {
+    #region STATUS IDS
     private const short STATUS_SUBMITTED = 1;
     private const short STATUS_ASSIGNED = 2;
     private const short STATUS_IN_PROGRESS = 3;
@@ -22,383 +23,606 @@ public class ComplaintService : IComplaintService
     private const short STATUS_REJECTED = 7;
     private const short STATUS_REOPENED = 8;
     private const short STATUS_EXTERNALLY_ESCALATED = 9;
-
-    // Notification type IDs (from seed)
+    #endregion
+    #region NOTIFICATION IDS
     private const short NOTIF_COMPLAINT_ASSIGNED = 3;
     private const short NOTIF_COMPLAINT_ESCALATED = 4;
     private const short NOTIF_COMPLAINT_RESOLVED = 5;
     private const short NOTIF_COMPLAINT_REJECTED = 6;
     private const short NOTIF_COMPLAINT_REOPENED = 7;
     private const short NOTIF_SLA_BREACH = 8;
-
+    #endregion
+    #region ROLE IDs
+    private const short ROLE_EMPLOYEE = 1;
+    private const short ROLE_GRO = 2;
+    private const short ROLE_DEPARTMENT_HEAD = 3;
+    private const short ROLE_ADMIN = 4;
+    #endregion
+    #region DECLARATIONS
     private readonly IComplaintRepository _complaintRepository;
     private readonly IComplaintHistoryRepository _historyRepository;
     private readonly IComplaintAssignmentRepository _assignmentRepository;
     private readonly ICategoryRepository _categoryRepository;
     private readonly IEmployeeRepository _employeeRepository;
-    private readonly IEscalationRuleRepository _escalationRuleRepository;
     private readonly INotificationService _notificationService;
+    private readonly ICurrentUserService _currentUserService;
+    private readonly IComplaintAttachmentService _attachmentService;
+    private readonly IRepository<int, ComplaintEscalation> _escalationRepository;
+    private readonly IComplaintAssignmentEngine _assignmentEngine;
+    private readonly CGRContext _context;
+    #endregion
 
+    #region CONSTRUCTOR DEPENDENCY INJECTION
     public ComplaintService(
         IComplaintRepository complaintRepository,
         IComplaintHistoryRepository historyRepository,
         IComplaintAssignmentRepository assignmentRepository,
         ICategoryRepository categoryRepository,
         IEmployeeRepository employeeRepository,
-        IEscalationRuleRepository escalationRuleRepository,
-        INotificationService notificationService)
+        IComplaintAssignmentEngine assignmentEngine,
+        INotificationService notificationService, CGRContext context,
+        IComplaintAttachmentService attachmentService,
+        ICurrentUserService currentUserService,
+        IRepository<int, ComplaintEscalation> escalationRepository)
     {
         _complaintRepository = complaintRepository;
         _historyRepository = historyRepository;
         _assignmentRepository = assignmentRepository;
         _categoryRepository = categoryRepository;
         _employeeRepository = employeeRepository;
-        _escalationRuleRepository = escalationRuleRepository;
         _notificationService = notificationService;
+        _currentUserService = currentUserService;
+        _attachmentService = attachmentService;
+        _escalationRepository = escalationRepository;
+        _context = context;
+        _assignmentEngine = assignmentEngine;
     }
+    #endregion
 
-    public async Task<ComplaintDto> CreateAsync(CreateComplaintDto dto, int employeeId)
+
+    public async Task<PagedResultDto<ComplaintDashboardDto>> GetPagedAsync(int page, int pageSize, int? statusId, int? priorityId, int? categoryId,
+      int? departmentId, string? search)
     {
-        var category = await _categoryRepository.Get(dto.CategoryId);
-        if (!category.IsActive)
-            throw new BusinessRuleException("The selected category is inactive.");
-
-        // Auto-assign GRO with least workload in that department
-        var workloads = await _employeeRepository.GetGroActiveWorkloadAsync(category.DepartmentId);
-        var previousHandlers = new List<int>();
-
-        var assignedGro = workloads
-            .Where(w => !previousHandlers.Contains(w.EmployeeId!.Value))
-            .FirstOrDefault();
-
-        var now = DateTime.UtcNow;
-        var complaint = new Complaint
-        {
-            ComplaintTitle = dto.ComplaintTitle,
-            ComplaintDescription = dto.ComplaintDescription,
-            RaisedByEmployeeId = employeeId,
-            CategoryId = dto.CategoryId,
-            PriorityId = category.DefaultPriorityId,
-            StatusId = assignedGro != null ? STATUS_ASSIGNED : STATUS_SUBMITTED,
-            CurrentHandlerEmployeeId = assignedGro?.EmployeeId,
-            EscalationLevel = 0,
-            ReopenedCount = 0,
-            CreatedAt = now,
-            UpdatedAt = now
-        };
-
-        var created = await _complaintRepository.Create(complaint);
-
-        // Record assignment history if assigned
-        if (assignedGro != null)
-        {
-            await _assignmentRepository.Create(new ComplaintAssignmentHistory
-            {
-                ComplaintId = created.ComplaintId,
-                OldHandlerEmployeeId = null,
-                NewHandlerEmployeeId = assignedGro.EmployeeId!.Value,
-                AssignedBy = employeeId
-            });
-
-            await _notificationService.SendAsync(
-                assignedGro.EmployeeId!.Value, NOTIF_COMPLAINT_ASSIGNED,
-                "New Complaint Assigned",
-                $"Complaint '{dto.ComplaintTitle}' has been assigned to you.",
-                created.ComplaintId);
-        }
-
-        // Record status history
-        await _historyRepository.Create(new ComplaintHistory
-        {
-            ComplaintId = created.ComplaintId,
-            OldStatusId = null,
-            NewStatusId = created.StatusId,
-            OldHandlerEmployeeId = null,
-            NewHandlerEmployeeId = created.CurrentHandlerEmployeeId,
-            ChangedBy = employeeId,
-            Remarks = "Complaint submitted.",
-            CreatedAt = now,
-            EscalationLevelSnapshot = 0
-        });
-
-        return await GetComplaintDtoAsync(created.ComplaintId);
-    }
-
-    public async Task<ComplaintDto> GetByIdAsync(int complaintId, int currentEmployeeId, string role)
-    {
-        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId)
-            ?? throw new NotFoundException($"Complaint {complaintId}");
-        AssertCanView(complaint, currentEmployeeId, role);
-        return MapToDto(complaint);
-    }
-
-    public async Task<PagedResultDto<ComplaintDashboardDto>> GetPagedAsync(
-        int page, int pageSize, int? statusId, int? priorityId, int? categoryId, int? departmentId, string? search,
-        int currentEmployeeId, string role, int? currentDepartmentId)
-    {
-        var (items, total) = await _complaintRepository.GetPagedDashboardAsync(
-            page, pageSize, statusId, priorityId, categoryId, departmentId, search,
-            currentEmployeeId, role, currentDepartmentId);
+        var (items, totalCount) =
+            await _complaintRepository
+                .GetPagedDashboardAsync(page, pageSize, statusId, priorityId, categoryId, departmentId, search, _currentUserService.EmployeeId,
+                    _currentUserService.Role, _currentUserService.DepartmentId);
 
         return new PagedResultDto<ComplaintDashboardDto>
         {
-            Items = items.Select(MapDashboardToDto).ToList(),
-            TotalCount = total,
+            Items = items
+                .Select(MapDashboardToDto)
+                .ToList(),
+            TotalCount = totalCount,
             Page = page,
             PageSize = pageSize
         };
     }
 
-    public async Task<IEnumerable<ComplaintHistoryDto>> GetHistoryAsync(int complaintId, int currentEmployeeId, string role)
-    {
-        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId)
-            ?? throw new NotFoundException($"Complaint {complaintId}");
-        AssertCanView(complaint, currentEmployeeId, role);
 
-        var history = await _historyRepository.GetByComplaintIdAsync(complaintId);
+    public async Task<ComplaintDto> CreateAsync(CreateComplaintDto dto)
+    {
+        using var transaction = await _context.Database.BeginTransactionAsync();
+
+        List<string> createdFiles = new();
+
+        try
+        {
+            var employeeId = _currentUserService.EmployeeId;
+
+            var category = await _categoryRepository.Get(dto.CategoryId);
+
+            if (!category.IsActive)
+            {
+                throw new BusinessRuleException("Category is inactive.");
+            }
+            // to avoid update and created at difference
+            var utcnow = DateTime.UtcNow;
+            var complaint = new Complaint
+            {
+                ComplaintTitle = dto.ComplaintTitle,
+                ComplaintDescription = dto.ComplaintDescription,
+                RaisedByEmployeeId = employeeId,
+                CategoryId = dto.CategoryId,
+                PriorityId = category.DefaultPriorityId,
+                StatusId = STATUS_SUBMITTED,
+                EscalationLevel = 0,
+                ReopenedCount = 0,
+                CreatedAt = utcnow,
+                UpdatedAt = utcnow
+            };
+
+            complaint = await _complaintRepository.Create(complaint);
+
+            await CreateHistoryAsync(complaint.ComplaintId, null, STATUS_SUBMITTED, null, null, employeeId, ROLE_EMPLOYEE, "Complaint submitted.", 0);
+
+            var creatorRole = _currentUserService.Role;
+
+            if (creatorRole == "ADMIN")
+            {
+                throw new BusinessRuleException(
+                    "Administrators cannot raise complaints.");
+            }
+
+            var assignment =
+                await _assignmentEngine.DetermineInitialAssignmentAsync(
+                    complaint.ComplaintId,
+                    category.DepartmentId,
+                    _currentUserService.RoleId);
+
+            complaint.CurrentHandlerEmployeeId = assignment.HandlerId;
+            complaint.StatusId = STATUS_ASSIGNED;
+            complaint.EscalationLevel = assignment.EscalationLevel;
+            complaint.EscalationDueAt = DateTime.UtcNow.AddHours(category.SlaHours);
+            complaint.UpdatedAt = DateTime.UtcNow;
+
+            await _complaintRepository.Update(
+                complaint,
+                complaint.ComplaintId);
+
+            await _assignmentRepository.Create(
+                new ComplaintAssignmentHistory
+                {
+                    ComplaintId = complaint.ComplaintId,
+                    OldHandlerEmployeeId = null,
+                    NewHandlerEmployeeId = assignment.HandlerId,
+                    AssignedBy = null,
+                    AssignmentReason = "INITIAL"
+                });
+
+            await CreateHistoryAsync(
+                    complaint.ComplaintId,
+                    STATUS_SUBMITTED,
+                    STATUS_ASSIGNED,
+                    null,
+                    assignment.HandlerId,
+                    null,
+                    null,
+                    "Complaint assigned.",
+                    assignment.EscalationLevel);
+
+            if (dto.Attachments != null &&
+                dto.Attachments.Any())
+            {
+                var result = await _attachmentService.SaveAttachmentsAsync(
+                    complaint.ComplaintId,
+                    dto.Attachments);
+
+                createdFiles = result.CreatedFiles;
+            }
+
+            await transaction.CommitAsync();
+
+            complaint = await _complaintRepository.GetDetailByIdAsync(complaint.ComplaintId)?? throw new Exception("Failed to reload complaint.");
+
+            return MapToDto(complaint);
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+
+            await _attachmentService.DeleteFilesAsync(createdFiles);
+
+            throw;
+        }
+    }
+
+    public async Task<ComplaintDto> GetByIdAsync(int complaintId)
+    {
+        var complaint =
+            await _complaintRepository.GetDetailByIdAsync(complaintId)
+            ?? throw new NotFoundException($"Complaint {complaintId}");
+
+        await ValidateViewPermissionAsync(complaint);
+
+        return MapToDto(complaint);
+    }
+
+
+    public async Task<IEnumerable<ComplaintHistoryDto>> GetHistoryAsync(int complaintId)
+    {
+        var complaint =
+            await _complaintRepository.GetDetailByIdAsync(complaintId)
+            ?? throw new NotFoundException($"Complaint {complaintId}");
+
+        await ValidateViewPermissionAsync(complaint);
+
+        var history =
+            await _historyRepository.GetByComplaintIdAsync(complaintId);
+
         return history.Select(MapHistoryToDto);
     }
 
-    public async Task StartProgressAsync(int complaintId, int groId)
+    public async Task StartProgressAsync(int complaintId)
     {
-        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId)
+        var complaint =
+            await _complaintRepository.GetDetailByIdAsync(complaintId)
             ?? throw new NotFoundException($"Complaint {complaintId}");
 
-        if (complaint.CurrentHandlerEmployeeId != groId)
-            throw new ForbiddenException("You are not the assigned handler of this complaint.");
+        if (complaint.CurrentHandlerEmployeeId != _currentUserService.EmployeeId)
+        {
+            throw new ForbiddenException("Only the current handler can start progress.");
+        }
 
-        if (complaint.StatusId != STATUS_ASSIGNED && complaint.StatusId != STATUS_REOPENED)
-            throw new BusinessRuleException($"Cannot start progress on a complaint in '{complaint.Status?.StatusName}' status.");
+        if (complaint.StatusId != STATUS_ASSIGNED)
+        {
+            throw new BusinessRuleException("Only assigned complaints can be started.");
+        }
 
-        var oldStatusId = complaint.StatusId;
+        var oldStatus = complaint.StatusId;
+
         complaint.StatusId = STATUS_IN_PROGRESS;
         complaint.UpdatedAt = DateTime.UtcNow;
-        await _complaintRepository.Update(complaint, complaintId);
 
-        await _historyRepository.Create(new ComplaintHistory
-        {
-            ComplaintId = complaintId,
-            OldStatusId = oldStatusId,
-            NewStatusId = STATUS_IN_PROGRESS,
-            OldHandlerEmployeeId = groId,
-            NewHandlerEmployeeId = groId,
-            ChangedBy = groId,
-            Remarks = "GRO started working on the complaint.",
-            CreatedAt = DateTime.UtcNow,
-            EscalationLevelSnapshot = complaint.EscalationLevel
-        });
+        await _complaintRepository.Update(complaint, complaint.ComplaintId);
+
+        await CreateHistoryAsync(
+            complaint.ComplaintId,
+            oldStatus,
+            STATUS_IN_PROGRESS,
+            complaint.CurrentHandlerEmployeeId,
+            complaint.CurrentHandlerEmployeeId,
+            _currentUserService.EmployeeId,
+            _currentUserService.RoleId,
+            "Work started.",
+            complaint.EscalationLevel);
     }
 
-    public async Task ResolveAsync(int complaintId, int groId, ResolveComplaintDto dto)
+    public async Task ResolveAsync(int complaintId, ResolveComplaintDto dto)
     {
-        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId)
+        var complaint =
+            await _complaintRepository.GetDetailByIdAsync(complaintId)
             ?? throw new NotFoundException($"Complaint {complaintId}");
 
-        if (complaint.CurrentHandlerEmployeeId != groId)
-            throw new ForbiddenException("You are not the assigned handler of this complaint.");
+        if (complaint.CurrentHandlerEmployeeId != _currentUserService.EmployeeId)
+        {
+            throw new ForbiddenException("Only current handler can resolve.");
+        }
 
         if (complaint.StatusId != STATUS_IN_PROGRESS)
-            throw new BusinessRuleException($"Cannot resolve a complaint in '{complaint.Status?.StatusName}' status.");
+        {
+            throw new BusinessRuleException("Complaint is not in progress.");
+        }
 
-        var oldStatusId = complaint.StatusId;
+        var oldStatus = complaint.StatusId;
+
         complaint.StatusId = STATUS_RESOLVED;
         complaint.ResolvedAt = DateTime.UtcNow;
         complaint.UpdatedAt = DateTime.UtcNow;
-        await _complaintRepository.Update(complaint, complaintId);
 
-        await _historyRepository.Create(new ComplaintHistory
-        {
-            ComplaintId = complaintId,
-            OldStatusId = oldStatusId,
-            NewStatusId = STATUS_RESOLVED,
-            OldHandlerEmployeeId = groId,
-            NewHandlerEmployeeId = groId,
-            ChangedBy = groId,
-            Remarks = dto.ResolutionRemarks,
-            CreatedAt = DateTime.UtcNow,
-            EscalationLevelSnapshot = complaint.EscalationLevel
-        });
+        await _complaintRepository.Update(complaint, complaint.ComplaintId);
 
-        await _notificationService.SendAsync(
-            complaint.RaisedByEmployeeId, NOTIF_COMPLAINT_RESOLVED,
-            "Complaint Resolved",
-            $"Your complaint '{complaint.ComplaintTitle}' has been resolved. Please review and close or reopen.",
-            complaintId);
+        await CreateHistoryAsync(
+            complaint.ComplaintId,
+            oldStatus,
+            STATUS_RESOLVED,
+            complaint.CurrentHandlerEmployeeId,
+            complaint.CurrentHandlerEmployeeId,
+            _currentUserService.EmployeeId,
+            GetCurrentRoleId(),
+            dto.ResolutionRemarks,
+            complaint.EscalationLevel);
     }
 
-    public async Task CloseAsync(int complaintId, int employeeId)
+    public async Task CloseAsync(int complaintId, CloseComplaintDto dto)
     {
-        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId)
-            ?? throw new NotFoundException($"Complaint {complaintId}");
+        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId) ?? throw new NotFoundException($"Complaint {complaintId}");
 
-        if (complaint.RaisedByEmployeeId != employeeId)
-            throw new ForbiddenException("Only the complainant can close this complaint.");
+        if (complaint.RaisedByEmployeeId != _currentUserService.EmployeeId)
+        {
+            throw new ForbiddenException("Only complaint creator can close a complaint.");
+        }
 
         if (complaint.StatusId != STATUS_RESOLVED)
-            throw new BusinessRuleException($"Cannot close a complaint in '{complaint.Status?.StatusName}' status.");
+        {
+            throw new BusinessRuleException("Only resolved complaints can be closed.");
+        }
 
-        var oldStatusId = complaint.StatusId;
+        var oldStatus = complaint.StatusId;
+
         complaint.StatusId = STATUS_CLOSED;
         complaint.ClosedAt = DateTime.UtcNow;
         complaint.UpdatedAt = DateTime.UtcNow;
-        await _complaintRepository.Update(complaint, complaintId);
 
-        await _historyRepository.Create(new ComplaintHistory
-        {
-            ComplaintId = complaintId,
-            OldStatusId = oldStatusId,
-            NewStatusId = STATUS_CLOSED,
-            OldHandlerEmployeeId = complaint.CurrentHandlerEmployeeId,
-            NewHandlerEmployeeId = complaint.CurrentHandlerEmployeeId,
-            ChangedBy = employeeId,
-            Remarks = "Complainant accepted the resolution and closed the complaint.",
-            CreatedAt = DateTime.UtcNow,
-            EscalationLevelSnapshot = complaint.EscalationLevel
-        });
+        await _complaintRepository.Update(complaint, complaint.ComplaintId);
+
+        await CreateHistoryAsync(
+            complaint.ComplaintId,
+            oldStatus,
+            STATUS_CLOSED,
+            complaint.CurrentHandlerEmployeeId,
+            complaint.CurrentHandlerEmployeeId,
+            _currentUserService.EmployeeId,
+            _currentUserService.RoleId,
+            dto.Remarks,
+            complaint.EscalationLevel);
     }
 
-    public async Task ReopenAsync(int complaintId, int employeeId, ReopenComplaintDto dto)
+    public async Task ReopenAsync(int complaintId, ReopenComplaintDto dto)
     {
-        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId)
-            ?? throw new NotFoundException($"Complaint {complaintId}");
+        using var transaction = await _context.Database.BeginTransactionAsync();
 
-        if (complaint.RaisedByEmployeeId != employeeId)
-            throw new ForbiddenException("Only the complainant can reopen this complaint.");
-
-        if (complaint.StatusId != STATUS_RESOLVED && complaint.StatusId != STATUS_EXTERNALLY_ESCALATED)
-            throw new BusinessRuleException($"Cannot reopen a complaint in '{complaint.Status?.StatusName}' status.");
-
-        // Priority bump on reopen
-        var newPriorityId = (short)Math.Min(complaint.PriorityId + 1, 4);
-
-        // Exclude all previous handlers for reassignment
-        var previousHandlers = await _assignmentRepository.GetPreviousHandlersAsync(complaintId);
-        var workloads = await _employeeRepository.GetGroActiveWorkloadAsync(complaint.Category?.DepartmentId);
-
-        var newGro = workloads
-            .Where(w => !previousHandlers.Contains(w.EmployeeId!.Value))
-            .FirstOrDefault();
-
-        var oldStatusId = complaint.StatusId;
-        var oldHandlerId = complaint.CurrentHandlerEmployeeId;
-
-        complaint.StatusId = STATUS_REOPENED;
-        complaint.PriorityId = newPriorityId;
-        complaint.ReopenedCount = (short)(complaint.ReopenedCount + 1);
-        complaint.CurrentHandlerEmployeeId = newGro?.EmployeeId ?? oldHandlerId;
-        complaint.UpdatedAt = DateTime.UtcNow;
-        await _complaintRepository.Update(complaint, complaintId);
-
-        if (newGro != null)
+        try
         {
-            await _assignmentRepository.Create(new ComplaintAssignmentHistory
+            var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId) ?? throw new NotFoundException($"Complaint {complaintId}");
+
+            if (complaint.RaisedByEmployeeId != _currentUserService.EmployeeId)
             {
-                ComplaintId = complaintId,
-                OldHandlerEmployeeId = oldHandlerId,
-                NewHandlerEmployeeId = newGro.EmployeeId!.Value,
-                AssignedBy = employeeId
-            });
+                throw new ForbiddenException("Only complaint creator can reopen.");
+            }
+
+            if (complaint.StatusId != STATUS_RESOLVED &&
+                complaint.StatusId != STATUS_EXTERNALLY_ESCALATED)
+            {
+                throw new BusinessRuleException("Only resolved or externally escalated complaints can be reopened.");
+            }
+
+            var oldStatus = complaint.StatusId;
+            var oldHandler = complaint.CurrentHandlerEmployeeId;
+
+            complaint.StatusId = STATUS_REOPENED;
+            complaint.ReopenedCount++;
+
+            complaint.ResolvedAt = null;
+            complaint.ClosedAt = null;
+
+            complaint.UpdatedAt = DateTime.UtcNow;
+
+            await _complaintRepository.Update(complaint, complaint.ComplaintId);
+
+            await CreateHistoryAsync(
+                complaint.ComplaintId,
+                oldStatus,
+                STATUS_REOPENED,
+                complaint.CurrentHandlerEmployeeId,
+                complaint.CurrentHandlerEmployeeId,
+                _currentUserService.EmployeeId,
+                _currentUserService.RoleId,
+                dto.ReopenRemarks,
+                complaint.EscalationLevel);
+
+            var assignment = await _assignmentEngine.DetermineInitialAssignmentAsync(complaint.ComplaintId, complaint.Category.DepartmentId, _currentUserService.RoleId);
+
+            await _assignmentRepository.Create(
+                new ComplaintAssignmentHistory
+                {
+                    ComplaintId = complaint.ComplaintId,
+                    OldHandlerEmployeeId = complaint.CurrentHandlerEmployeeId,
+                    NewHandlerEmployeeId = assignment.HandlerId,
+                    AssignedBy = null,
+                    AssignmentReason = "REOPEN"
+                });
+
+            complaint.CurrentHandlerEmployeeId = assignment.HandlerId;
+            complaint.StatusId = STATUS_ASSIGNED;
+            complaint.EscalationLevel = assignment.EscalationLevel;
+            complaint.UpdatedAt = DateTime.UtcNow;
+
+            await _complaintRepository.Update(complaint, complaint.ComplaintId);
+
+            await CreateHistoryAsync(
+                    complaint.ComplaintId,
+                    STATUS_REOPENED,
+                    STATUS_ASSIGNED,
+                    oldHandler,
+                    assignment.HandlerId,
+                    null,
+                    null,
+                    "Complaint reassigned after reopen.",
+                    assignment.EscalationLevel);
+
+            await transaction.CommitAsync();
         }
-
-        await _historyRepository.Create(new ComplaintHistory
+        catch
         {
-            ComplaintId = complaintId,
-            OldStatusId = oldStatusId,
-            NewStatusId = STATUS_REOPENED,
-            OldHandlerEmployeeId = oldHandlerId,
-            NewHandlerEmployeeId = complaint.CurrentHandlerEmployeeId,
-            ChangedBy = employeeId,
-            Remarks = dto.ReopenRemarks,
-            CreatedAt = DateTime.UtcNow,
-            EscalationLevelSnapshot = complaint.EscalationLevel
-        });
-
-        if (newGro != null)
-        {
-            await _notificationService.SendAsync(
-                newGro.EmployeeId!.Value, NOTIF_COMPLAINT_REOPENED,
-                "Complaint Reopened and Reassigned",
-                $"Complaint '{complaint.ComplaintTitle}' has been reopened and assigned to you.",
-                complaintId);
+            await transaction.RollbackAsync();
+            throw;
         }
-
-        await _notificationService.SendAsync(
-            employeeId, NOTIF_COMPLAINT_REOPENED,
-            "Complaint Reopened",
-            $"Your complaint '{complaint.ComplaintTitle}' has been reopened with bumped priority.",
-            complaintId);
     }
 
-    public async Task EscalateAsync(int complaintId, int currentEmployeeId, string role, EscalateComplaintDto dto)
+    public async Task EscalateAsync(int complaintId, EscalateComplaintDto dto)
     {
-        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId)
-            ?? throw new NotFoundException($"Complaint {complaintId}");
+        using var transaction = await _context.Database.BeginTransactionAsync();
 
-        if (complaint.CurrentHandlerEmployeeId != currentEmployeeId && role != "ADMIN")
-            throw new ForbiddenException("You are not authorized to escalate this complaint.");
-
-        var allowedStatuses = new short[] { STATUS_ASSIGNED, STATUS_IN_PROGRESS, STATUS_REOPENED, STATUS_ESCALATED };
-        if (!allowedStatuses.Contains(complaint.StatusId))
-            throw new BusinessRuleException($"Cannot escalate a complaint in '{complaint.Status?.StatusName}' status.");
-
-        var nextLevel = (short)(complaint.EscalationLevel + 1);
-        var rule = await _escalationRuleRepository.GetRuleAsync(complaint.CategoryId, complaint.PriorityId, nextLevel);
-
-        short newStatusId;
-        if (rule == null)
+        try
         {
-            // No more escalation rules — externally escalated
-            newStatusId = STATUS_EXTERNALLY_ESCALATED;
+            var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId) ?? throw new NotFoundException($"Complaint {complaintId}");
+
+            if (complaint.CurrentHandlerEmployeeId != _currentUserService.EmployeeId)
+            {
+                throw new ForbiddenException("Only current handler can escalate.");
+            }
+
+            if (complaint.StatusId != STATUS_IN_PROGRESS)
+            {
+                throw new BusinessRuleException("Only in-progress complaints can be escalated.");
+            }
+
+            var currentRole = _currentUserService.Role;
+
+            int newHandlerId;
+            short newEscalationLevel;
+
+            if (currentRole == "GRO")
+            {
+                var departmentHead = await _employeeRepository.GetDepartmentHeadAsync(complaint.Category.DepartmentId);
+
+                if (departmentHead == null)
+                {
+                    throw new BusinessRuleException("No Department Head found.");
+                }
+
+                newHandlerId = departmentHead.EmployeeId;
+                newEscalationLevel = 1;
+            }
+            else if (currentRole == "DEPARTMENT_HEAD")
+            {
+                var admin = await _employeeRepository.GetAdminAsync() ?? throw new BusinessRuleException("No active admin found.");
+
+                newHandlerId = admin.EmployeeId;
+                newEscalationLevel = 2;
+            }
+            else
+            {
+                throw new BusinessRuleException("Admin cannot escalate complaints.");
+            }
+
+            var oldStatus = complaint.StatusId;
+            var oldHandler = complaint.CurrentHandlerEmployeeId;
+
+            complaint.CurrentHandlerEmployeeId = newHandlerId;
+            complaint.StatusId = STATUS_ESCALATED;
+            complaint.EscalationLevel = newEscalationLevel;
+            complaint.UpdatedAt = DateTime.UtcNow;
+
+            await _complaintRepository.Update(
+                complaint,
+                complaint.ComplaintId);
+
+            await _escalationRepository.Create(
+                new ComplaintEscalation
+                {
+                    ComplaintId = complaint.ComplaintId,
+                    EscalatedToEmployeeId = newHandlerId,
+                    EscalationLevel = newEscalationLevel,
+                    EscalatedByEmployeeId = _currentUserService.EmployeeId,
+                    Reason = dto.Remarks,
+                    EscalatedAt = DateTime.UtcNow
+                });
+
+            await _assignmentRepository.Create(
+                new ComplaintAssignmentHistory
+                {
+                    ComplaintId = complaint.ComplaintId,
+                    OldHandlerEmployeeId = oldHandler,
+                    NewHandlerEmployeeId = newHandlerId,
+                    AssignedBy = _currentUserService.EmployeeId,
+                    AssignmentReason = "ESCALATION"
+                });
+
+            await CreateHistoryAsync(
+                complaint.ComplaintId,
+                oldStatus,
+                STATUS_ESCALATED,
+                oldHandler,
+                newHandlerId,
+                _currentUserService.EmployeeId,
+                _currentUserService.RoleId,
+                dto.Remarks!,
+                newEscalationLevel);
+
+            await transaction.CommitAsync();
         }
-        else
+        catch
         {
-            newStatusId = STATUS_ESCALATED;
+            await transaction.RollbackAsync();
+            throw;
         }
-
-        var oldStatusId = complaint.StatusId;
-        var oldHandlerId = complaint.CurrentHandlerEmployeeId;
-
-        complaint.EscalationLevel = nextLevel;
-        complaint.StatusId = newStatusId;
-        complaint.UpdatedAt = DateTime.UtcNow;
-        await _complaintRepository.Update(complaint, complaintId);
-
-        await _historyRepository.Create(new ComplaintHistory
-        {
-            ComplaintId = complaintId,
-            OldStatusId = oldStatusId,
-            NewStatusId = newStatusId,
-            OldHandlerEmployeeId = oldHandlerId,
-            NewHandlerEmployeeId = complaint.CurrentHandlerEmployeeId,
-            ChangedBy = currentEmployeeId,
-            Remarks = dto.Remarks ?? "Complaint escalated.",
-            CreatedAt = DateTime.UtcNow,
-            EscalationLevelSnapshot = nextLevel
-        });
-
-        await _notificationService.SendAsync(
-            complaint.RaisedByEmployeeId, NOTIF_COMPLAINT_ESCALATED,
-            "Complaint Escalated",
-            $"Your complaint '{complaint.ComplaintTitle}' has been escalated to level {nextLevel}.",
-            complaintId);
     }
+    public async Task AssignAsync(int complaintId, AssignComplaintDto dto)
+    {
+        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId) ?? throw new NotFoundException($"Complaint {complaintId}");
+        var previoushandlers = await _assignmentRepository.GetPreviousHandlersAsync(complaintId);
+        if (_currentUserService.Role != "ADMIN")
+        {
+            throw new ForbiddenException("Only admins can manually assign complaints.");
+        }
 
-    // ─── Private Helpers ────────────────────────────────────────────────────────
+        if (complaint.StatusId == STATUS_RESOLVED ||
+            complaint.StatusId == STATUS_REJECTED ||
+            complaint.StatusId == STATUS_CLOSED ||
+            complaint.StatusId == STATUS_EXTERNALLY_ESCALATED)
+        {
+            throw new BusinessRuleException(
+                "Complaint cannot be manually assigned in its current status.");
+        }
 
+        var gro =
+            await _employeeRepository.GetByIdWithRoleAsync(dto.GroEmployeeId);
+
+        if (gro == null)
+        {
+            throw new NotFoundException($"Employee {dto.GroEmployeeId}");
+        }
+
+        if (!gro.IsActive)
+        {
+            throw new BusinessRuleException("Employee is inactive.");
+        }
+
+        if (gro.Role?.RoleName != "GRO")
+        {
+            throw new BusinessRuleException(
+                "Complaint can only be assigned to a GRO.");
+        }
+        if(gro.DepartmentId!=complaint.Category.DepartmentId)
+        {
+            throw new BusinessRuleException("Complaint can only be assigned to an employee in the same department.");
+        }
+        if(previoushandlers.Contains(gro.EmployeeId))
+        {
+            throw new BusinessRuleException("Cannot assign to a handler who has already handled this complaint.");
+        }
+        
+        var oldHandlerId = complaint.CurrentHandlerEmployeeId;
+        var oldStatus = complaint.StatusId;
+        complaint.CurrentHandlerEmployeeId = dto.GroEmployeeId;
+        complaint.EscalationLevel = 0;
+        complaint.EscalationDueAt = DateTime.UtcNow.AddHours(complaint.Category.SlaHours);
+        complaint.StatusId = STATUS_ASSIGNED;
+        complaint.UpdatedAt = DateTime.UtcNow;
+
+        await _complaintRepository.Update(
+            complaint,
+            complaint.ComplaintId);
+
+        await _assignmentRepository.Create(
+            new ComplaintAssignmentHistory
+            {
+                ComplaintId = complaint.ComplaintId,
+                OldHandlerEmployeeId = oldHandlerId,
+                NewHandlerEmployeeId = dto.GroEmployeeId,
+                AssignedBy = _currentUserService.EmployeeId,
+                AssignmentReason = "MANUAL_ASSIGNMENT"
+            });
+
+        await CreateHistoryAsync(
+            complaint.ComplaintId,
+            oldStatus,
+            STATUS_ASSIGNED,
+            oldHandlerId,
+            dto.GroEmployeeId,
+            _currentUserService.EmployeeId,
+            _currentUserService.RoleId,
+            dto.Remarks,
+            complaint.EscalationLevel);
+    }
+    #region HELPERS
+    private short GetCurrentRoleId()
+    {
+        switch (_currentUserService.Role)
+        {
+            case "EMPLOYEE":
+                return ROLE_EMPLOYEE;
+
+            case "GRO":
+                return ROLE_GRO;
+
+            case "DEPARTMENT_HEAD":
+                return ROLE_DEPARTMENT_HEAD;
+
+            case "ADMIN":
+                return ROLE_ADMIN;
+
+            default:
+                throw new BusinessRuleException("Unknown role.");
+        }
+    }
     private async Task<ComplaintDto> GetComplaintDtoAsync(int complaintId)
     {
         var c = await _complaintRepository.GetDetailByIdAsync(complaintId)
             ?? throw new NotFoundException($"Complaint {complaintId}");
         return MapToDto(c);
-    }
-
-    private static void AssertCanView(Complaint c, int employeeId, string role)
-    {
-        if (role == "ADMIN") return;
-        if (c.RaisedByEmployeeId == employeeId) return;
-        if (role == "GRO" && c.CurrentHandlerEmployeeId == employeeId) return;
-        if (role == "DEPARTMENT_HEAD") return; // DeptHead can see all in their dept
-        throw new ForbiddenException("You are not authorized to view this complaint.");
     }
 
     private static ComplaintDto MapToDto(Complaint c) => new()
@@ -421,6 +645,20 @@ public class ComplaintService : IComplaintService
         EscalationLevel = c.EscalationLevel,
         ReopenedCount = c.ReopenedCount,
         EscalationDueAt = c.EscalationDueAt,
+        Attachments = c.ComplaintAttachments
+                    .Select(a => new ComplaintAttachmentDto
+                    {
+                        ComplaintId = c.ComplaintId,
+                        AttachmentId = a.AttachmentId,
+                        OriginalFileName = a.OriginalFileName,
+                        FilePath = a.FilePath,
+                        MimeType = a.MimeType,
+                        FileSizeBytes = a.FileSizeBytes,
+                        UploadedBy = a.UploadedBy,
+                        UploadedByName = a.UploadedByNavigation?.EmployeeName ?? string.Empty,
+                        CreatedAt = a.CreatedAt
+                    })
+                    .ToList(),
         CreatedAt = c.CreatedAt,
         UpdatedAt = c.UpdatedAt,
         ResolvedAt = c.ResolvedAt,
@@ -460,4 +698,59 @@ public class ComplaintService : IComplaintService
         ChangedByName = h.ChangedByNavigation?.EmployeeName,
         CreatedAt = h.CreatedAt
     };
+
+    private async Task ValidateViewPermissionAsync(Complaint complaint)
+    {
+        var employeeId = _currentUserService.EmployeeId;
+        var role = _currentUserService.Role;
+
+        if (role == "ADMIN")
+        {
+            return;
+        }
+
+        if (complaint.RaisedByEmployeeId == employeeId)
+        {
+            return;
+        }
+
+        if (complaint.CurrentHandlerEmployeeId == employeeId)
+        {
+            return;
+        }
+
+        if (role == "DEPARTMENT_HEAD")
+        {
+            var employee =
+                await _employeeRepository.GetByIdWithRoleAsync(employeeId);
+
+            if (employee?.DepartmentId ==
+                complaint.Category.DepartmentId)
+            {
+                return;
+            }
+        }
+
+        throw new ForbiddenException(
+            "You are not authorized to view this complaint.");
+    }
+    private async Task CreateHistoryAsync(int complaintId, short? oldStatusId, short newStatusId, int? oldHandlerId, int? newHandlerId, int? changedBy, short? roleIdAtActionTime, string remarks, short escalationLevel)
+    {
+        await _historyRepository.Create(
+            new ComplaintHistory
+            {
+                ComplaintId = complaintId,
+                OldStatusId = oldStatusId,
+                NewStatusId = newStatusId,
+                OldHandlerEmployeeId = oldHandlerId,
+                NewHandlerEmployeeId = newHandlerId,
+                ChangedBy = changedBy,
+                RoleIdAtActionTime = roleIdAtActionTime,
+                Remarks = remarks,
+                EscalationLevelSnapshot = escalationLevel,
+                CreatedAt = DateTime.UtcNow
+            });
+    }
+  
+    #endregion
 }

@@ -19,15 +19,16 @@ public class ComplaintRequestRepository : AbstractRepository<int, ComplaintReque
 
     public async Task<ComplaintRequest?> GetPendingByComplaintAndTypeAsync(int complaintId, short requestTypeId)
     {
-        return await _context.ComplaintRequests
-            .FirstOrDefaultAsync(r => r.ComplaintId == complaintId 
-                                   && r.RequestTypeId == requestTypeId 
-                                   && r.RequestStatusId == 1); // 1 = PENDING
+        return await _context.ComplaintRequests.AsNoTracking()
+            .FirstOrDefaultAsync(r => r.ComplaintId == complaintId
+                                   && r.RequestTypeId == requestTypeId
+                                   && r.RequestStatusId == 1); 
     }
 
     public async Task<(IEnumerable<ComplaintRequest> Items, int TotalCount)> GetPagedAsync(int page, int pageSize, short? requestTypeId, short? statusId)
     {
         var query = _context.ComplaintRequests
+            .AsNoTracking()
             .Include(r => r.Complaint)
             .Include(r => r.RequestType)
             .Include(r => r.RequestStatus)
@@ -52,5 +53,18 @@ public class ComplaintRequestRepository : AbstractRepository<int, ComplaintReque
             .ToListAsync();
 
         return (items, totalCount);
+    }
+
+    public async Task<ComplaintRequest?> GetDetailAsync(int requestId)
+    {
+        return await _context.ComplaintRequests
+            .AsNoTracking()
+            .Include(r => r.Complaint)
+                .ThenInclude(c => c.Category)
+            .Include(r => r.RequestType)
+            .Include(r => r.RequestStatus)
+            .Include(r => r.RequestedByNavigation)
+            .Include(r => r.ReviewedByNavigation)
+            .FirstOrDefaultAsync(r => r.RequestId == requestId);
     }
 }

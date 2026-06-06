@@ -26,6 +26,7 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
                 .ThenInclude(cat => cat.Department)
             .Include(c => c.RaisedByEmployee)
             .Include(c => c.CurrentHandlerEmployee)
+            .Include(c=>c.ComplaintAttachments)
             .FirstOrDefaultAsync(c => c.ComplaintId == id);
     }
 
@@ -39,7 +40,6 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
                   c => c.ComplaintId,
                   (v, c) => new { View = v, Complaint = c });
 
-        // Role-based visibility filters
         if (roleFilter == "EMPLOYEE")
         {
             query = query.Where(x => x.Complaint.RaisedByEmployeeId == employeeIdFilter);

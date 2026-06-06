@@ -25,6 +25,7 @@ public class ComplaintHistoryRepository : AbstractRepository<int, ComplaintHisto
             .Include(h => h.OldHandlerEmployee)
             .Include(h => h.NewHandlerEmployee)
             .Include(h => h.ChangedByNavigation)
+            .Include(h=>h.RoleIdAtActionTimeNavigation)
             .Where(h => h.ComplaintId == complaintId)
             .OrderBy(h => h.CreatedAt)
             .ToListAsync();

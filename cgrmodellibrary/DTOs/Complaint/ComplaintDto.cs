@@ -1,3 +1,5 @@
+using cgrmodellibrary.DTOs.Attachment;
+
 namespace cgrmodellibrary.DTOs.Complaint;
 
 public class ComplaintDto
@@ -19,6 +21,8 @@ public class ComplaintDto
     public string StatusName { get; set; } = null!;
     public short EscalationLevel { get; set; }
     public short ReopenedCount { get; set; }
+
+    public List<ComplaintAttachmentDto> Attachments { get; set; } = [];
     public DateTime? EscalationDueAt { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

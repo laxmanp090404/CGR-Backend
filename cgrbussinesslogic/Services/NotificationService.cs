@@ -16,8 +16,7 @@ public class NotificationService : INotificationService
         _notificationRepository = notificationRepository;
     }
 
-    public async Task<PagedResultDto<NotificationDto>> GetMyNotificationsAsync(
-        int employeeId, bool? isRead, int page, int pageSize)
+    public async Task<PagedResultDto<NotificationDto>> GetMyNotificationsAsync(int employeeId, bool? isRead, int page, int pageSize)
     {
         var (items, total) = await _notificationRepository.GetByEmployeeIdAsync(employeeId, isRead, page, pageSize);
         return new PagedResultDto<NotificationDto>

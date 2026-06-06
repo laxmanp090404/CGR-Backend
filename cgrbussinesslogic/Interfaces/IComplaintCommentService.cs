@@ -4,6 +4,7 @@ namespace cgrbussinesslogic.Interfaces;
 
 public interface IComplaintCommentService
 {
-    Task<IEnumerable<ComplaintCommentDto>> GetByComplaintIdAsync(int complaintId, int currentEmployeeId, string role);
-    Task<ComplaintCommentDto> AddCommentAsync(int complaintId, CreateComplaintCommentDto dto, int employeeId, string role);
+    Task<IEnumerable<ComplaintCommentDto>>GetByComplaintIdAsync(int complaintId);
+
+    Task<ComplaintCommentDto>AddCommentAsync(int complaintId,CreateComplaintCommentDto dto);
 }

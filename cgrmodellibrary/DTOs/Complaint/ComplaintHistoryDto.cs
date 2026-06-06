@@ -15,5 +15,8 @@ public class ComplaintHistoryDto
     public string? Remarks { get; set; }
     public int? ChangedBy { get; set; }
     public string? ChangedByName { get; set; }
+    public short? RoleIdAtActionTime { get; set; }
+
+    public string? RoleNameAtActionTime { get; set; }
     public DateTime CreatedAt { get; set; }
 }

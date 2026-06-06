@@ -32,6 +32,7 @@ builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IRoleRequestRepository, RoleRequestRepository>();
 builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 builder.Services.AddScoped<IRepository<int, Department>, AbstractRepository<int, Department>>();
+builder.Services.AddScoped<IRepository<int,ComplaintEscalation>,AbstractRepository<int,ComplaintEscalation>>();
 #endregion
 #region Services
 builder.Services.AddHttpContextAccessor();
@@ -50,6 +51,7 @@ builder.Services.AddScoped<IComplaintRequestService, ComplaintRequestService>();
 builder.Services.AddScoped<IRoleRequestService, RoleRequestService>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 builder.Services.AddScoped<IAuditLogService, AuditLogService>();
+builder.Services.AddScoped<IComplaintAssignmentEngine,ComplaintAssignmentEngine>();
 #endregion
 #region JWT
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -118,7 +120,6 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
@@ -126,6 +127,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

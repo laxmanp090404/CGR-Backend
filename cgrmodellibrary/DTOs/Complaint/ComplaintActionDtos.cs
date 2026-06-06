@@ -24,3 +24,18 @@ public class EscalateComplaintDto
 {
     public string? Remarks { get; set; }
 }
+
+public class AssignComplaintDto
+{
+    [Required]
+    public int GroEmployeeId { get; set; }
+
+    [Required]
+    public string Remarks { get; set; } = null!;
+}
+
+public class CloseComplaintDto
+{
+    [Required]
+    public string Remarks { get; set; } = null!;
+}

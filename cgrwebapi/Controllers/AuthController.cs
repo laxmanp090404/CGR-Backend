@@ -28,7 +28,6 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<LoginResponseDto>> Register([FromBody] RegisterRequestDto dto)
     {
         var result = await _authService.RegisterAsync(dto);
-        // did not use created bcos shouldnt expose url of created
         return StatusCode(StatusCodes.Status201Created, result);
     }
 }

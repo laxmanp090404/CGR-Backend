@@ -223,7 +223,6 @@ public partial class CGRContext : DbContext
 
             entity.HasOne(d => d.AssignedByNavigation).WithMany(p => p.ComplaintAssignmentHistoryAssignedByNavigations)
                 .HasForeignKey(d => d.AssignedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_assign_history_assigned_by");
 
             entity.HasOne(d => d.Complaint).WithMany(p => p.ComplaintAssignmentHistories)
@@ -369,6 +368,13 @@ public partial class CGRContext : DbContext
             entity.Property(e => e.OldHandlerEmployeeId).HasColumnName("old_handler_employee_id");
             entity.Property(e => e.OldStatusId).HasColumnName("old_status_id");
             entity.Property(e => e.Remarks).HasColumnName("remarks");
+            entity.Property(e => e.RoleIdAtActionTime)
+      .HasColumnName("role_id_at_action_time");
+
+            entity.HasOne(d => d.RoleIdAtActionTimeNavigation)
+                  .WithMany()
+                  .HasForeignKey(d => d.RoleIdAtActionTime)
+                  .HasConstraintName("fk_history_role_at_action");
 
             entity.HasOne(d => d.ChangedByNavigation).WithMany(p => p.ComplaintHistoryChangedByNavigations)
                 .HasForeignKey(d => d.ChangedBy)

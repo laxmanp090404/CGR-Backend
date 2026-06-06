@@ -10,4 +10,5 @@ public interface IComplaintRepository : IRepository<int, Complaint>
     Task<(IEnumerable<VComplaintDashboard> Items, int TotalCount)> GetPagedDashboardAsync(
         int page, int pageSize, int? statusId, int? priorityId, int? categoryId, int? departmentId, string? search,
         int employeeIdFilter, string roleFilter, int? deptIdFilter);
+    
 }

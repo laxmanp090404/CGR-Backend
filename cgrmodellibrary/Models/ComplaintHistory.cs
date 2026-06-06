@@ -24,6 +24,9 @@ public partial class ComplaintHistory
     public string? Remarks { get; set; }
 
     public DateTime CreatedAt { get; set; }
+    public short? RoleIdAtActionTime { get; set; }
+
+    public virtual Role? RoleIdAtActionTimeNavigation { get; set; }
 
     public virtual Employee? ChangedByNavigation { get; set; }
 

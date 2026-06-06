@@ -1,11 +1,15 @@
+namespace cgrbussinesslogic.Interfaces;
+
 using cgrmodellibrary.DTOs.Attachment;
+using cgrmodellibrary.Models;
 using Microsoft.AspNetCore.Http;
 
-namespace cgrbussinesslogic.Interfaces;
+
 
 public interface IComplaintAttachmentService
 {
     Task<IEnumerable<ComplaintAttachmentDto>> GetByComplaintIdAsync(int complaintId);
-    Task<ComplaintAttachmentDto> UploadAsync(int complaintId, IFormFile file, int employeeId);
-    Task DeleteAsync(int attachmentId, int currentEmployeeId, string role);
+
+    Task<(List<ComplaintAttachment> Attachments, List<string> CreatedFiles)> SaveAttachmentsAsync(int complaintId, List<IFormFile> files);
+    Task DeleteFilesAsync(IEnumerable<string> filePaths);
 }
