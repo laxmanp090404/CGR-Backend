@@ -11,6 +11,13 @@ public class ComplaintRequestService : IComplaintRequestService
 {
     private const short REQUEST_TYPE_REJECTION = 1;
 
+    #region ROLE IDs
+    private const short ROLE_EMPLOYEE = 1;
+    private const short ROLE_GRO = 2;
+    private const short ROLE_DEPARTMENT_HEAD = 3;
+    private const short ROLE_ADMIN = 4;
+    #endregion
+
     #region Request Statuses
 
     private const short REQUEST_STATUS_PENDING = 1;
@@ -47,7 +54,8 @@ public class ComplaintRequestService : IComplaintRequestService
         IComplaintAssignmentRepository assignmentRepository,
         IComplaintHistoryRepository historyRepository,
         IEmployeeRepository employeeRepository,
-        IComplaintAssignmentEngine assignmentEngine)
+        IComplaintAssignmentEngine assignmentEngine
+        )
     {
         _requestRepository = requestRepository;
         _complaintRepository = complaintRepository;
@@ -71,8 +79,8 @@ public class ComplaintRequestService : IComplaintRequestService
             throw new ForbiddenException("Only the current handler can raise a rejection request.");
         }
 
-        if (_currentUserService.Role != "GRO" &&
-            _currentUserService.Role != "DEPARTMENT_HEAD")
+        if (_currentUserService.RoleId != ROLE_GRO &&
+            _currentUserService.RoleId != ROLE_DEPARTMENT_HEAD)
         {
             throw new ForbiddenException("Only GROs and Department Heads can create rejection requests.");
         }
@@ -115,7 +123,7 @@ public class ComplaintRequestService : IComplaintRequestService
             throw new UnauthorizedAccessException();
         }
 
-        if (_currentUserService.Role != "ADMIN")
+        if (_currentUserService.RoleId != ROLE_ADMIN)
         {
             throw new ForbiddenException("Only admins can review complaint requests.");
         }
@@ -184,9 +192,9 @@ public class ComplaintRequestService : IComplaintRequestService
             {
                 complaint.PriorityId += 1;
             }
-           
 
-             var raisedBy = complaint.RaisedByEmployee ?? throw new NotFoundException($"Employee {complaint.RaisedByEmployeeId} who raised the complaint");
+
+            var raisedBy = complaint.RaisedByEmployee ?? throw new NotFoundException($"Employee {complaint.RaisedByEmployeeId} who raised the complaint");
             var assignment =
                await _assignmentEngine
                    .DetermineInitialAssignmentAsync(
@@ -212,14 +220,13 @@ public class ComplaintRequestService : IComplaintRequestService
                     CreatedAt = DateTime.UtcNow
                 });
             // after assignement new history and assignment history
-            complaint.CurrentHandlerEmployeeId =assignment.HandlerId;
+            complaint.CurrentHandlerEmployeeId = assignment.HandlerId;
 
             complaint.StatusId = STATUS_ASSIGNED;
 
-            complaint.EscalationLevel =assignment.EscalationLevel;
+            complaint.EscalationLevel = assignment.EscalationLevel;
 
-            complaint.EscalationDueAt =DateTime.UtcNow.AddHours(complaint.Category.SlaHours);
-
+            complaint.EscalationDueAt =await _assignmentEngine.CalculateEscalationDueAtAsync(complaint);
             complaint.UpdatedAt =
                 DateTime.UtcNow;
 

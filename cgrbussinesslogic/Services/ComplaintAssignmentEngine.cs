@@ -8,17 +8,19 @@ public class ComplaintAssignmentEngine : IComplaintAssignmentEngine
 {
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IComplaintAssignmentRepository _assignmentRepository;
-
+    private readonly IEscalationRuleRepository _escalationRuleRepository;
     private const short ROLE_EMPLOYEE = 1;
     private const short ROLE_GRO = 2;
     private const short ROLE_DEPARTMENT_HEAD = 3;
     private const short ROLE_ADMIN = 4;
     public ComplaintAssignmentEngine(
      IEmployeeRepository employeeRepository,
-     IComplaintAssignmentRepository assignmentRepository)
+     IComplaintAssignmentRepository assignmentRepository,
+     IEscalationRuleRepository escalationRuleRepository)
     {
         _employeeRepository = employeeRepository;
         _assignmentRepository = assignmentRepository;
+        _escalationRuleRepository = escalationRuleRepository;
     }
     public async Task<(int HandlerId, short EscalationLevel)> DetermineInitialAssignmentAsync(int complaintId, int categoryDepartmentId, short creatorRole)
     {
@@ -87,6 +89,24 @@ public class ComplaintAssignmentEngine : IComplaintAssignmentEngine
         }
         return (admin.EmployeeId, 2);
 
+    }
+
+     // helper to calculate escalation due at based on levels
+    public  async Task<DateTime?> CalculateEscalationDueAtAsync(Complaint complaint)
+    {
+        if (complaint.EscalationLevel == 0)
+        {
+            return DateTime.UtcNow.AddHours(complaint.Category.SlaHours);
+        }
+
+        var rule =await _escalationRuleRepository.GetRuleAsync(complaint.CategoryId,complaint.PriorityId,complaint.EscalationLevel);
+
+        if (rule == null)
+        {
+            throw new BusinessRuleException($"No escalation rule configured for category {complaint.CategoryId}, priority {complaint.PriorityId}, level {complaint.EscalationLevel}");
+        }
+
+        return DateTime.UtcNow.AddHours(rule.EscalateAfterHours);
     }
 
 
