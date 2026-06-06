@@ -10,8 +10,11 @@ namespace cgrdataaccesslibrary.Repositories;
 
 public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplaintRepository
 {
-    private readonly CGRContext _context;
-
+    private  readonly CGRContext _context;
+    private const short STATUS_CLOSED = 6;
+    private const short STATUS_REJECTED = 7;
+    private const short STATUS_EXTERNALLY_ESCALATED = 9;
+    private const short STATUS_RESOLVED = 5;
     public ComplaintRepository(CGRContext context) : base(context)
     {
         _context = context;
@@ -90,4 +93,20 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
 
         return (items, totalCount);
     }
+
+    // get complaints that expired above escalationdueat
+    public async Task<IEnumerable<Complaint>> GetEscalationDueComplaintsAsync()
+{
+    return await _context.Complaints
+        .Include(c => c.Category)
+        .Include(c => c.Priority)
+        .Include(c => c.CurrentHandlerEmployee)
+        .Where(c =>
+            c.EscalationDueAt <= DateTime.UtcNow &&
+            c.StatusId != STATUS_CLOSED && 
+            c.StatusId != STATUS_REJECTED && 
+            c.StatusId != STATUS_EXTERNALLY_ESCALATED &&
+            c.StatusId!=STATUS_RESOLVED)  
+        .ToListAsync();
+}
 }

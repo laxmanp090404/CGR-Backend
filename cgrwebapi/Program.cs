@@ -5,6 +5,8 @@ using cgrdataaccesslibrary.Interfaces;
 using cgrdataaccesslibrary.Repositories;
 using cgrmodellibrary.Models;
 using cgrwebapi.Middlewares;
+using Hangfire;
+using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -16,6 +18,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<CGRContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddHangfire(config =>
+{
+    config.UsePostgreSqlStorage(options =>
+    {
+        options.UseNpgsqlConnection(
+            builder.Configuration.GetConnectionString("DefaultConnection"));
+    });
+});
+
+builder.Services.AddHangfireServer();
 
 #region Repos
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
@@ -34,7 +46,7 @@ builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 builder.Services.AddScoped<IRepository<int, Department>, AbstractRepository<int, Department>>();
 builder.Services.AddScoped<IRepository<int,ComplaintEscalation>,AbstractRepository<int,ComplaintEscalation>>();
 #endregion
-#region Services and helpers
+#region Services
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -52,6 +64,8 @@ builder.Services.AddScoped<IRoleRequestService, RoleRequestService>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 builder.Services.AddScoped<IAuditLogService, AuditLogService>();
 builder.Services.AddScoped<IComplaintAssignmentEngine,ComplaintAssignmentEngine>();
+builder.Services.AddScoped<ISlaEscalationJob, SlaEscalationJob>();
+builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
 #endregion
 #region JWT
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -128,10 +142,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-
+app.UseHangfireDashboard();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+RecurringJob.AddOrUpdate<ISlaEscalationJob>(
+    "sla-escalation-job",
+    job => job.ProcessEscalationsAsync(),
+
+    "*/5 * * * *");
 app.MapControllers();
 
 app.Run();

@@ -109,6 +109,46 @@ public class ComplaintAssignmentEngine : IComplaintAssignmentEngine
         return DateTime.UtcNow.AddHours(rule.EscalateAfterHours);
     }
 
+    // determine escalated authority  and escalation level for automatic escalation
+    public async Task<(int HandlerId, short EscalationLevel)> DetermineEscalationAssignmentAsync(Complaint complaint)
+{
+    switch (complaint.EscalationLevel)
+    {
+        // level0 -> dept head l1
+        case 0:
+        {
+            var departmentHead =await _employeeRepository.GetDepartmentHeadAsync(complaint.Category.DepartmentId);
 
+            if (departmentHead != null)
+            {
+                return (
+                    departmentHead.EmployeeId,1);
+            }
 
+            // fallback to admin
+            var admin =await _employeeRepository.GetAdminAsync()?? throw new BusinessRuleException("No active admin found.");
+
+            return (admin.EmployeeId,2);
+        }
+
+        // level1 depthead -> admin l2
+        case 1:
+        {
+            var admin =
+                await _employeeRepository.GetAdminAsync()?? throw new BusinessRuleException("No active admin found.");
+
+            return (admin.EmployeeId,2);
+        }
+
+        // level2 admin to externally escalated employeeid is 0 for external
+        case 2:
+        {
+            return (0,3);
+        }
+
+        default:
+            throw new BusinessRuleException(
+                $"Invalid escalation level {complaint.EscalationLevel}");
+    }
+}
 }

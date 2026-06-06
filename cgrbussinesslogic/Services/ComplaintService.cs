@@ -168,7 +168,7 @@ public class ComplaintService : IComplaintService
                     OldHandlerEmployeeId = null,
                     NewHandlerEmployeeId = assignment.HandlerId,
                     AssignedBy = null,
-                    AssignmentReason = "INITIAL ASSIGNMENT BY ASSIGNMENT ENGINE",
+                    AssignmentReason = "INITIAL",
                     AssignedAt = DateTime.UtcNow
                 });
             // capture status change history for assignment in complaint history
@@ -581,7 +581,7 @@ public class ComplaintService : IComplaintService
                 OldHandlerEmployeeId = oldHandlerId,
                 NewHandlerEmployeeId = dto.GroEmployeeId,
                 AssignedBy = _currentUserService.EmployeeId,
-                AssignmentReason = "MANUAL_ASSIGNMENT"
+                AssignmentReason = "MANUAL"
             });
 
         await CreateHistoryAsync(
