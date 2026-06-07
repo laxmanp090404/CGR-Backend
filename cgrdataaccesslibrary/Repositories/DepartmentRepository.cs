@@ -34,8 +34,7 @@ public class DepartmentRepository
             .ToListAsync();
     }
 
-    public async Task<Department?> GetDetailByIdAsync(
-        int departmentId)
+    public async Task<Department?> GetDetailByIdAsync(int departmentId)
     {
         return await _context.Departments
             .Include(d => d.DepartmentHeadEmployee)
@@ -52,11 +51,31 @@ public class DepartmentRepository
                 e => e.DepartmentId == departmentId);
     }
 
-    public async Task<bool> HasCategoriesAsync(
+    public async Task<Department?> GetByNameAsync(string departmentName)
+    {
+        return await _context.Departments
+            .FirstOrDefaultAsync(
+                d => d.DepartmentName.ToLower() ==
+                departmentName.ToLower());
+    }
+    public async Task<bool> HasActiveCategoriesAsync(
         int departmentId)
     {
         return await _context.Categories
             .AnyAsync(
-                c => c.DepartmentId == departmentId);
+                c => c.DepartmentId == departmentId && c.IsActive);
+    }
+
+    public async Task<bool> ExistsByNameAsync(string departmentName,int? excludeDepartmentId = null)
+    {
+        var query = _context.Departments
+            .Where(d =>
+                d.DepartmentName.ToLower() ==
+                departmentName.ToLower());
+        if (excludeDepartmentId.HasValue)
+        {
+            query = query.Where(d => d.DepartmentId != excludeDepartmentId.Value);
+        }
+        return await query.AnyAsync();
     }
 }

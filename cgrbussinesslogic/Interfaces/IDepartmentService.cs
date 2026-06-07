@@ -4,9 +4,11 @@ namespace cgrbussinesslogic.Interfaces;
 
 public interface IDepartmentService
 {
-    Task<IEnumerable<DepartmentDto>> GetAllAsync();
-    Task<DepartmentDto> GetByIdAsync(int id);
+    Task<IEnumerable<DepartmentDto>> GetAllAsync(bool? isActive);
+
+    Task<DepartmentDto> GetByIdAsync(int departmentId);
+
     Task<DepartmentDto> CreateAsync(CreateDepartmentDto dto);
-    Task<DepartmentDto> UpdateAsync(int id, UpdateDepartmentDto dto);
-    Task DeleteAsync(int id);
+
+    Task<DepartmentDto> UpdateAsync(int departmentId,UpdateDepartmentDto dto);
 }

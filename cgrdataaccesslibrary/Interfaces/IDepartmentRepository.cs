@@ -10,5 +10,8 @@ public interface IDepartmentRepository : IRepository<int, Department>
 
     Task<bool> HasEmployeesAsync(int departmentId);
 
-    Task<bool> HasCategoriesAsync(int departmentId);
+    Task<bool> HasActiveCategoriesAsync(int departmentId);
+
+    Task<bool> ExistsByNameAsync(string departmentName, int? excludeId = null);
+    Task<Department?> GetByNameAsync(string departmentName);
 }

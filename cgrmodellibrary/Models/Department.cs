@@ -14,6 +14,7 @@ public partial class Department
     public bool IsActive { get; set; }
 
     public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
 
     public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 

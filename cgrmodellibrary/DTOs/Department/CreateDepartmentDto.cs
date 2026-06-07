@@ -4,8 +4,9 @@ namespace cgrmodellibrary.DTOs.Department;
 
 public class CreateDepartmentDto
 {
-    [Required]
+    [Required(ErrorMessage = "Department name is required.")]
     [MaxLength(100)]
-    public string DepartmentName { get; set; } = null!;
-    public int? HeadEmployeeId { get; set; }
+    public string DepartmentName { get; set; } = string.Empty;
+
+    public int? DepartmentHeadEmployeeId { get; set; }
 }
