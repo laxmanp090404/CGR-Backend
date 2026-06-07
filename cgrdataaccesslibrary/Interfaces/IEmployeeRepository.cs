@@ -8,7 +8,7 @@ public interface IEmployeeRepository : IRepository<int, Employee>
 {
     Task<Employee?> GetByEmailAsync(string email);
     Task<bool> ExistsByEmailAsync(string email, int? excludeId = null);
-    Task<(IEnumerable<Employee> Items, int TotalCount)> GetPagedAsync(int page, int pageSize, int? roleId, int? departmentId, string? search);
+    Task<(IEnumerable<Employee> Items, int TotalCount)> GetPagedAsync(int page, int pageSize, int? roleId, int? departmentId, string? search,bool? isActive);
     Task<IEnumerable<VGroActiveWorkload>> GetGroActiveWorkloadAsync(int? departmentId);
 
     // for complaint related 
@@ -16,4 +16,11 @@ public interface IEmployeeRepository : IRepository<int, Employee>
 
     Task<Employee?> GetAdminAsync();
     Task<Employee?> GetByIdWithRoleAsync(int employeeId);
+    Task<IEnumerable<Employee>> GetAllDetailedAsync(bool? isActive);
+
+    Task<Employee?> GetDetailByIdAsync(int employeeId);
+
+    Task<bool> HasActiveAssignedComplaintsAsync(int employeeId);
+
+    Task<bool> IsDepartmentHeadAsync(int employeeId);
 }

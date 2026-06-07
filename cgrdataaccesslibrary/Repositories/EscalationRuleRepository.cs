@@ -22,4 +22,23 @@ public class EscalationRuleRepository : AbstractRepository<int, EscalationRule>,
                                    && r.PriorityId == priorityId 
                                    && r.EscalationLevel == escalationLevel);
     }
+    public async Task<IEnumerable<EscalationRule>> GetByCategoryAsync(int categoryId)
+{
+    return await _context.EscalationRules
+        .Where(r => r.CategoryId == categoryId)
+        .OrderBy(r => r.PriorityId)
+        .ThenBy(r => r.EscalationLevel)
+        .ToListAsync();
+}
+public async Task DeleteByCategoryAsync(
+    int categoryId)
+{
+    var rules =
+        await _context.EscalationRules
+            .Where(r => r.CategoryId == categoryId)
+            .ToListAsync();
+
+    _context.EscalationRules.RemoveRange(rules);
+
+}
 }

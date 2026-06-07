@@ -10,6 +10,8 @@ public class DepartmentService : IDepartmentService
 {
     private const short ROLE_DEPARTMENT_HEAD = 3;
     private const short ROLE_ADMIN = 4;
+    private const short ROLE_EMPLOYEE = 1;
+
 
     private readonly IDepartmentRepository _departmentRepository;
     private readonly IEmployeeRepository _employeeRepository;
@@ -27,7 +29,7 @@ public class DepartmentService : IDepartmentService
 
     public async Task<IEnumerable<DepartmentDto>> GetAllAsync(bool? isActive)
     {
-       
+
         var departments =
             await _departmentRepository.GetAllAsync(isActive);
 
@@ -48,8 +50,7 @@ public class DepartmentService : IDepartmentService
     {
         ValidateAdmin();
 
-        var existing =
-            await _departmentRepository.GetByNameAsync(dto.DepartmentName);
+        var existing = await _departmentRepository.GetByNameAsync(dto.DepartmentName);
 
         if (existing != null)
         {
@@ -69,8 +70,22 @@ public class DepartmentService : IDepartmentService
             UpdatedAt = DateTime.UtcNow
         };
 
-        var created =
-            await _departmentRepository.Create(department);
+        var created = await _departmentRepository.Create(department);
+
+        if (dto.DepartmentHeadEmployeeId.HasValue)
+        {
+            var employee =
+                await _employeeRepository.Get(
+                    dto.DepartmentHeadEmployeeId.Value)
+                ?? throw new NotFoundException(
+                    $"Employee {dto.DepartmentHeadEmployeeId.Value}");
+
+            employee.RoleId = ROLE_DEPARTMENT_HEAD;
+
+            await _employeeRepository.Update(
+                employee,
+                employee.EmployeeId);
+        }
 
         var reloaded =
             await _departmentRepository.GetDetailByIdAsync(
@@ -117,7 +132,7 @@ public class DepartmentService : IDepartmentService
         }
 
         await ValidateDepartmentHeadAsync(
-            dto.DepartmentHeadEmployeeId);
+            dto.DepartmentHeadEmployeeId, departmentId);
 
         department.DepartmentName =
             dto.DepartmentName.Trim();
@@ -125,16 +140,51 @@ public class DepartmentService : IDepartmentService
         department.DepartmentHeadEmployeeId =
             dto.DepartmentHeadEmployeeId;
 
-        department.IsActive =
-            dto.IsActive;
+        if (!dto.IsActive &&
+    department.DepartmentHeadEmployeeId.HasValue)
+        {
+            throw new BusinessRuleException(
+                "Remove Department Head before deactivating department.");
+        }
+        department.IsActive = dto.IsActive;
 
         department.UpdatedAt =
             DateTime.UtcNow;
-
+        var previousHeadId = department.DepartmentHeadEmployeeId;
         await _departmentRepository.Update(
             department,
             departmentId);
+        if (previousHeadId.HasValue &&
+    previousHeadId != dto.DepartmentHeadEmployeeId)
+        {
+            var oldHead =
+                await _employeeRepository.Get(
+                    previousHeadId.Value);
 
+            if (oldHead != null)
+            {
+                oldHead.RoleId = ROLE_EMPLOYEE;
+
+                await _employeeRepository.Update(
+                    oldHead,
+                    oldHead.EmployeeId);
+            }
+        }
+        if (dto.DepartmentHeadEmployeeId.HasValue &&
+    previousHeadId != dto.DepartmentHeadEmployeeId)
+        {
+            var newHead =
+                await _employeeRepository.Get(
+                    dto.DepartmentHeadEmployeeId.Value)
+                ?? throw new NotFoundException(
+                    $"Employee {dto.DepartmentHeadEmployeeId.Value}");
+
+            newHead.RoleId = ROLE_DEPARTMENT_HEAD;
+
+            await _employeeRepository.Update(
+                newHead,
+                newHead.EmployeeId);
+        }
         var reloaded =
             await _departmentRepository.GetDetailByIdAsync(
                 departmentId)
@@ -144,8 +194,10 @@ public class DepartmentService : IDepartmentService
         return MapToDto(reloaded);
     }
 
-    private async Task ValidateDepartmentHeadAsync(
-        int? employeeId)
+    private async Task
+    ValidateDepartmentHeadAsync(
+    int? employeeId,
+    int? departmentId = null)
     {
         if (!employeeId.HasValue)
         {
@@ -164,10 +216,21 @@ public class DepartmentService : IDepartmentService
                 "Department Head must be active.");
         }
 
-        if (employee.RoleId != ROLE_DEPARTMENT_HEAD)
+        if (employee.RoleId != ROLE_EMPLOYEE)
         {
             throw new BusinessRuleException(
-                "Selected employee is not a Department Head.");
+                "Only employees can be assigned as Department Heads Manually by aN Admin.");
+        }
+
+        var alreadyAssigned =
+            await _departmentRepository
+                .IsDepartmentHeadAssignedAsync(
+                    employeeId.Value,
+                    departmentId);
+
+        if (alreadyAssigned)
+        {
+            throw new BusinessRuleException("This employee is already assigned as Department Head of another department.");
         }
     }
 

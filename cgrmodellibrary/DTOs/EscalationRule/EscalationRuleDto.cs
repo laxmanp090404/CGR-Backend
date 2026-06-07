@@ -9,6 +9,5 @@ public class EscalationRuleDto
     public string PriorityName { get; set; } = null!;
     public short EscalationLevel { get; set; }
     public int EscalateAfterHours { get; set; }
-    public short EscalateToRoleId { get; set; }
-    public string EscalateToRoleName { get; set; } = null!;
+   
 }

@@ -1,89 +1,205 @@
 using cgrbussinesslogic.Interfaces;
 using cgrdataaccesslibrary.Interfaces;
+using cgrmodellibrary.DTOs.Common;
 using cgrmodellibrary.DTOs.Employee;
 using cgrmodellibrary.Exceptions;
+using cgrmodellibrary.Models;
 
 namespace cgrbussinesslogic.Services;
 
 public class EmployeeService : IEmployeeService
 {
     private readonly IEmployeeRepository _employeeRepository;
+    private readonly ICurrentUserService _currentUserService;
+    private const short ROLE_ADMIN = 4;
 
-    public EmployeeService(IEmployeeRepository employeeRepository)
+
+    public EmployeeService(IEmployeeRepository employeeRepository, ICurrentUserService currentUserService)
     {
         _employeeRepository = employeeRepository;
+        _currentUserService = currentUserService;
     }
 
-    public async Task<EmployeeDto> GetByIdAsync(int id)
+   public async Task<EmployeeDto> GetByIdAsync(int employeeId)
+{
+    if (!_currentUserService.IsAuthenticated)
     {
-        var emp = await _employeeRepository.Get(id);
-        return MapToDto(emp);
+        throw new UnauthorizedAccessException();
     }
 
-    public async Task<(IEnumerable<EmployeeDto> Items, int TotalCount)> GetPagedAsync(
-        int page, int pageSize, int? roleId, int? departmentId, string? search)
+    if (_currentUserService.RoleId != ROLE_ADMIN &&
+        _currentUserService.EmployeeId != employeeId)
     {
-        var (items, total) = await _employeeRepository.GetPagedAsync(page, pageSize, roleId, departmentId, search);
-        return (items.Select(MapToDto), total);
+        throw new ForbiddenException("You can only view your own profile.");
     }
 
-    public async Task<EmployeeDto> UpdateAsync(int id, UpdateEmployeeDto dto, int currentUserId, string currentRole)
-    {
-        var emp = await _employeeRepository.Get(id);
+    var employee =
+        await _employeeRepository.GetDetailByIdAsync(
+            employeeId)
+        ?? throw new NotFoundException(
+            $"Employee {employeeId} not found.");
 
-        // Only admin or the employee themselves can update
-        if (currentRole != "ADMIN" && currentUserId != id)
+    return MapToDto(employee);
+}
+    public async Task<PagedResultDto<EmployeeDto>> GetPagedAsync(
+      int page,
+      int pageSize,
+      bool? isActive,
+      int? roleId,
+      int? departmentId,
+      string? search)
+    {
+        ValidateAdmin();
+
+        var (items, totalCount) =
+            await _employeeRepository.GetPagedAsync(
+                page,
+                pageSize,
+                roleId,
+                departmentId,
+                search, isActive);
+
+
+        return new PagedResultDto<EmployeeDto>
         {
-            throw new ForbiddenException("You are not allowed to update this employee.");
+            Items =
+                items.Select(MapToDto).ToList(),
+            TotalCount = totalCount,
+            Page = page,
+            PageSize = pageSize
+        };
+    }
+    public async Task<EmployeeDto> UpdateAsync(int employeeId,UpdateEmployeeDto dto)
+{
+    if (!_currentUserService.IsAuthenticated)
+    {
+        throw new UnauthorizedAccessException();
+    }
+
+    if (_currentUserService.RoleId != ROLE_ADMIN &&
+        _currentUserService.EmployeeId != employeeId)
+    {
+        throw new ForbiddenException("You can only update your own profile.");
+    }
+
+    var employee =
+        await _employeeRepository.Get(
+            employeeId);
+
+    if (await _employeeRepository.ExistsByEmailAsync(
+            dto.Email,
+            employeeId))
+    {
+        throw new ConflictException(
+            $"Email '{dto.Email}' already exists.");
+    }
+
+    employee.EmployeeName =
+        dto.EmployeeName.Trim();
+
+    employee.Email =
+        dto.Email.Trim();
+
+    employee.MobileNumber =
+        dto.MobileNumber.Trim();
+
+    employee.UpdatedAt =
+        DateTime.UtcNow;
+
+    await _employeeRepository.Update(
+        employee,
+        employeeId);
+
+    var reloaded =
+        await _employeeRepository.GetDetailByIdAsync(
+            employeeId)
+        ?? throw new NotFoundException(
+            $"Employee {employeeId} not found.");
+
+    return MapToDto(reloaded);
+}
+
+    public async Task DeactivateAsync(int employeeId)
+    {
+        ValidateAdmin();
+
+        var employee =
+            await _employeeRepository.Get(
+                employeeId);
+
+        if (employee.RoleId == ROLE_ADMIN)
+        {
+            throw new BusinessRuleException(
+                "Admin cannot be deactivated.");
         }
 
-        if (!string.IsNullOrWhiteSpace(dto.EmployeeName))
-            emp.EmployeeName = dto.EmployeeName;
-        if (!string.IsNullOrWhiteSpace(dto.MobileNumber))
-            emp.MobileNumber = dto.MobileNumber;
+        if (await _employeeRepository.IsDepartmentHeadAsync(
+                employeeId))
+        {
+            throw new BusinessRuleException(
+                "Department Head cannot be deactivated.");
+        }
 
-        emp.UpdatedAt = DateTime.UtcNow;
-        var updated = await _employeeRepository.Update(emp, id);
-        return MapToDto(updated);
+        if (await _employeeRepository.HasActiveAssignedComplaintsAsync(
+                employeeId))
+        {
+            throw new BusinessRuleException(
+                "Employee has active complaint assignments.");
+        }
+
+        employee.IsActive = false;
+        employee.UpdatedAt = DateTime.UtcNow;
+
+        await _employeeRepository.Update(
+            employee,
+            employeeId);
+    }
+    public async Task RestoreAsync(int employeeId)
+    {
+        ValidateAdmin();
+
+        var employee =
+            await _employeeRepository.Get(
+                employeeId);
+
+        employee.IsActive = true;
+        employee.UpdatedAt = DateTime.UtcNow;
+
+        await _employeeRepository.Update(
+            employee,
+            employeeId);
     }
 
-    public async Task DeactivateAsync(int id, int currentUserId, string currentRole)
+
+    private static EmployeeDto MapToDto(Employee employee)
     {
-        if (currentRole != "ADMIN")
-            throw new ForbiddenException("Only Admin can deactivate employees.");
-
-        var emp = await _employeeRepository.Get(id);
-        if (!emp.IsActive)
-            throw new BusinessRuleException("Employee is already inactive.");
-
-        emp.IsActive = false;
-        emp.UpdatedAt = DateTime.UtcNow;
-        await _employeeRepository.Update(emp, id);
+        return new EmployeeDto
+        {
+            EmployeeId = employee.EmployeeId,
+            EmployeeName = employee.EmployeeName,
+            Email = employee.Email,
+            MobileNumber = employee.MobileNumber,
+            RoleId = employee.RoleId,
+            RoleName = employee.Role?.RoleName ?? string.Empty,
+            DepartmentId = employee.DepartmentId,
+            DepartmentName =
+                employee.Department?.DepartmentName,
+            IsActive = employee.IsActive,
+            CreatedAt = employee.CreatedAt
+        };
     }
 
-    public async Task ReactivateAsync(int id, int currentUserId)
+    private void ValidateAdmin()
     {
-        var emp = await _employeeRepository.Get(id);
-        if (emp.IsActive)
-            throw new BusinessRuleException("Employee is already active.");
+        if (!_currentUserService.IsAuthenticated)
+        {
+            throw new UnauthorizedAccessException();
+        }
 
-        emp.IsActive = true;
-        emp.UpdatedAt = DateTime.UtcNow;
-        await _employeeRepository.Update(emp, id);
+        if (_currentUserService.RoleId != ROLE_ADMIN)
+        {
+            throw new ForbiddenException(
+                "Only admins can perform this action.");
+        }
     }
-
-   
-    private static EmployeeDto MapToDto(cgrmodellibrary.Models.Employee emp) => new()
-    {
-        EmployeeId = emp.EmployeeId,
-        EmployeeName = emp.EmployeeName,
-        Email = emp.Email,
-        MobileNumber = emp.MobileNumber,
-        RoleId = emp.RoleId,
-        RoleName = emp.Role?.RoleName ?? string.Empty,
-        DepartmentId = emp.DepartmentId,
-        DepartmentName = emp.Department?.DepartmentName,
-        IsActive = emp.IsActive,
-        CreatedAt = emp.CreatedAt
-    };
 }

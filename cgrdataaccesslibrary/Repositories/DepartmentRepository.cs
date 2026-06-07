@@ -66,7 +66,7 @@ public class DepartmentRepository
                 c => c.DepartmentId == departmentId && c.IsActive);
     }
 
-    public async Task<bool> ExistsByNameAsync(string departmentName,int? excludeDepartmentId = null)
+    public async Task<bool> ExistsByNameAsync(string departmentName, int? excludeDepartmentId = null)
     {
         var query = _context.Departments
             .Where(d =>
@@ -76,6 +76,22 @@ public class DepartmentRepository
         {
             query = query.Where(d => d.DepartmentId != excludeDepartmentId.Value);
         }
+        return await query.AnyAsync();
+    }
+    public async Task<bool> IsDepartmentHeadAssignedAsync(int employeeId,int? excludeDepartmentId = null)
+    {
+        var query =
+            _context.Departments
+                .Where(d =>
+                    d.DepartmentHeadEmployeeId == employeeId &&
+                    d.IsActive);
+
+        if (excludeDepartmentId.HasValue)
+        {
+            query = query.Where(
+                    d => d.DepartmentId != excludeDepartmentId.Value);
+        }
+
         return await query.AnyAsync();
     }
 }

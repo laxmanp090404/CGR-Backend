@@ -16,6 +16,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 builder.Services.AddDbContext<CGRContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddHangfire(config =>
@@ -31,20 +32,23 @@ builder.Services.AddHangfireServer();
 
 #region Repos
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped(typeof(IRepository<,>),typeof(AbstractRepository<,>));
 builder.Services.AddScoped<IComplaintRepository, ComplaintRepository>();
 builder.Services.AddScoped<IComplaintHistoryRepository, ComplaintHistoryRepository>();
 builder.Services.AddScoped<IComplaintAssignmentRepository, ComplaintAssignmentRepository>();
 builder.Services.AddScoped<IComplaintCommentRepository, ComplaintCommentRepository>();
 builder.Services.AddScoped<IComplaintAttachmentRepository, ComplaintAttachmentRepository>();
 builder.Services.AddScoped<IComplaintRequestRepository, ComplaintRequestRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IEscalationRuleRepository, EscalationRuleRepository>();
 builder.Services.AddScoped<ILookupRepository, LookupRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IRoleRequestRepository, RoleRequestRepository>();
 builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
-builder.Services.AddScoped<IRepository<int, Department>, AbstractRepository<int, Department>>();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IRepository<int,ComplaintEscalation>,AbstractRepository<int,ComplaintEscalation>>();
+builder.Services.AddScoped<IRepository<short,Priority>,AbstractRepository<short,Priority>>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IRepository<int, EscalationRule>,AbstractRepository<int, EscalationRule>>();
 #endregion
 #region Services
 builder.Services.AddHttpContextAccessor();

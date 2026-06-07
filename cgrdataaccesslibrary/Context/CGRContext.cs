@@ -109,6 +109,9 @@ public partial class CGRContext : DbContext
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+    .HasDefaultValueSql("now()")
+    .HasColumnName("updated_at");
             entity.Property(e => e.DefaultPriorityId).HasColumnName("default_priority_id");
             entity.Property(e => e.DepartmentId).HasColumnName("department_id");
             entity.Property(e => e.IsActive)
@@ -485,6 +488,9 @@ public partial class CGRContext : DbContext
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("created_at");
+            entity.Property(e => e.UpdatedAt)
+            .HasDefaultValueSql("now()")
+            .HasColumnName("updated_at");
             entity.Property(e => e.DepartmentHeadEmployeeId).HasColumnName("department_head_employee_id");
             entity.Property(e => e.DepartmentName)
                 .HasMaxLength(100)
@@ -563,7 +569,6 @@ public partial class CGRContext : DbContext
                 .HasColumnName("escalation_rule_id");
             entity.Property(e => e.CategoryId).HasColumnName("category_id");
             entity.Property(e => e.EscalateAfterHours).HasColumnName("escalate_after_hours");
-            entity.Property(e => e.EscalateToRoleId).HasColumnName("escalate_to_role_id");
             entity.Property(e => e.EscalationLevel).HasColumnName("escalation_level");
             entity.Property(e => e.PriorityId).HasColumnName("priority_id");
 
@@ -572,10 +577,7 @@ public partial class CGRContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_escalation_rule_category");
 
-            entity.HasOne(d => d.EscalateToRole).WithMany(p => p.EscalationRules)
-                .HasForeignKey(d => d.EscalateToRoleId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_escalation_rule_role");
+           
 
             entity.HasOne(d => d.Priority).WithMany(p => p.EscalationRules)
                 .HasForeignKey(d => d.PriorityId)

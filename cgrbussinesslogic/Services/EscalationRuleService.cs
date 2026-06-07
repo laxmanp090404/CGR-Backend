@@ -24,7 +24,6 @@ public class EscalationRuleService : IEscalationRuleService
         var query = _context.EscalationRules
             .Include(r => r.Category)
             .Include(r => r.Priority)
-            .Include(r => r.EscalateToRole)
             .AsQueryable();
 
         if (categoryId.HasValue)
@@ -39,7 +38,6 @@ public class EscalationRuleService : IEscalationRuleService
         var rule = await _context.EscalationRules
             .Include(r => r.Category)
             .Include(r => r.Priority)
-            .Include(r => r.EscalateToRole)
             .FirstOrDefaultAsync(r => r.EscalationRuleId == id)
             ?? throw new NotFoundException($"EscalationRule with id {id}");
 
@@ -58,7 +56,7 @@ public class EscalationRuleService : IEscalationRuleService
             PriorityId = dto.PriorityId,
             EscalationLevel = dto.EscalationLevel,
             EscalateAfterHours = dto.EscalateAfterHours,
-            EscalateToRoleId = dto.EscalateToRoleId
+           
         };
 
         var created = await _ruleRepository.Create(rule);
@@ -79,7 +77,5 @@ public class EscalationRuleService : IEscalationRuleService
         PriorityName = r.Priority?.PriorityName ?? string.Empty,
         EscalationLevel = r.EscalationLevel,
         EscalateAfterHours = r.EscalateAfterHours,
-        EscalateToRoleId = r.EscalateToRoleId,
-        EscalateToRoleName = r.EscalateToRole?.RoleName ?? string.Empty
     };
 }

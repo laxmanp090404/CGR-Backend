@@ -7,78 +7,81 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cgrwebapi.Controllers;
+[Route("api/[controller]")]
 [ApiController]
-[Route("api/employees")]
 [Authorize]
-public class EmployeesController : ControllerBase
+public class EmployeeController : ControllerBase
 {
     private readonly IEmployeeService _employeeService;
-    private readonly IRoleRequestService _roleRequestService;
-    public EmployeesController(IEmployeeService employeeService,IRoleRequestService roleRequestService)
+
+    public EmployeeController(
+        IEmployeeService employeeService)
     {
         _employeeService = employeeService;
-        _roleRequestService =roleRequestService;
     }
 
     [HttpGet]
-    public async Task<ActionResult<PagedResultDto<EmployeeDto>>> GetAll(
-        [FromQuery] int page = 1, [FromQuery] int pageSize = 20,
-        [FromQuery] int? roleId = null, [FromQuery] int? departmentId = null, [FromQuery] string? search = null)
+    public async Task<ActionResult<PagedResultDto<EmployeeDto>>> GetPaged(
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10,
+        [FromQuery] bool? isActive = null,
+        [FromQuery] int? roleId = null,
+        [FromQuery] int? departmentId = null,
+        [FromQuery] string? search = null)
     {
-        var result = await _employeeService.GetPagedAsync(page, pageSize, roleId, departmentId, search);
-        return Ok(new PagedResultDto<EmployeeDto>
-        {
-            Items = result.Items,
-            TotalCount = result.TotalCount,
-            Page = page,
-            PageSize = pageSize
-        });
-    }
+        var result =
+            await _employeeService.GetPagedAsync(
+                page,
+                pageSize,
+                isActive,
+                roleId,
+                departmentId,
+                search);
 
-    [HttpGet("{id:int}")]
-    public async Task<ActionResult<EmployeeDto>> GetById(int id)
-    {
-        var result = await _employeeService.GetByIdAsync(id);
         return Ok(result);
     }
 
-    [HttpPut("{id:int}")]
-    public async Task<ActionResult<EmployeeDto>> Update(int id, [FromBody] UpdateEmployeeDto dto)
+    [HttpGet("{employeeId:int}")]
+    public async Task<ActionResult<EmployeeDto>> GetById(
+        int employeeId)
     {
-        var employeeId = User.GetEmployeeId();
-        var role = User.GetRole();
-        var result = await _employeeService.UpdateAsync(id, dto, employeeId, role);
+        var result =
+            await _employeeService.GetByIdAsync(
+                employeeId);
+
         return Ok(result);
     }
 
-    [HttpDelete("{id:int}")]
-    [Authorize(Policy = "AdminOnly")]
-    public async Task<ActionResult<object>> Deactivate(int id)
+    [HttpPut("{employeeId:int}")]
+    public async Task<ActionResult<EmployeeDto>> Update(
+        int employeeId,
+        UpdateEmployeeDto dto)
     {
-        var adminId = User.GetEmployeeId();
-        var role = User.GetRole();
-        await _employeeService.DeactivateAsync(id, adminId, role);
+        var result =
+            await _employeeService.UpdateAsync(
+                employeeId,
+                dto);
+
+        return Ok(result);
+    }
+
+    [HttpDelete("{employeeId:int}")]
+    public async Task<IActionResult> Deactivate(
+        int employeeId)
+    {
+        await _employeeService.DeactivateAsync(
+            employeeId);
+
         return NoContent();
     }
 
-    [HttpPatch("{id:int}/reactivate")]
-    [Authorize(Policy = "AdminOnly")]
-    public async Task<ActionResult<object>> Reactivate(int id)
+    [HttpPatch("{employeeId:int}/restore")]
+    public async Task<IActionResult> Restore(
+        int employeeId)
     {
-        var adminId = User.GetEmployeeId();
-        await _employeeService.ReactivateAsync(id, adminId);
+        await _employeeService.RestoreAsync(
+            employeeId);
+
         return NoContent();
-    }
-
-
-    [Authorize(Policy = "AdminOnly")]
-    [HttpPut("{id}/role")]
-    public async Task<ActionResult<RoleRequestDto>> ChangeRole(int id, [FromBody] ManualRoleChangeDto dto)
-    {
-        int adminId = User.GetEmployeeId();
-
-        var result = await _roleRequestService.ManualRoleChangeAsync(id, dto, adminId);
-
-        return Ok(result);
     }
 }

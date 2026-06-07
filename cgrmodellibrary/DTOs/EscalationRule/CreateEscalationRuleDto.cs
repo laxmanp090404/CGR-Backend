@@ -14,6 +14,5 @@ public class CreateEscalationRuleDto
     [Required]
     [Range(1, 8760)]
     public int EscalateAfterHours { get; set; }
-    [Required]
-    public short EscalateToRoleId { get; set; }
+   
 }
