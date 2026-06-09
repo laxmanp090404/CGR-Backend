@@ -79,7 +79,7 @@ public class EmployeeService : IEmployeeService
     if (_currentUserService.RoleId != ROLE_ADMIN &&
         _currentUserService.EmployeeId != employeeId)
     {
-        throw new ForbiddenException("You can only update your own profile.");
+        throw new ForbiddenException("You can only update your own profile  or Admin can only do this.");
     }
 
     var employee =

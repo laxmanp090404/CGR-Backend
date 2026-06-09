@@ -5,13 +5,13 @@ namespace cgrmodellibrary.Extensions;
 
 public static class ClaimsPrincipalExtensions
 {
-    public static int GetEmployeeId(this ClaimsPrincipal user)
+public static int GetEmployeeId(this ClaimsPrincipal user)
     {
         var claim = user.FindFirst("employee_id");
         if (claim == null)
         {
             throw new UnauthorizedAccessException("Employee ID claim not found.");
-        }
+    }
         return int.Parse(claim.Value);
     }
 

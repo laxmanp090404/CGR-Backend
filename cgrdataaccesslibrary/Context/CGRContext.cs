@@ -56,7 +56,6 @@ public partial class CGRContext : DbContext
 
     public virtual DbSet<VGroActiveWorkload> VGroActiveWorkloads { get; set; }
 
-    public virtual DbSet<VSlaBreachedComplaint> VSlaBreachedComplaints { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -821,25 +820,7 @@ public partial class CGRContext : DbContext
             entity.Property(e => e.WeightedScore).HasColumnName("weighted_score");
         });
 
-        modelBuilder.Entity<VSlaBreachedComplaint>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("v_sla_breached_complaints");
-
-            entity.Property(e => e.CategoryId).HasColumnName("category_id");
-            entity.Property(e => e.ComplaintId).HasColumnName("complaint_id");
-            entity.Property(e => e.ComplaintTitle)
-                .HasMaxLength(250)
-                .HasColumnName("complaint_title");
-            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
-            entity.Property(e => e.CurrentHandlerEmployeeId).HasColumnName("current_handler_employee_id");
-            entity.Property(e => e.EscalationDueAt).HasColumnName("escalation_due_at");
-            entity.Property(e => e.EscalationLevel).HasColumnName("escalation_level");
-            entity.Property(e => e.PriorityId).HasColumnName("priority_id");
-            entity.Property(e => e.StatusId).HasColumnName("status_id");
-        });
-
+       
         OnModelCreatingPartial(modelBuilder);
     }
 

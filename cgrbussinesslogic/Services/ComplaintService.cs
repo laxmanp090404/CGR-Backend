@@ -102,14 +102,14 @@ public class ComplaintService : IComplaintService
             PageSize = pageSize
         };
     }
-  
+
     //create complaints
     public async Task<ComplaintDto> CreateAsync(CreateComplaintDto dto)
     {
-         if (_currentUserService.RoleId == ROLE_ADMIN)
-            {
-                throw new BusinessRuleException("Administrators cannot raise complaints.");
-            }
+        if (_currentUserService.RoleId == ROLE_ADMIN)
+        {
+            throw new BusinessRuleException("Administrators cannot raise complaints.");
+        }
         //transaction
         using var transaction = await _context.Database.BeginTransactionAsync();
         //delete files if any error occurs
@@ -186,7 +186,7 @@ public class ComplaintService : IComplaintService
             if (dto.Attachments != null &&
                 dto.Attachments.Any())
             {
-                var result = await _attachmentService.SaveAttachmentsAsync(complaint.ComplaintId,dto.Attachments);
+                var result = await _attachmentService.SaveAttachmentsAsync(complaint.ComplaintId, dto.Attachments);
 
                 createdFiles = result.CreatedFiles;
             }
@@ -209,7 +209,7 @@ public class ComplaintService : IComplaintService
     //get complaint by id with details
     public async Task<ComplaintDto> GetByIdAsync(int complaintId)
     {
-        var complaint =await _complaintRepository.GetDetailByIdAsync(complaintId)?? throw new NotFoundException($"Complaint {complaintId}");
+        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId) ?? throw new NotFoundException($"Complaint {complaintId} Not found");
         await ValidateViewPermissionAsync(complaint);
         return MapToDto(complaint);
     }
@@ -219,7 +219,7 @@ public class ComplaintService : IComplaintService
     {
         var complaint =
             await _complaintRepository.GetDetailByIdAsync(complaintId)
-            ?? throw new NotFoundException($"Complaint {complaintId}");
+            ?? throw new NotFoundException($"Complaint {complaintId} Not found");
 
         await ValidateViewPermissionAsync(complaint);
 
@@ -233,7 +233,7 @@ public class ComplaintService : IComplaintService
     {
         var complaint =
             await _complaintRepository.GetDetailByIdAsync(complaintId)
-            ?? throw new NotFoundException($"Complaint {complaintId}");
+            ?? throw new NotFoundException($"Complaint {complaintId} Not found");
 
         if (complaint.CurrentHandlerEmployeeId != _currentUserService.EmployeeId)
         {
@@ -268,7 +268,7 @@ public class ComplaintService : IComplaintService
     {
         var complaint =
             await _complaintRepository.GetDetailByIdAsync(complaintId)
-            ?? throw new NotFoundException($"Complaint {complaintId}");
+            ?? throw new NotFoundException($"Complaint {complaintId} Not found");
 
         if (complaint.CurrentHandlerEmployeeId != _currentUserService.EmployeeId)
         {
@@ -302,7 +302,7 @@ public class ComplaintService : IComplaintService
     // close complaint
     public async Task CloseAsync(int complaintId, CloseComplaintDto dto)
     {
-        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId) ?? throw new NotFoundException($"Complaint {complaintId}");
+        var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId) ?? throw new NotFoundException($"Complaint {complaintId} Not found");
 
         if (complaint.RaisedByEmployeeId != _currentUserService.EmployeeId)
         {
@@ -340,7 +340,7 @@ public class ComplaintService : IComplaintService
 
         try
         {
-            var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId) ?? throw new NotFoundException($"Complaint {complaintId}");
+            var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId) ?? throw new NotFoundException($"Complaint {complaintId} Not found");
 
             if (complaint.RaisedByEmployeeId != _currentUserService.EmployeeId)
             {
@@ -352,7 +352,10 @@ public class ComplaintService : IComplaintService
             {
                 throw new BusinessRuleException("Only resolved or externally escalated complaints can be reopened.");
             }
-
+            if (complaint.ReopenedCount >= 3)
+            {
+                throw new BusinessRuleException("Cannot reopen a complaint more than 3 times. Please raise a new complaint.");
+            }
             var oldStatus = complaint.StatusId;
             var oldHandler = complaint.CurrentHandlerEmployeeId;
 
@@ -423,7 +426,7 @@ public class ComplaintService : IComplaintService
 
         try
         {
-            var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId) ?? throw new NotFoundException($"Complaint {complaintId}");
+            var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId) ?? throw new NotFoundException($"Complaint {complaintId} Not found");
 
             if (complaint.CurrentHandlerEmployeeId != _currentUserService.EmployeeId)
             {
@@ -540,7 +543,7 @@ public class ComplaintService : IComplaintService
 
         if (gro == null)
         {
-            throw new NotFoundException($"Employee {dto.GroEmployeeId}");
+            throw new NotFoundException($"Employee {dto.GroEmployeeId} Not found");
         }
 
         if (!gro.IsActive)
@@ -650,7 +653,8 @@ public class ComplaintService : IComplaintService
         EscalationLevel = v.EscalationLevel ?? 0,
         EscalationDueAt = v.EscalationDueAt,
         CreatedAt = v.CreatedAt ?? DateTime.MinValue,
-        UpdatedAt = v.UpdatedAt ?? DateTime.MinValue
+        UpdatedAt = v.UpdatedAt ?? DateTime.MinValue,
+        ClosedAt = v.ClosedAt
     };
 
     private static ComplaintHistoryDto MapHistoryToDto(ComplaintHistory h) => new()
@@ -658,7 +662,7 @@ public class ComplaintService : IComplaintService
         HistoryId = h.HistoryId,
         ComplaintId = h.ComplaintId,
         OldStatusId = h.OldStatusId,
-        OldStatusName = h.OldStatus?.StatusName??string.Empty,
+        OldStatusName = h.OldStatus?.StatusName ?? string.Empty,
         NewStatusId = h.NewStatusId,
         NewStatusName = h.NewStatus?.StatusName ?? string.Empty,
         OldHandlerEmployeeId = h.OldHandlerEmployeeId,
@@ -668,6 +672,8 @@ public class ComplaintService : IComplaintService
         Remarks = h.Remarks,
         ChangedBy = h.ChangedBy,
         ChangedByName = h.ChangedByNavigation?.EmployeeName,
+        RoleIdAtActionTime = h.RoleIdAtActionTime,
+        RoleNameAtActionTime = h.RoleIdAtActionTimeNavigation?.RoleName ?? string.Empty,
         CreatedAt = h.CreatedAt
     };
 
@@ -693,7 +699,7 @@ public class ComplaintService : IComplaintService
         // can see his dept complaints
         if (role == ROLE_DEPARTMENT_HEAD)
         {
-           
+
             if (_currentUserService.DepartmentId == complaint.Category.DepartmentId)
             {
                 return;
@@ -719,6 +725,6 @@ public class ComplaintService : IComplaintService
                 CreatedAt = DateTime.UtcNow
             });
     }
-   
+
     #endregion
 }

@@ -31,13 +31,13 @@ public class ComplaintCommentService : IComplaintCommentService
     public async Task<IEnumerable<ComplaintCommentDto>> GetByComplaintIdAsync(int complaintId)
     {
         var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId)
-            ?? throw new NotFoundException($"Complaint {complaintId}");
+            ?? throw new NotFoundException($"Complaint {complaintId} Not found");
 
         ValidateCommentAccess(complaint);
 
         var comments = await _commentRepository.GetByComplaintIdAsync(complaintId);
 
-        bool canSeeInternal = _currentUserService.Role is "GRO" or "DEPARTMENT_HEAD" or "ADMIN";
+        bool canSeeInternal = _currentUserService.Role is "GRO" or "DEPARTMENT_HEAD" or "ADMIN" && complaint.RaisedByEmployeeId != _currentUserService.EmployeeId;;
 
         return comments
             .Where(c => canSeeInternal || !c.IsInternal)
@@ -47,16 +47,21 @@ public class ComplaintCommentService : IComplaintCommentService
     public async Task<ComplaintCommentDto> AddCommentAsync(int complaintId, CreateComplaintCommentDto dto)
     {
         var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId)
-            ?? throw new NotFoundException($"Complaint {complaintId}");
+            ?? throw new NotFoundException($"Complaint {complaintId} Not found");
 
         ValidateCommentAccess(complaint);
 
         if (complaint.StatusId is STATUS_CLOSED or STATUS_REJECTED or STATUS_EXTERNALLY_ESCALATED)
             throw new BusinessRuleException($"Cannot comment on complaints in status {complaint.Status?.StatusName}");
 
-        if (dto.IsInternal && _currentUserService.Role == "EMPLOYEE")
-            throw new ForbiddenException("Employees cannot add internal comments.");
+        if (dto.IsInternal)
+        {
+            if (_currentUserService.Role == "EMPLOYEE")
+                throw new ForbiddenException("Employees cannot add internal comments.");
 
+            if (complaint.RaisedByEmployeeId == _currentUserService.EmployeeId)
+                throw new ForbiddenException("Cannot add internal comments on your own complaint.");
+        }
         var comment = new ComplaintComment
         {
             ComplaintId = complaintId,
@@ -77,17 +82,17 @@ public class ComplaintCommentService : IComplaintCommentService
 
         if (_currentUserService.Role == "EMPLOYEE" &&
             complaint.RaisedByEmployeeId != _currentUserService.EmployeeId)
-            throw new ForbiddenException("You are not authorized.");
+            throw new ForbiddenException("You are not authorized to comment or view this.");
 
         if (_currentUserService.Role == "GRO" &&
             complaint.RaisedByEmployeeId != _currentUserService.EmployeeId &&
             complaint.CurrentHandlerEmployeeId != _currentUserService.EmployeeId)
-            throw new ForbiddenException("You are not authorized.");
+            throw new ForbiddenException("You are not authorized to comment or view this.");
 
         if (_currentUserService.Role == "DEPARTMENT_HEAD" &&
             complaint.RaisedByEmployeeId != _currentUserService.EmployeeId &&
             complaint.Category.DepartmentId != _currentUserService.DepartmentId)
-            throw new ForbiddenException("You are not authorized.");
+            throw new ForbiddenException("You are not authorized to comment or view this.");
     }
 
     private static ComplaintCommentDto MapToDto(ComplaintComment c) => new()

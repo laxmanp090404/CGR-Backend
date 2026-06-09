@@ -26,7 +26,7 @@ public class AbstractRepository<K, T> : IRepository<K, T> where T : class where 
             T? item = await Get(key);
             if(item == null)
             {
-                throw new NotFoundException($"{typeof(T).Name} with key {key}");
+                throw new NotFoundException($"{typeof(T).Name} with key {key} Not found");
             }
             _context.Set<T>().Remove(item);
             await _context.SaveChangesAsync();
@@ -40,7 +40,7 @@ public class AbstractRepository<K, T> : IRepository<K, T> where T : class where 
             T? item = await _context.Set<T>().FindAsync(key);
             if(item == null)
             {
-                throw new NotFoundException($"{typeof(T).Name} with key {key}");
+                throw new NotFoundException($"{typeof(T).Name} with key {key} Not found");
             }
             return item;
        
@@ -58,7 +58,7 @@ public class AbstractRepository<K, T> : IRepository<K, T> where T : class where 
            T old = await Get(key);
         if(old == null)
         {
-            throw new NotFoundException($"No updates as entity of {typeof(T).Name}");
+            throw new NotFoundException($"No updates as entity of {typeof(T).Name} with key {key} Not found");
         }
          _context.Set<T>().Update(item);
          await _context.SaveChangesAsync();

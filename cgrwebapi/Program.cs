@@ -40,15 +40,13 @@ builder.Services.AddScoped<IComplaintCommentRepository, ComplaintCommentReposito
 builder.Services.AddScoped<IComplaintAttachmentRepository, ComplaintAttachmentRepository>();
 builder.Services.AddScoped<IComplaintRequestRepository, ComplaintRequestRepository>();
 builder.Services.AddScoped<IEscalationRuleRepository, EscalationRuleRepository>();
-builder.Services.AddScoped<ILookupRepository, LookupRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IRoleRequestRepository, RoleRequestRepository>();
-builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-builder.Services.AddScoped<IRepository<int,ComplaintEscalation>,AbstractRepository<int,ComplaintEscalation>>();
-builder.Services.AddScoped<IRepository<short,Priority>,AbstractRepository<short,Priority>>();
+// builder.Services.AddScoped<IRepository<int,ComplaintEscalation>,AbstractRepository<int,ComplaintEscalation>>();
+// builder.Services.AddScoped<IRepository<short,Priority>,AbstractRepository<short,Priority>>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IRepository<int, EscalationRule>,AbstractRepository<int, EscalationRule>>();
+// builder.Services.AddScoped<IRepository<int, EscalationRule>,AbstractRepository<int, EscalationRule>>();
 #endregion
 #region Services
 builder.Services.AddHttpContextAccessor();
@@ -65,8 +63,6 @@ builder.Services.AddScoped<IComplaintCommentService, ComplaintCommentService>();
 builder.Services.AddScoped<IComplaintAttachmentService, ComplaintAttachmentService>();
 builder.Services.AddScoped<IComplaintRequestService, ComplaintRequestService>();
 builder.Services.AddScoped<IRoleRequestService, RoleRequestService>();
-builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
-builder.Services.AddScoped<IAuditLogService, AuditLogService>();
 builder.Services.AddScoped<IComplaintAssignmentEngine,ComplaintAssignmentEngine>();
 builder.Services.AddScoped<ISlaEscalationJob, SlaEscalationJob>();
 builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();

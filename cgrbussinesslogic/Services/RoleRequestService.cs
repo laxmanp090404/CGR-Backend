@@ -32,36 +32,13 @@ public class RoleRequestService : IRoleRequestService
         _departmentRepository = departmentRepository;
         _context = context;
     }
-    // helpers
-    private static short GetRoleId(string role)
-    {
-        switch (role)
-        {
-            case "EMPLOYEE":
-                return ROLE_EMPLOYEE;
-
-            case "GRO":
-                return ROLE_GRO;
-
-            case "DEPARTMENT_HEAD":
-                return ROLE_DEPT_HEAD;
-
-            case "ADMIN":
-                return ROLE_ADMIN;
-
-            default:
-                throw new ValidationException("Invalid role.");
-        }
-    }
-    private static bool IsValidRequestUpgrade(short currentRole, short requestedRole)
-    {
-        return (currentRole == ROLE_EMPLOYEE && requestedRole == ROLE_GRO) ||
-               (currentRole == ROLE_GRO && requestedRole == ROLE_DEPT_HEAD);
-    }
+    
     public async Task<RoleRequestDto> CreateAsync(CreateRoleRequestDto dto, int employeeId, string currentRole)
     {
-
-        short currentRoleId = GetRoleId(currentRole);
+        //stale token issue
+        // short currentRoleId = GetRoleId(currentRole);
+        var employee = await _employeeRepository.Get(employeeId);
+        short currentRoleId = employee.RoleId;
 
         if (!IsValidRequestUpgrade(currentRoleId, dto.RequestedRoleId))
             throw new BusinessRuleException("Invalid role upgrade path. Only EMPLOYEE to GRO or GRO to DEPARTMENT_HEAD upgrades are allowed.");
@@ -87,7 +64,7 @@ public class RoleRequestService : IRoleRequestService
 
     public async Task<RoleRequestDto> RejectAsync(int roleRequestId, string? remarks, int adminId)
     {
-        var request = await _roleRequestRepository.Get(roleRequestId);
+        var request = await _roleRequestRepository.Get(roleRequestId) ?? throw new NotFoundException("Role request not found.");
 
         if (request.RequestStatusId != REQUEST_STATUS_PENDING)
         {
@@ -148,7 +125,7 @@ public class RoleRequestService : IRoleRequestService
 
         try
         {
-            var request = await _roleRequestRepository.Get(roleRequestId);
+            var request = await _roleRequestRepository.Get(roleRequestId) ?? throw new NotFoundException("Role request not found.");
 
             if (request.RequestStatusId != REQUEST_STATUS_PENDING)
             {
@@ -360,5 +337,11 @@ public class RoleRequestService : IRoleRequestService
             await dbTxn.RollbackAsync();
             throw;
         }
+    }
+    // helpers
+    private static bool IsValidRequestUpgrade(short currentRole, short requestedRole)
+    {
+        return (currentRole == ROLE_EMPLOYEE && requestedRole == ROLE_GRO) ||
+               (currentRole == ROLE_GRO && requestedRole == ROLE_DEPT_HEAD);
     }
 }

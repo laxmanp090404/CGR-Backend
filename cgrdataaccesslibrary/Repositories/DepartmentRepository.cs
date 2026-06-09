@@ -78,6 +78,7 @@ public class DepartmentRepository
         }
         return await query.AnyAsync();
     }
+    // check if the employee is already a department head of any active department (excluding the current department)
     public async Task<bool> IsDepartmentHeadAssignedAsync(int employeeId,int? excludeDepartmentId = null)
     {
         var query =

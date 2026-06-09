@@ -50,6 +50,7 @@ public class RoleRequestRepository : AbstractRepository<int, RoleRequest>, IRole
     public async Task<IEnumerable<RoleRequest>> GetByEmployeeIdAsync(int employeeId)
     {
         return await _context.RoleRequests
+            .Include(r => r.Employee)
             .Include(r => r.CurrentRole)
             .Include(r => r.RequestedRole)
             .Include(r => r.RequestStatus)

@@ -169,7 +169,7 @@ public class SlaEscalationJob : ISlaEscalationJob
                 EscalatedToEmployeeId = newHandlerId,
                 EscalationLevel = complaint.EscalationLevel,
                 EscalationRuleId = rule?.EscalationRuleId,
-                Reason = breachedLevel==0?"Category SLA breached":"Escalation Level {breachedLevel} breached"
+                Reason = breachedLevel==0?"Category SLA breached":$"Escalation Level {breachedLevel} breached"
             });
     }
 

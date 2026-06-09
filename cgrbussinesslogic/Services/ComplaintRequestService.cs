@@ -149,7 +149,7 @@ public class ComplaintRequestService : IComplaintRequestService
         request.Remarks = dto.Remarks ?? request.Remarks;
 
         await _requestRepository.Update(request, requestId);
-        var complaint = await _complaintRepository.GetDetailByIdAsync(request.ComplaintId) ?? throw new NotFoundException($"Complaint {request.ComplaintId}");
+        var complaint = await _complaintRepository.GetDetailByIdAsync(request.ComplaintId) ?? throw new NotFoundException($"Complaint {request.ComplaintId} Not found");
         var oldStatus = complaint.StatusId;
         // approve for rejection so complaint request is approved and complaint is rejected
         if (dto.Approve)

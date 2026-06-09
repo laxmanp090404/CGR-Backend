@@ -29,12 +29,9 @@ public class DepartmentController : ControllerBase
     }
 
     [HttpGet("{departmentId:int}")]
-    public async Task<ActionResult<DepartmentDto>> GetById(
-        int departmentId)
+    public async Task<ActionResult<DepartmentDto>> GetById(int departmentId)
     {
-        var result =
-            await _departmentService.GetByIdAsync(
-                departmentId);
+        var result =await _departmentService.GetByIdAsync(departmentId);
 
         return Ok(result);
     }

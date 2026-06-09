@@ -5,6 +5,5 @@ namespace cgrbussinesslogic.Interfaces;
 
 public interface IAuditLogService
 {
-    Task<PagedResultDto<AuditLogDto>> GetPagedAsync(
-        int page, int pageSize, string? tableName, long? recordId, int? changedBy, DateTime? fromDate, DateTime? toDate);
+    Task<PagedResultDto<AuditLogDto>> GetPagedAsync(int page, int pageSize, string? tableName, long? recordId, int? changedBy, DateTime? fromDate, DateTime? toDate);
 }

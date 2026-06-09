@@ -15,6 +15,9 @@ public class AuthService : IAuthService
 
     private readonly IRoleRequestRepository _roleRequestRepository;
     private readonly IRepository<int, Department> _departmentRepository;
+    private short EMPLOYEE_ROLE_ID = 1;
+    private short GRO_ROLE_ID = 2;
+    private short ROLE_REQUEST_PENDING_STATUS_ID = 1;
     public AuthService(IEmployeeRepository employeeRepository, ITokenService tokenService, IRoleRequestRepository roleRequestRepository, IRepository<int, Department> departmentRepository)
     {
         _employeeRepository = employeeRepository;
@@ -29,7 +32,7 @@ public class AuthService : IAuthService
         // employee not there
         if (employee == null)
         {
-            throw new ValidationException("Invalid email or password.");
+            throw new ValidationException("Invalid email or password and account may not exist.");
         }
         // deactivated employee
         if (employee.IsActive == false)
@@ -63,7 +66,7 @@ public class AuthService : IAuthService
 
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password, workFactor: 12);
         // whatever role requested until approved it is in employee role only
-        const short EMPLOYEE_ROLE_ID = 1;
+       
 
         var employee = new Employee
         {
@@ -96,9 +99,9 @@ public class AuthService : IAuthService
             var roleRequest = new RoleRequest
             {
                 EmployeeId = created.EmployeeId,
-                CurrentRoleId = 1,
-                RequestedRoleId = 2,
-                RequestStatusId = 1,
+                CurrentRoleId = EMPLOYEE_ROLE_ID,
+                RequestedRoleId = GRO_ROLE_ID,
+                RequestStatusId = ROLE_REQUEST_PENDING_STATUS_ID,
                 CreatedAt = DateTime.UtcNow
             };
 
