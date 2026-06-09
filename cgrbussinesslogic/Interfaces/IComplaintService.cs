@@ -26,5 +26,7 @@ public interface IComplaintService
 
     Task AssignAsync(int complaintId, AssignComplaintDto dto);
 
-    
+    Task<IEnumerable<ComplaintAssignmentHistoryDto>> GetAssignmentHistoryAsync(int complaintId);
+
+    Task<IEnumerable<ComplaintEscalationDto>> GetEscalationHistoryAsync(int complaintId);
 }

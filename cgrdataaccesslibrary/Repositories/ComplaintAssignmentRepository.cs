@@ -25,4 +25,14 @@ public class ComplaintAssignmentRepository : AbstractRepository<int, ComplaintAs
             .Distinct()
             .ToListAsync();
     }
+    public async Task<IEnumerable<ComplaintAssignmentHistory>> GetByComplaintIdAsync(int complaintId)
+{
+    return await _context.ComplaintAssignmentHistories
+        .Include(h => h.OldHandlerEmployee)
+        .Include(h => h.NewHandlerEmployee)
+        .Include(h => h.AssignedByNavigation)
+        .Where(h => h.ComplaintId == complaintId)
+        .OrderBy(h => h.AssignedAt)
+        .ToListAsync();
+}
 }

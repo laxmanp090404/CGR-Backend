@@ -1,4 +1,5 @@
 using cgrbussinesslogic.Interfaces;
+using cgrdataaccesslibrary.Context;
 using cgrdataaccesslibrary.Interfaces;
 using cgrmodellibrary.DTOs.Common;
 using cgrmodellibrary.DTOs.ComplaintRequest;
@@ -43,8 +44,8 @@ public class ComplaintRequestService : IComplaintRequestService
     private readonly IComplaintAssignmentRepository _assignmentRepository;
     private readonly IComplaintHistoryRepository _historyRepository;
     private readonly IEmployeeRepository _employeeRepository;
-
     private readonly IComplaintAssignmentEngine _assignmentEngine;
+    private readonly CGRContext _context;
 
     public ComplaintRequestService(
         IComplaintRequestRepository requestRepository,
@@ -54,7 +55,8 @@ public class ComplaintRequestService : IComplaintRequestService
         IComplaintAssignmentRepository assignmentRepository,
         IComplaintHistoryRepository historyRepository,
         IEmployeeRepository employeeRepository,
-        IComplaintAssignmentEngine assignmentEngine
+        IComplaintAssignmentEngine assignmentEngine,
+        CGRContext context
         )
     {
         _requestRepository = requestRepository;
@@ -65,6 +67,7 @@ public class ComplaintRequestService : IComplaintRequestService
         _historyRepository = historyRepository;
         _employeeRepository = employeeRepository;
         _assignmentEngine = assignmentEngine;
+        _context = context;
     }
     public async Task<ComplaintRequestDto> CreateAsync(int complaintId, CreateComplaintRequestDto dto)
     {
@@ -139,136 +142,158 @@ public class ComplaintRequestService : IComplaintRequestService
                 "This request has already been reviewed.");
         }
 
-        request.ReviewedBy = _currentUserService.EmployeeId;
-        request.ReviewedAt = DateTime.UtcNow;
-        request.RequestStatusId =
-            dto.Approve
-                ? REQUEST_STATUS_APPROVED
-                : REQUEST_STATUS_REJECTED;
+        using var transaction = await _context.Database.BeginTransactionAsync();
 
-        request.Remarks = dto.Remarks ?? request.Remarks;
-
-        await _requestRepository.Update(request, requestId);
-        var complaint = await _complaintRepository.GetDetailByIdAsync(request.ComplaintId) ?? throw new NotFoundException($"Complaint {request.ComplaintId} Not found");
-        var oldStatus = complaint.StatusId;
-        // approve for rejection so complaint request is approved and complaint is rejected
-        if (dto.Approve)
+        try
         {
-            complaint.StatusId = STATUS_REJECTED;
-            complaint.UpdatedAt = DateTime.UtcNow;
+            request.ReviewedBy = _currentUserService.EmployeeId;
+            request.ReviewedAt = DateTime.UtcNow;
+            request.RequestStatusId =
+                dto.Approve
+                    ? REQUEST_STATUS_APPROVED
+                    : REQUEST_STATUS_REJECTED;
 
-            await _complaintRepository.Update(complaint, complaint.ComplaintId);
-            // after updating complaint history is created
-            await _historyRepository.Create(
-                                new ComplaintHistory
-                                {
-                                    ComplaintId = complaint.ComplaintId,
-                                    OldStatusId = oldStatus,
-                                    NewStatusId = STATUS_REJECTED,
-                                    OldHandlerEmployeeId = complaint.CurrentHandlerEmployeeId,
-                                    NewHandlerEmployeeId = complaint.CurrentHandlerEmployeeId,
-                                    ChangedBy = _currentUserService.EmployeeId,
-                                    Remarks = "Rejection request approved :" + dto.Remarks,
-                                    EscalationLevelSnapshot = complaint.EscalationLevel,
-                                    CreatedAt = DateTime.UtcNow,
-                                    RoleIdAtActionTime = _currentUserService.RoleId
-                                });
+            request.Remarks = dto.Remarks ?? request.Remarks;
 
-            await _notificationService.SendAsync(
-                complaint.RaisedByEmployeeId,
-                NOTIF_COMPLAINT_REJECTED,
-                "Complaint Rejected",
-                $"Your complaint '{complaint.ComplaintTitle}' has been rejected.",
-                complaint.ComplaintId);
-        }
-        // not approved rejection is rejected so complaint request is rejected
-        //  and comlainet is openeed with priority bump to compensate for the delay caused
-        else
-        {
-            var oldhandler = complaint.CurrentHandlerEmployeeId;
-
-            // priority bump
-            if (complaint.PriorityId < 4)
+            await _requestRepository.Update(request, requestId);
+            var complaint = await _complaintRepository.GetDetailByIdAsync(request.ComplaintId) ?? throw new NotFoundException($"Complaint {request.ComplaintId} Not found");
+            var oldStatus = complaint.StatusId;
+            // approve for rejection so complaint request is approved and complaint is rejected
+            if (dto.Approve)
             {
-                complaint.PriorityId += 1;
+                complaint.StatusId = STATUS_REJECTED;
+                complaint.UpdatedAt = DateTime.UtcNow;
+
+                await _complaintRepository.Update(complaint, complaint.ComplaintId);
+                // after updating complaint history is created
+                await _historyRepository.Create(
+                                    new ComplaintHistory
+                                    {
+                                        ComplaintId = complaint.ComplaintId,
+                                        OldStatusId = oldStatus,
+                                        NewStatusId = STATUS_REJECTED,
+                                        OldHandlerEmployeeId = complaint.CurrentHandlerEmployeeId,
+                                        NewHandlerEmployeeId = complaint.CurrentHandlerEmployeeId,
+                                        ChangedBy = _currentUserService.EmployeeId,
+                                        Remarks = "Rejection request approved :" + dto.Remarks,
+                                        EscalationLevelSnapshot = complaint.EscalationLevel,
+                                        CreatedAt = DateTime.UtcNow,
+                                        RoleIdAtActionTime = _currentUserService.RoleId
+                                    });
+
+                await _notificationService.SendAsync(
+                    complaint.RaisedByEmployeeId,
+                    NOTIF_COMPLAINT_REJECTED,
+                    "Complaint Rejected",
+                    $"Your complaint '{complaint.ComplaintTitle}' has been rejected.",
+                    complaint.ComplaintId);
+            }
+            // not approved rejection is rejected so complaint request is rejected
+            //  and complaint is reopened with priority bump to compensate for the delay caused
+            else
+            {
+                if (complaint.ReopenedCount >= 3)
+                    throw new BusinessRuleException(
+                        "Cannot reopen complaint. Maximum reopen limit reached. Approve the rejection instead.");
+
+                var oldhandler = complaint.CurrentHandlerEmployeeId;
+
+                // priority bump
+                if (complaint.PriorityId < 4)
+                {
+                    complaint.PriorityId += 1;
+                }
+
+
+                var raisedBy = complaint.RaisedByEmployee ?? throw new NotFoundException($"Employee {complaint.RaisedByEmployeeId} who raised the complaint");
+                var assignment =
+                   await _assignmentEngine
+                       .DetermineInitialAssignmentAsync(
+                           complaint.ComplaintId,
+                           complaint.Category.DepartmentId,
+                           raisedBy.RoleId);
+                complaint.ReopenedCount++;
+
+                complaint.StatusId = STATUS_REOPENED;
+                // inserting status reopen history before changing handler to capture old handler in history
+                await _historyRepository.Create(
+                    new ComplaintHistory
+                    {
+                        ComplaintId = complaint.ComplaintId,
+                        OldStatusId = oldStatus,
+                        NewStatusId = STATUS_REOPENED,
+                        OldHandlerEmployeeId = oldhandler,
+                        NewHandlerEmployeeId = oldhandler,
+                        ChangedBy = _currentUserService.EmployeeId,
+                        RoleIdAtActionTime = _currentUserService.RoleId,
+                        Remarks = "Rejection request rejected. Complaint reopened.",
+                        EscalationLevelSnapshot = complaint.EscalationLevel,
+                        CreatedAt = DateTime.UtcNow
+                    });
+                // after assignement new history and assignment history
+                complaint.CurrentHandlerEmployeeId = assignment.HandlerId;
+
+                complaint.StatusId = STATUS_ASSIGNED;
+
+                complaint.EscalationLevel = assignment.EscalationLevel;
+
+                complaint.EscalationDueAt = await _assignmentEngine.CalculateEscalationDueAtAsync(complaint);
+                complaint.UpdatedAt =
+                    DateTime.UtcNow;
+
+                await _complaintRepository.Update(
+                    complaint,
+                    complaint.ComplaintId);
+
+                await _assignmentRepository.Create(
+                    new ComplaintAssignmentHistory
+                    {
+                        ComplaintId = complaint.ComplaintId,
+                        OldHandlerEmployeeId = oldhandler,
+                        NewHandlerEmployeeId = assignment.HandlerId,
+                        AssignedBy = null,
+                        AssignmentReason = "REOPEN"
+                    });
+
+                await _historyRepository.Create(
+                    new ComplaintHistory
+                    {
+                        ComplaintId = complaint.ComplaintId,
+                        OldStatusId = STATUS_REOPENED,
+                        NewStatusId = STATUS_ASSIGNED,
+                        OldHandlerEmployeeId = oldhandler,
+                        NewHandlerEmployeeId = assignment.HandlerId,
+                        ChangedBy = null,
+                        RoleIdAtActionTime = null,
+                        Remarks = "Complaint reassigned after reopen.",
+                        EscalationLevelSnapshot = assignment.EscalationLevel,
+                        CreatedAt = DateTime.UtcNow
+                    });
+                //notification for new handler
+                await _notificationService.SendAsync(
+assignment.HandlerId,
+NOTIF_COMPLAINT_REOPENED,
+"Complaint Assigned",
+$"Complaint '{complaint.ComplaintTitle}' has been reopened and assigned to you.",
+complaint.ComplaintId);
+                //notification for complaint raiser
+                await _notificationService.SendAsync(
+                    complaint.RaisedByEmployeeId,
+                    NOTIF_COMPLAINT_REOPENED,
+                    "Complaint Reopened",
+                    $"Your complaint '{complaint.ComplaintTitle}' has been reopened.",
+                    complaint.ComplaintId);
             }
 
+            await transaction.CommitAsync();
 
-            var raisedBy = complaint.RaisedByEmployee ?? throw new NotFoundException($"Employee {complaint.RaisedByEmployeeId} who raised the complaint");
-            var assignment =
-               await _assignmentEngine
-                   .DetermineInitialAssignmentAsync(
-                       complaint.ComplaintId,
-                       complaint.Category.DepartmentId,
-                       raisedBy.RoleId);
-            complaint.ReopenedCount++;
-
-            complaint.StatusId = STATUS_REOPENED;
-            // inserting status reopen history before changing handler to capture old handler in history
-            await _historyRepository.Create(
-                new ComplaintHistory
-                {
-                    ComplaintId = complaint.ComplaintId,
-                    OldStatusId = oldStatus,
-                    NewStatusId = STATUS_REOPENED,
-                    OldHandlerEmployeeId = oldhandler,
-                    NewHandlerEmployeeId = oldhandler,
-                    ChangedBy = _currentUserService.EmployeeId,
-                    RoleIdAtActionTime = _currentUserService.RoleId,
-                    Remarks = "Rejection request rejected. Complaint reopened.",
-                    EscalationLevelSnapshot = complaint.EscalationLevel,
-                    CreatedAt = DateTime.UtcNow
-                });
-            // after assignement new history and assignment history
-            complaint.CurrentHandlerEmployeeId = assignment.HandlerId;
-
-            complaint.StatusId = STATUS_ASSIGNED;
-
-            complaint.EscalationLevel = assignment.EscalationLevel;
-
-            complaint.EscalationDueAt =await _assignmentEngine.CalculateEscalationDueAtAsync(complaint);
-            complaint.UpdatedAt =
-                DateTime.UtcNow;
-
-            await _complaintRepository.Update(
-                complaint,
-                complaint.ComplaintId);
-
-            await _assignmentRepository.Create(
-                new ComplaintAssignmentHistory
-                {
-                    ComplaintId = complaint.ComplaintId,
-                    OldHandlerEmployeeId = oldhandler,
-                    NewHandlerEmployeeId = assignment.HandlerId,
-                    AssignedBy = null,
-                    AssignmentReason = "REOPEN"
-                });
-
-            await _historyRepository.Create(
-                new ComplaintHistory
-                {
-                    ComplaintId = complaint.ComplaintId,
-                    OldStatusId = STATUS_REOPENED,
-                    NewStatusId = STATUS_ASSIGNED,
-                    OldHandlerEmployeeId = oldhandler,
-                    NewHandlerEmployeeId = assignment.HandlerId,
-                    ChangedBy = null,
-                    RoleIdAtActionTime = null,
-                    Remarks = "Complaint reassigned after reopen.",
-                    EscalationLevelSnapshot = assignment.EscalationLevel,
-                    CreatedAt = DateTime.UtcNow
-                });
-
-            await _notificationService.SendAsync(
-                complaint.RaisedByEmployeeId,
-                NOTIF_COMPLAINT_REOPENED,
-                "Complaint Reopened",
-                $"Your complaint '{complaint.ComplaintTitle}' has been reopened.",
-                complaint.ComplaintId);
+            return await ReloadDto(requestId);
         }
-
-
-        return await ReloadDto(requestId);
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 
     public async Task<PagedResultDto<ComplaintRequestDto>> GetPagedAsync(int page, int pageSize, short? statusId)
@@ -293,21 +318,8 @@ public class ComplaintRequestService : IComplaintRequestService
 
     private async Task<ComplaintRequestDto> ReloadDto(int requestId)
     {
-        var (items, _) =
-            await _requestRepository.GetPagedAsync(
-                1,
-                1,
-                REQUEST_TYPE_REJECTION,
-                null);
-
-        var request = items.FirstOrDefault(r => r.RequestId == requestId);
-
-        if (request == null)
-        {
-            var rawRequest = await _requestRepository.GetDetailAsync(requestId) ?? throw new NotFoundException($"Complaint request {requestId} not found.");
-
-            return MapToDto(rawRequest);
-        }
+        var request = await _requestRepository.GetDetailAsync(requestId)
+            ?? throw new NotFoundException($"Complaint request {requestId} not found.");
 
         return MapToDto(request);
     }

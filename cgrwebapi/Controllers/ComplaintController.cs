@@ -152,4 +152,25 @@ public class ComplaintController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("{complaintId}/assignment-history")]
+public async Task<ActionResult<
+    IEnumerable<ComplaintAssignmentHistoryDto>>>
+    GetAssignmentHistory(int complaintId)
+{
+    return Ok(
+        await _complaintService
+            .GetAssignmentHistoryAsync(
+                complaintId));
+}
+[HttpGet("{complaintId}/escalations")]
+public async Task<ActionResult<
+    IEnumerable<ComplaintEscalationDto>>>
+    GetEscalationHistory(int complaintId)
+{
+    return Ok(
+        await _complaintService
+            .GetEscalationHistoryAsync(
+                complaintId));
+}
 }
