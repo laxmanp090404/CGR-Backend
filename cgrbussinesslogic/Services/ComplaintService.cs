@@ -48,7 +48,7 @@ public class ComplaintService : IComplaintService
     private readonly INotificationService _notificationService;
     private readonly ICurrentUserService _currentUserService;
     private readonly IComplaintAttachmentService _attachmentService;
-    private readonly IRepository<int, ComplaintEscalation> _escalationRepository;
+    private readonly IComplaintEscalationRepository _escalationRepository;
     private readonly IComplaintAssignmentEngine _assignmentEngine;
     private readonly IEscalationRuleRepository _escalationRuleRepository;
     private readonly CGRContext _context;
@@ -65,7 +65,7 @@ public class ComplaintService : IComplaintService
         INotificationService notificationService, CGRContext context,
         IComplaintAttachmentService attachmentService,
         ICurrentUserService currentUserService,
-        IRepository<int, ComplaintEscalation> escalationRepository,
+        IComplaintEscalationRepository escalationRepository,
         IEscalationRuleRepository escalationRuleRepository
         )
     {
@@ -739,9 +739,7 @@ public class ComplaintService : IComplaintService
 
         ComplaintHelper.ValidateHistoryAccessAsync(complaint, _currentUserService.EmployeeId, _currentUserService.RoleId, _currentUserService.DepartmentId);
 
-        var escalations = (await _escalationRepository.GetAll())
-            .Where(x => x.ComplaintId == complaintId)
-            .OrderBy(x => x.EscalatedAt);
+        var escalations = await _escalationRepository.GetByComplaintIdAsync(complaintId);
 
         return escalations.Select(e => new ComplaintEscalationDto
         {
@@ -752,6 +750,7 @@ public class ComplaintService : IComplaintService
             EscalationLevel = e.EscalationLevel,
             EscalatedByEmployeeId = e.EscalatedByEmployeeId,
             EscalatedByEmployeeName = e.EscalatedByEmployee?.EmployeeName ?? "",
+            EscalationRuleId = e.EscalationRuleId,
             Reason = e.Reason,
             EscalatedAt = e.EscalatedAt
         }).ToList();

@@ -43,6 +43,7 @@ builder.Services.AddScoped<IEscalationRuleRepository, EscalationRuleRepository>(
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IRoleRequestRepository, RoleRequestRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IComplaintEscalationRepository, ComplaintEscalationRepository>();
 // builder.Services.AddScoped<IRepository<int,ComplaintEscalation>,AbstractRepository<int,ComplaintEscalation>>();
 // builder.Services.AddScoped<IRepository<short,Priority>,AbstractRepository<short,Priority>>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
