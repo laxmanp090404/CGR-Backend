@@ -115,7 +115,7 @@ public class ComplaintService : IComplaintService
         using var transaction = await _context.Database.BeginTransactionAsync();
         //delete files if any error occurs
         List<string> createdFiles = new();
-
+        Complaint? complaint = null;
         try
         {
             var employeeId = _currentUserService.EmployeeId;
@@ -128,7 +128,7 @@ public class ComplaintService : IComplaintService
             }
             // to avoid update and created at difference
             var utcnow = DateTime.UtcNow;
-            var complaint = new Complaint
+            complaint = new Complaint
             {
                 ComplaintTitle = dto.ComplaintTitle,
                 ComplaintDescription = dto.ComplaintDescription,
@@ -218,7 +218,13 @@ public class ComplaintService : IComplaintService
         {
             await transaction.RollbackAsync();
 
-            await _attachmentService.DeleteFilesAsync(createdFiles);
+            // await _attachmentService.DeleteFilesAsync(createdFiles);
+            if (complaint?.ComplaintId > 0)
+            {
+                await _attachmentService.DeleteComplaintFolderAsync(
+                    complaint.ComplaintId);
+            }
+
 
             throw;
         }

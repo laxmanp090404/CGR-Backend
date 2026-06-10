@@ -73,7 +73,8 @@ public class ComplaintAttachmentService : IComplaintAttachmentService
                 _uploadBasePath,
                 complaintId.ToString());
 
-        Directory.CreateDirectory(complaintDirectory);
+        // Directory.CreateDirectory(complaintDirectory);
+        bool folderCreated = false;
 
         foreach (var file in files)
         {
@@ -98,7 +99,11 @@ public class ComplaintAttachmentService : IComplaintAttachmentService
                 throw new ValidationException(
                     "Attachment exceeds allowed size.");
             }
-
+            if (!folderCreated)
+            {
+                Directory.CreateDirectory(complaintDirectory);
+                folderCreated = true;
+            }
             string uniqueFileName =
                 $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
 
@@ -165,6 +170,22 @@ public class ComplaintAttachmentService : IComplaintAttachmentService
         });
     }
 
+    public async Task DeleteComplaintFolderAsync(int complaintId)
+    {
+        var complaintDirectory =
+            Path.Combine(
+                Directory.GetCurrentDirectory(),
+                _uploadBasePath,
+                complaintId.ToString());
+
+        await Task.Run(() =>
+        {
+            if (Directory.Exists(complaintDirectory))
+            {
+                Directory.Delete(complaintDirectory, true);
+            }
+        });
+    }
     private static ComplaintAttachmentDto MapToDto(ComplaintAttachment a) => new()
     {
         AttachmentId = a.AttachmentId,

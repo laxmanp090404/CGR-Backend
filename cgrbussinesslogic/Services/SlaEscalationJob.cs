@@ -147,7 +147,8 @@ public class SlaEscalationJob : ISlaEscalationJob
                 EscalationLevelSnapshot = oldLevel,
                 CreatedAt = DateTime.UtcNow
             });
-
+       
+        // externall escalation ,escalation history is not created as no rule for it
         await _notificationService.SendAsync(
             complaint.RaisedByEmployeeId,
             NOTIF_EXTERNALLY_ESCALATED,

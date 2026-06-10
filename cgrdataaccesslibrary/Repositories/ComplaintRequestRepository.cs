@@ -19,13 +19,13 @@ public class ComplaintRequestRepository : AbstractRepository<int, ComplaintReque
 
     public async Task<ComplaintRequest?> GetPendingByComplaintAndTypeAsync(int complaintId, short requestTypeId)
     {
-        return await _context.ComplaintRequests.AsNoTracking()
+        return await _context.ComplaintRequests
             .FirstOrDefaultAsync(r => r.ComplaintId == complaintId
                                    && r.RequestTypeId == requestTypeId
                                    && r.RequestStatusId == 1); 
     }
 
-    public async Task<(IEnumerable<ComplaintRequest> Items, int TotalCount)> GetPagedAsync(int page, int pageSize, short? requestTypeId, short? statusId)
+    public async Task<(IEnumerable<ComplaintRequest> Items, int TotalCount)> GetPagedAsync(int page, int pageSize, short? requestTypeId, short? statusId,int? requestedBy)
     {
         var query = _context.ComplaintRequests
             .AsNoTracking()
@@ -35,7 +35,10 @@ public class ComplaintRequestRepository : AbstractRepository<int, ComplaintReque
             .Include(r => r.RequestedByNavigation)
             .Include(r => r.ReviewedByNavigation)
             .AsQueryable();
-
+        if(requestedBy.HasValue)
+        {
+            query = query.Where(r => r.RequestedBy == requestedBy.Value);
+        }
         if (requestTypeId.HasValue)
         {
             query = query.Where(r => r.RequestTypeId == requestTypeId.Value);
@@ -58,7 +61,7 @@ public class ComplaintRequestRepository : AbstractRepository<int, ComplaintReque
     public async Task<ComplaintRequest?> GetDetailAsync(int requestId)
     {
         return await _context.ComplaintRequests
-            .AsNoTracking()
+
             .Include(r => r.Complaint)
                 .ThenInclude(c => c.Category)
             .Include(r => r.RequestType)

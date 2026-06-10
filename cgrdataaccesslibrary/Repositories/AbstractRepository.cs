@@ -55,11 +55,7 @@ public class AbstractRepository<K, T> : IRepository<K, T> where T : class where 
 
     public async Task<T> Update(T item, K key)
     {
-           T old = await Get(key);
-        if(old == null)
-        {
-            throw new NotFoundException($"No updates as entity of {typeof(T).Name} with key {key} Not found");
-        }
+          
          _context.Set<T>().Update(item);
          await _context.SaveChangesAsync();
          return item;

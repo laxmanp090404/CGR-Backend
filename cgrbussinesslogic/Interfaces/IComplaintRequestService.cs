@@ -9,5 +9,5 @@ public interface IComplaintRequestService
 
     Task<ComplaintRequestDto> ReviewAsync(int requestId,ReviewComplaintRequestDto dto);
 
-    Task<PagedResultDto<ComplaintRequestDto>>GetPagedAsync(int page,int pageSize,short? statusId);
+    Task<PagedResultDto<ComplaintRequestDto>>GetPagedAsync(int page,int pageSize,short? statusId,int? requestedBy);
 }

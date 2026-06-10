@@ -46,6 +46,7 @@ public class ComplaintRequestService : IComplaintRequestService
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IComplaintAssignmentEngine _assignmentEngine;
     private readonly CGRContext _context;
+    private readonly short PRIORITY_CRITICAL = 4;
 
     public ComplaintRequestService(
         IComplaintRequestRepository requestRepository,
@@ -131,15 +132,14 @@ public class ComplaintRequestService : IComplaintRequestService
             throw new ForbiddenException("Only admins can review complaint requests.");
         }
 
-        var request = await _requestRepository.GetDetailAsync(requestId) ?? throw new NotFoundException($"Complaint request {requestId}");
+        var request = await _requestRepository.GetDetailAsync(requestId) ?? throw new NotFoundException($"Complaint request {requestId} not found");
         if (request.RequestTypeId != REQUEST_TYPE_REJECTION)
         {
             throw new BusinessRuleException("Only rejection requests can be reviewed.");
         }
         if (request.RequestStatusId != REQUEST_STATUS_PENDING)
         {
-            throw new BusinessRuleException(
-                "This request has already been reviewed.");
+            throw new BusinessRuleException("This request has already been reviewed.");
         }
 
         using var transaction = await _context.Database.BeginTransactionAsync();
@@ -153,10 +153,10 @@ public class ComplaintRequestService : IComplaintRequestService
                     ? REQUEST_STATUS_APPROVED
                     : REQUEST_STATUS_REJECTED;
 
-            request.Remarks = dto.Remarks ?? request.Remarks;
+            request.Remarks = dto.Remarks ?? request.Remarks+"No remarks provided by reviewer.";
 
             await _requestRepository.Update(request, requestId);
-            var complaint = await _complaintRepository.GetDetailByIdAsync(request.ComplaintId) ?? throw new NotFoundException($"Complaint {request.ComplaintId} Not found");
+            var complaint = await _complaintRepository.GetDetailByIdAsync(request.ComplaintId) ?? throw new NotFoundException($"Complaint {request.ComplaintId} not found");
             var oldStatus = complaint.StatusId;
             // approve for rejection so complaint request is approved and complaint is rejected
             if (dto.Approve)
@@ -180,7 +180,7 @@ public class ComplaintRequestService : IComplaintRequestService
                                         CreatedAt = DateTime.UtcNow,
                                         RoleIdAtActionTime = _currentUserService.RoleId
                                     });
-
+                // send notification to complaint raiser about rejection of compkaint
                 await _notificationService.SendAsync(
                     complaint.RaisedByEmployeeId,
                     NOTIF_COMPLAINT_REJECTED,
@@ -198,8 +198,8 @@ public class ComplaintRequestService : IComplaintRequestService
 
                 var oldhandler = complaint.CurrentHandlerEmployeeId;
 
-                // priority bump
-                if (complaint.PriorityId < 4)
+                // priority bump only if it not critical already
+                if (complaint.PriorityId < PRIORITY_CRITICAL)
                 {
                     complaint.PriorityId += 1;
                 }
@@ -254,7 +254,7 @@ public class ComplaintRequestService : IComplaintRequestService
                         AssignedBy = null,
                         AssignmentReason = "REOPEN"
                     });
-
+                
                 await _historyRepository.Create(
                     new ComplaintHistory
                     {
@@ -296,14 +296,15 @@ complaint.ComplaintId);
         }
     }
 
-    public async Task<PagedResultDto<ComplaintRequestDto>> GetPagedAsync(int page, int pageSize, short? statusId)
+    public async Task<PagedResultDto<ComplaintRequestDto>> GetPagedAsync(int page, int pageSize, short? statusId, int? requestedBy)
     {
         var (items, totalCount) =
             await _requestRepository.GetPagedAsync(
                 page,
                 pageSize,
                 REQUEST_TYPE_REJECTION,
-                statusId);
+                statusId,
+                requestedBy);
 
         return new PagedResultDto<ComplaintRequestDto>
         {
