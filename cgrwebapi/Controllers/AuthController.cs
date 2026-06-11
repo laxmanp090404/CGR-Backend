@@ -1,6 +1,7 @@
 using cgrbussinesslogic.Interfaces;
 using cgrmodellibrary.DTOs.Auth;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace cgrwebapi.Controllers;
 
@@ -16,6 +17,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [EnableRateLimiting("Login")]
     public async Task<ActionResult<LoginResponseDto>> Login([FromBody] LoginRequestDto dto)
     {
         var result = await _authService.LoginAsync(dto);

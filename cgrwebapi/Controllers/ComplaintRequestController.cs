@@ -3,6 +3,7 @@ using cgrmodellibrary.DTOs.Common;
 using cgrmodellibrary.DTOs.ComplaintRequest;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace cgrwebapi.Controllers;
 
@@ -23,6 +24,7 @@ public class ComplaintRequestController : ControllerBase
     }
     // create a complaint rejection request
     [Authorize(Roles = "GRO,DEPARTMENT_HEAD")]
+    [EnableRateLimiting("ComplaintRequestReopen")]
 [HttpPost("complaints/{complaintId:int}")]
 public async Task<ActionResult<ComplaintRequestDto>> Create(int complaintId,CreateComplaintRequestDto dto)
 {

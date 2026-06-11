@@ -158,6 +158,9 @@ public class ComplaintService : IComplaintService
             complaint.CurrentHandlerEmployeeId = assignment.HandlerId;
             complaint.StatusId = STATUS_ASSIGNED;
             complaint.EscalationLevel = assignment.EscalationLevel;
+            
+            // get escalation due of a complaint
+
             complaint.EscalationDueAt = await _assignmentEngine.CalculateEscalationDueAtAsync(complaint);
             complaint.UpdatedAt = DateTime.UtcNow;
 
@@ -179,18 +182,18 @@ public class ComplaintService : IComplaintService
                 });
             // notification for handler
             await _notificationService.SendAsync(
-  assignment.HandlerId,
-    NOTIF_COMPLAINT_ASSIGNED,
-    "Complaint Assigned",
-    $"Complaint '{complaint.ComplaintTitle}' has been assigned to you.",
-    complaint.ComplaintId);
+                                    assignment.HandlerId,
+                                    NOTIF_COMPLAINT_ASSIGNED,
+                                    "Complaint Assigned",
+                                    $"Complaint '{complaint.ComplaintTitle}' has been assigned to you.",
+                                    complaint.ComplaintId);
             // notification for creator of complaint
             await _notificationService.SendAsync(
-            complaint.RaisedByEmployeeId,
-            NOTIF_COMPLAINT_ASSIGNED,
-            "Complaint Submitted",
-            $"Your complaint '{complaint.ComplaintTitle}' has been submitted and assigned to {complaint.CurrentHandlerEmployee?.EmployeeName ?? $"id {complaint.CurrentHandlerEmployeeId}"}.",
-            complaint.ComplaintId);
+                                    complaint.RaisedByEmployeeId,
+                                    NOTIF_COMPLAINT_ASSIGNED,
+                                    "Complaint Submitted",
+                                    $"Your complaint '{complaint.ComplaintTitle}' has been submitted and assigned to {complaint.CurrentHandlerEmployee?.EmployeeName ?? $"id {complaint.CurrentHandlerEmployeeId}"}.",
+                                    complaint.ComplaintId);
             // capture status change history for assignment in complaint history
             await ComplaintHelper.CreateHistoryAsync(
                     _historyRepository,

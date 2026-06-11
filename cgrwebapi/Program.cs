@@ -10,16 +10,16 @@ using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-// using Microsoft.OpenApi;
-// using Microsoft.OpenApi.Models;
+using System.Threading.RateLimiting;
 using System.Text;
 using Serilog;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
-//configure serilog
+//configure serilog and override default logging for custom filtering
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft.AspNetCore", Serilog.Events.LogEventLevel.Warning)
     .WriteTo.Console()
     .WriteTo.File(
         "logs/CGRApplog-.txt",
@@ -134,37 +134,49 @@ builder.Services
                     });
             };
     });
-// builder.Services.AddOpenApi();
-// builder.Services.AddSwaggerGen(c =>
-// {
-//     c.SwaggerDoc("v1", new OpenApiInfo { Title = "CGR API", Version = "v1" });
-//     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-//     {
-//         Description = "Please Enter token",
-//         Name        = "Authorization",
-//         In          = ParameterLocation.Header,
-//         Type        = SecuritySchemeType.ApiKey,
-//         Scheme      = "Bearer"
-//     });
-//     c.AddSecurityRequirement(new OpenApiSecurityRequirement
-// {
-//     {
-//         new OpenApiSecurityScheme
-//         {
-//             Scheme = "Bearer",
-//             Name = "Authorization",
-//             In = ParameterLocation.Header,
-//             Reference = new OpenApiReference
-//             {
-//                 Type = ReferenceType.SecurityScheme,
-//                 Id = "Bearer"
-//             }
-//         },
-//         new string[]{}
-//     }
-// });
-// });
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = 429;
+    // rate limit for creating compplaints
+    options.AddPolicy("ComplaintCreate",
+    context =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            context.User.FindFirst("employee_id")?.Value?? context.Connection.RemoteIpAddress?.ToString()?? "anonymous",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 3,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0
+            }));
+    // policy for rate limiting complaint request
+     options.AddPolicy("ComplaintRequestReopen",
+        context =>
+            RateLimitPartition.GetFixedWindowLimiter(
+                context.User.FindFirst("employee_id")?.Value ?? context.Connection.RemoteIpAddress?.ToString() ?? "anonymous",
+                _ => new FixedWindowRateLimiterOptions
+                {
+                    PermitLimit = 5,
+                    Window = TimeSpan.FromMinutes(1),
+                    QueueLimit = 0
+                }));
+
+   
+    // policy for login attempts 
+    // user not logged in so use IP
+    options.AddPolicy(
+        "Login",
+        context =>
+            RateLimitPartition.GetFixedWindowLimiter(
+                context.Connection.RemoteIpAddress?.ToString() ?? "anonymous",
+                _ => new FixedWindowRateLimiterOptions
+                {
+                    PermitLimit = 10,
+                    Window = TimeSpan.FromMinutes(1),
+                    QueueLimit = 0
+                }));
+});
 builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 
@@ -174,10 +186,23 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseSerilogRequestLogging(options =>
+{
+    options.GetLevel = (httpContext, elapsed, ex) =>
+    {
+        if (httpContext.Request.Path.StartsWithSegments("/hangfire"))
+        {
+            return Serilog.Events.LogEventLevel.Debug;
+        }
+
+        return Serilog.Events.LogEventLevel.Information;
+    };
+});
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHangfireDashboard();
 app.UseHttpsRedirection();
 app.UseAuthentication();
+app.UseRateLimiter();//after auth otherwise empid null
 app.UseAuthorization();
 RecurringJob.AddOrUpdate<ISlaEscalationJob>(
     "sla-escalation-job",

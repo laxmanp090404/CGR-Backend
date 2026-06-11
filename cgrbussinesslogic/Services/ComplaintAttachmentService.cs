@@ -55,8 +55,7 @@ public class ComplaintAttachmentService : IComplaintAttachmentService
 
         if (files.Count > MaxFilesPerComplaint)
         {
-            throw new BusinessRuleException(
-                $"Maximum {MaxFilesPerComplaint} files allowed.");
+            throw new BusinessRuleException($"Maximum {MaxFilesPerComplaint} files allowed.");
         }
 
         long totalSize = files.Sum(f => f.Length);

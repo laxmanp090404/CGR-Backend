@@ -3,6 +3,7 @@ using cgrmodellibrary.DTOs.Common;
 using cgrmodellibrary.DTOs.Complaint;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace cgrwebapi.Controllers;
 
@@ -18,8 +19,9 @@ public class ComplaintController : ControllerBase
     {
         _complaintService = complaintService;
     }
-    //ratelimiting required
+    
     [HttpPost]
+    [EnableRateLimiting("ComplaintCreate")]
     [Consumes("multipart/form-data")]
     public async Task<ActionResult<ComplaintDto>> Create(
         [FromForm] CreateComplaintDto dto)
@@ -114,8 +116,8 @@ public class ComplaintController : ControllerBase
 
         return NoContent();
     }
-
     [HttpPut("{complaintId:int}/reopen")]
+    [EnableRateLimiting("ComplaintRequestReopen")]
     public async Task<ActionResult> Reopen(
         int complaintId,
         ReopenComplaintDto dto)

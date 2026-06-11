@@ -17,6 +17,7 @@ public class ComplaintAssignmentRepository : AbstractRepository<int, ComplaintAs
         _context = context;
     }
 
+    // get previous handlers for the complaint
     public async Task<List<int>> GetPreviousHandlersAsync(int complaintId)
     {
         return await _context.ComplaintAssignmentHistories

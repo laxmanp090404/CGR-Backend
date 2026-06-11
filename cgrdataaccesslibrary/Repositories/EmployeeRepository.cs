@@ -72,7 +72,7 @@ public class EmployeeRepository : AbstractRepository<int, Employee>, IEmployeeRe
 
         return (items, totalCount);
     }
-
+    // method to get active workload of gros for assignment engine
     public async Task<IEnumerable<VGroActiveWorkload>> GetGroActiveWorkloadAsync(int? departmentId)
     {
         var query = _context.VGroActiveWorkloads.AsQueryable();
