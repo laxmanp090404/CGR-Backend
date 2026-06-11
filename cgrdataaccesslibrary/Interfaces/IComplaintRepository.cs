@@ -11,5 +11,7 @@ public interface IComplaintRepository : IRepository<int, Complaint>
         int page, int pageSize, int? statusId, int? priorityId, int? categoryId, int? departmentId, string? search,
         int employeeIdFilter, string roleFilter, int? deptIdFilter);
      Task<IEnumerable<Complaint>> GetEscalationDueComplaintsAsync();
+     // For duplicate complaint check
+     Task<bool> ExistsRecentDuplicateAsync(int raisedByEmployeeId,string title,string description,TimeSpan window);
     
 }

@@ -130,6 +130,14 @@ public class ComplaintService : IComplaintService
             {
                 throw new BusinessRuleException("Category is inactive.");
             }
+            //check for duplicate complaint in last 2 minutes with same title and description by same employee
+            var duplicateExists =await _complaintRepository.ExistsRecentDuplicateAsync(_currentUserService.EmployeeId,dto.ComplaintTitle.Trim(),dto.ComplaintDescription.Trim(),TimeSpan.FromMinutes(2));
+
+            if (duplicateExists)
+            {
+                throw new ConflictException(
+                    "A similar complaint was recently submitted.");
+            }
             // to avoid update and created at difference
             var utcnow = DateTime.UtcNow;
             complaint = new Complaint
@@ -158,7 +166,7 @@ public class ComplaintService : IComplaintService
             complaint.CurrentHandlerEmployeeId = assignment.HandlerId;
             complaint.StatusId = STATUS_ASSIGNED;
             complaint.EscalationLevel = assignment.EscalationLevel;
-            
+
             // get escalation due of a complaint
 
             complaint.EscalationDueAt = await _assignmentEngine.CalculateEscalationDueAtAsync(complaint);
@@ -218,7 +226,7 @@ public class ComplaintService : IComplaintService
             await transaction.CommitAsync();
 
             complaint = await _complaintRepository.GetDetailByIdAsync(complaint.ComplaintId) ?? throw new Exception("Failed to reload complaint.");
-        
+
             _logger.LogInformation($"Complaint {complaint.ComplaintId} created by Employee {complaint.RaisedByEmployeeId}");
             return ComplaintHelper.MapToDto(complaint);
         }
@@ -338,7 +346,7 @@ public class ComplaintService : IComplaintService
     "Complaint Resolved",
     $"Your complaint '{complaint.ComplaintTitle}' has been resolved.",
     complaint.ComplaintId);
-    _logger.LogInformation($"Complaint {complaint.ComplaintId} resolved by Employee {_currentUserService.EmployeeId}");
+        _logger.LogInformation($"Complaint {complaint.ComplaintId} resolved by Employee {_currentUserService.EmployeeId}");
     }
     // close complaint
     public async Task CloseAsync(int complaintId, CloseComplaintDto dto)
@@ -381,7 +389,7 @@ public class ComplaintService : IComplaintService
     "Complaint Closed",
     $"Complaint '{complaint.ComplaintTitle}' has been closed by the requester.",
     complaint.ComplaintId);
-    _logger.LogInformation($"Complaint {complaint.ComplaintId} closed by Employee {_currentUserService.EmployeeId}");
+        _logger.LogInformation($"Complaint {complaint.ComplaintId} closed by Employee {_currentUserService.EmployeeId}");
     }
 
     public async Task ReopenAsync(int complaintId, ReopenComplaintDto dto)

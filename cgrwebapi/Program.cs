@@ -14,6 +14,7 @@ using System.Threading.RateLimiting;
 using System.Text;
 using Serilog;
 using Microsoft.AspNetCore.Mvc;
+using cgrwebapi.Infrastructure.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 //configure serilog and override default logging for custom filtering
@@ -40,6 +41,8 @@ builder.Services.AddHangfire(config =>
 });
 
 builder.Services.AddHangfireServer();
+// custom rate limiting policies extension method
+builder.Services.AddAppRateLimiting();
 
 #region Repos
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
@@ -134,47 +137,6 @@ builder.Services
                     });
             };
     });
-builder.Services.AddRateLimiter(options =>
-{
-    options.RejectionStatusCode = 429;
-    // rate limit for creating compplaints
-    options.AddPolicy("ComplaintCreate",
-    context =>
-        RateLimitPartition.GetFixedWindowLimiter(
-            context.User.FindFirst("employee_id")?.Value?? context.Connection.RemoteIpAddress?.ToString()?? "anonymous",
-            _ => new FixedWindowRateLimiterOptions
-            {
-                PermitLimit = 3,
-                Window = TimeSpan.FromMinutes(1),
-                QueueLimit = 0
-            }));
-    // policy for rate limiting complaint request
-     options.AddPolicy("ComplaintRequestReopen",
-        context =>
-            RateLimitPartition.GetFixedWindowLimiter(
-                context.User.FindFirst("employee_id")?.Value ?? context.Connection.RemoteIpAddress?.ToString() ?? "anonymous",
-                _ => new FixedWindowRateLimiterOptions
-                {
-                    PermitLimit = 5,
-                    Window = TimeSpan.FromMinutes(1),
-                    QueueLimit = 0
-                }));
-
-   
-    // policy for login attempts 
-    // user not logged in so use IP
-    options.AddPolicy(
-        "Login",
-        context =>
-            RateLimitPartition.GetFixedWindowLimiter(
-                context.Connection.RemoteIpAddress?.ToString() ?? "anonymous",
-                _ => new FixedWindowRateLimiterOptions
-                {
-                    PermitLimit = 10,
-                    Window = TimeSpan.FromMinutes(1),
-                    QueueLimit = 0
-                }));
-});
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

@@ -7248,3 +7248,317 @@ INNER JOIN priorities AS p ON c.priority_id = p.priority_id
 LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
 WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
 2026-06-11 19:37:59.692 +05:30 [INF] 1 servers were removed due to timeout
+2026-06-11 19:40:00.363 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-11 19:45:00.583 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-11 19:50:00.815 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-11 19:55:01.106 +05:30 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-11 19:59:28.432 +05:30 [INF] Server w4n00tw13c-laxmanp:54872:57f9db06 caught stopping signal...
+2026-06-11 19:59:28.435 +05:30 [INF] Application is shutting down...
+2026-06-11 19:59:28.437 +05:30 [INF] Server w4n00tw13c-laxmanp:54872:57f9db06 All dispatchers stopped
+2026-06-11 19:59:28.443 +05:30 [INF] Server w4n00tw13c-laxmanp:54872:57f9db06 successfully reported itself as stopped in 3.881 ms
+2026-06-11 19:59:28.443 +05:30 [INF] Server w4n00tw13c-laxmanp:54872:57f9db06 has been stopped in total 8.2675 ms
+2026-06-11 19:59:40.075 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-06-11 19:59:40.168 +05:30 [INF] Hangfire SQL objects installed.
+2026-06-11 19:59:40.335 +05:30 [INF] Now listening on: http://localhost:5162
+2026-06-11 19:59:40.337 +05:30 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: cgrdb, Schema: hangfire'
+2026-06-11 19:59:40.337 +05:30 [INF] Using the following options for PostgreSQL job storage:
+2026-06-11 19:59:40.337 +05:30 [INF]     Queue poll interval: 00:00:15.
+2026-06-11 19:59:40.337 +05:30 [INF]     Invisibility timeout: 00:30:00.
+2026-06-11 19:59:40.337 +05:30 [INF]     Use sliding invisibility timeout: False.
+2026-06-11 19:59:40.337 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-06-11 19:59:40.342 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-11 19:59:40.342 +05:30 [INF] Hosting environment: Development
+2026-06-11 19:59:40.342 +05:30 [INF] Content root path: /Users/laxmanp/Self Tasks/CGR/cgrwebapi
+2026-06-11 19:59:40.350 +05:30 [INF] Server w4n00tw13c-laxmanp:56393:9d8db6fc successfully announced in 7.8743 ms
+2026-06-11 19:59:40.351 +05:30 [INF] Server w4n00tw13c-laxmanp:56393:9d8db6fc is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-06-11 19:59:40.354 +05:30 [INF] Server w4n00tw13c-laxmanp:56393:9d8db6fc all the dispatchers started
+2026-06-11 20:00:11.232 +05:30 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-11 20:00:49.308 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-11 20:00:49.350 +05:30 [INF] HTTP POST /api/Complaint responded 401 in 43.1528 ms
+2026-06-11 20:01:30.578 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.category_id, c.category_name, c.created_at, c.default_priority_id, c.department_id, c.is_active, c.sla_hours, c.updated_at
+FROM categories AS c
+WHERE c.category_id = @p
+LIMIT 1
+2026-06-11 20:01:30.618 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@raisedByEmployeeId='?' (DbType = Int32), @threshold='?' (DbType = DateTime), @title='?', @description='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM complaints AS c
+    WHERE c.raised_by_employee_id = @raisedByEmployeeId AND c.created_at >= @threshold AND c.complaint_title = @title AND c.complaint_description = @description)
+2026-06-11 20:01:30.705 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime), @p7='?' (DbType = Int16), @p8='?' (DbType = Int16), @p9='?' (DbType = Int32), @p10='?' (DbType = Int16), @p11='?' (DbType = DateTime), @p12='?' (DbType = Int16), @p13='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaints (category_id, closed_at, complaint_description, complaint_title, created_at, current_handler_employee_id, escalation_due_at, escalation_level, priority_id, raised_by_employee_id, reopened_count, resolved_at, status_id, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13)
+RETURNING complaint_id;
+2026-06-11 20:01:30.740 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (DbType = Int32), @p5='?' (DbType = Int16), @p6='?' (DbType = Int32), @p7='?' (DbType = Int16), @p8='?', @p9='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaint_history (changed_by, complaint_id, created_at, escalation_level_snapshot, new_handler_employee_id, new_status_id, old_handler_employee_id, old_status_id, remarks, role_id_at_action_time)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9)
+RETURNING history_id;
+2026-06-11 20:01:30.754 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@complaintId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT DISTINCT c.new_handler_employee_id
+FROM complaint_assignment_history AS c
+WHERE c.complaint_id = @complaintId
+2026-06-11 20:01:30.767 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@departmentId_Value='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT v.active_complaint_count, v.department_id, v.employee_created_at, v.employee_id, v.employee_name, v.weighted_score
+FROM v_gro_active_workload AS v
+WHERE v.department_id = @departmentId_Value
+ORDER BY v.weighted_score, v.employee_created_at
+2026-06-11 20:01:30.773 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p14='?' (DbType = Int32), @p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime), @p7='?' (DbType = Int16), @p8='?' (DbType = Int16), @p9='?' (DbType = Int32), @p10='?' (DbType = Int16), @p11='?' (DbType = DateTime), @p12='?' (DbType = Int16), @p13='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+UPDATE complaints SET category_id = @p0, closed_at = @p1, complaint_description = @p2, complaint_title = @p3, created_at = @p4, current_handler_employee_id = @p5, escalation_due_at = @p6, escalation_level = @p7, priority_id = @p8, raised_by_employee_id = @p9, reopened_count = @p10, resolved_at = @p11, status_id = @p12, updated_at = @p13
+WHERE complaint_id = @p14;
+2026-06-11 20:01:30.787 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?', @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaint_assignment_history (assigned_at, assigned_by, assignment_reason, complaint_id, new_handler_employee_id, old_handler_employee_id)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING assignment_history_id;
+2026-06-11 20:01:30.802 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Boolean), @p3='?', @p4='?' (DbType = Int16), @p5='?' (DbType = Int32), @p6='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO notifications (created_at, employee_id, is_read, message, notification_type_id, reference_complaint_id, title)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING notification_id;
+2026-06-11 20:01:30.805 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Boolean), @p3='?', @p4='?' (DbType = Int16), @p5='?' (DbType = Int32), @p6='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO notifications (created_at, employee_id, is_read, message, notification_type_id, reference_complaint_id, title)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING notification_id;
+2026-06-11 20:01:30.810 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (DbType = Int32), @p5='?' (DbType = Int16), @p6='?' (DbType = Int32), @p7='?' (DbType = Int16), @p8='?', @p9='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaint_history (changed_by, complaint_id, created_at, escalation_level_snapshot, new_handler_employee_id, new_status_id, old_handler_employee_id, old_status_id, remarks, role_id_at_action_time)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9)
+RETURNING history_id;
+2026-06-11 20:01:30.861 +05:30 [INF] Executed DbCommand (18ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-11 20:01:30.898 +05:30 [INF] Complaint 21 created by Employee 14
+2026-06-11 20:01:30.921 +05:30 [INF] HTTP POST /api/Complaint responded 201 in 408.7281 ms
+2026-06-11 20:01:33.194 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.category_id, c.category_name, c.created_at, c.default_priority_id, c.department_id, c.is_active, c.sla_hours, c.updated_at
+FROM categories AS c
+WHERE c.category_id = @p
+LIMIT 1
+2026-06-11 20:01:33.200 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@raisedByEmployeeId='?' (DbType = Int32), @threshold='?' (DbType = DateTime), @title='?', @description='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM complaints AS c
+    WHERE c.raised_by_employee_id = @raisedByEmployeeId AND c.created_at >= @threshold AND c.complaint_title = @title AND c.complaint_description = @description)
+2026-06-11 20:01:33.202 +05:30 [WRN] A similar complaint was recently submitted.
+2026-06-11 20:01:33.206 +05:30 [INF] HTTP POST /api/Complaint responded 409 in 60.1914 ms
+2026-06-11 20:01:45.001 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.category_id, c.category_name, c.created_at, c.default_priority_id, c.department_id, c.is_active, c.sla_hours, c.updated_at
+FROM categories AS c
+WHERE c.category_id = @p
+LIMIT 1
+2026-06-11 20:01:45.002 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@raisedByEmployeeId='?' (DbType = Int32), @threshold='?' (DbType = DateTime), @title='?', @description='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM complaints AS c
+    WHERE c.raised_by_employee_id = @raisedByEmployeeId AND c.created_at >= @threshold AND c.complaint_title = @title AND c.complaint_description = @description)
+2026-06-11 20:01:45.003 +05:30 [WRN] A similar complaint was recently submitted.
+2026-06-11 20:01:45.004 +05:30 [INF] HTTP POST /api/Complaint responded 409 in 18.2166 ms
+2026-06-11 20:01:46.064 +05:30 [INF] HTTP POST /api/Complaint responded 429 in 0.7799 ms
+2026-06-11 20:01:52.295 +05:30 [INF] HTTP POST /api/Complaint responded 429 in 0.4304 ms
+2026-06-11 20:01:53.136 +05:30 [INF] HTTP POST /api/Complaint responded 429 in 0.3617 ms
+2026-06-11 20:05:10.858 +05:30 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-11 20:10:11.139 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-11 20:13:30.724 +05:30 [INF] Server w4n00tw13c-laxmanp:56393:9d8db6fc caught stopping signal...
+2026-06-11 20:13:30.729 +05:30 [INF] Application is shutting down...
+2026-06-11 20:13:30.731 +05:30 [INF] Server w4n00tw13c-laxmanp:56393:9d8db6fc All dispatchers stopped
+2026-06-11 20:13:30.740 +05:30 [INF] Server w4n00tw13c-laxmanp:56393:9d8db6fc successfully reported itself as stopped in 5.023 ms
+2026-06-11 20:13:30.740 +05:30 [INF] Server w4n00tw13c-laxmanp:56393:9d8db6fc has been stopped in total 11.5949 ms
+2026-06-11 20:13:46.268 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-06-11 20:13:46.375 +05:30 [INF] Hangfire SQL objects installed.
+2026-06-11 20:13:46.563 +05:30 [FTL] Application startup exception
+System.ArgumentException: There already exists a policy with the name ComplaintCreate. (Parameter 'policyName')
+   at Microsoft.AspNetCore.RateLimiting.RateLimiterOptions.AddPolicy[TPartitionKey](String policyName, Func`2 partitioner)
+   at Program.<>c.<<Main>$>b__0_6(RateLimiterOptions options) in /Users/laxmanp/Self Tasks/CGR/cgrwebapi/Program.cs:line 144
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.UnnamedOptionsManager`1.get_Value()
+   at Microsoft.AspNetCore.RateLimiting.RateLimitingMiddleware..ctor(RequestDelegate next, ILogger`1 logger, IOptions`1 options, IServiceProvider serviceProvider, RateLimitingMetrics metrics)
+   at System.Reflection.ConstructorInvoker.InterpretedInvoke(Object obj, IntPtr* args)
+   at System.Reflection.ConstructorInvoker.InvokeWithManyArgs(Span`1 arguments)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ConstructorMatcher.CreateInstance(IServiceProvider provider)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(IServiceProvider provider, Type instanceType, Object[] parameters)
+   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.ReflectionMiddlewareBinder.CreateMiddleware(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+2026-06-11 20:13:46.576 +05:30 [ERR] Hosting failed to start
+System.ArgumentException: There already exists a policy with the name ComplaintCreate. (Parameter 'policyName')
+   at Microsoft.AspNetCore.RateLimiting.RateLimiterOptions.AddPolicy[TPartitionKey](String policyName, Func`2 partitioner)
+   at Program.<>c.<<Main>$>b__0_6(RateLimiterOptions options) in /Users/laxmanp/Self Tasks/CGR/cgrwebapi/Program.cs:line 144
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.UnnamedOptionsManager`1.get_Value()
+   at Microsoft.AspNetCore.RateLimiting.RateLimitingMiddleware..ctor(RequestDelegate next, ILogger`1 logger, IOptions`1 options, IServiceProvider serviceProvider, RateLimitingMetrics metrics)
+   at System.Reflection.ConstructorInvoker.InterpretedInvoke(Object obj, IntPtr* args)
+   at System.Reflection.ConstructorInvoker.InvokeWithManyArgs(Span`1 arguments)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ConstructorMatcher.CreateInstance(IServiceProvider provider)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(IServiceProvider provider, Type instanceType, Object[] parameters)
+   at Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.ReflectionMiddlewareBinder.CreateMiddleware(RequestDelegate next)
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.ApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-06-11 20:14:17.439 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-06-11 20:14:17.566 +05:30 [INF] Hangfire SQL objects installed.
+2026-06-11 20:14:17.726 +05:30 [INF] Now listening on: http://localhost:5162
+2026-06-11 20:14:17.728 +05:30 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: cgrdb, Schema: hangfire'
+2026-06-11 20:14:17.728 +05:30 [INF] Using the following options for PostgreSQL job storage:
+2026-06-11 20:14:17.728 +05:30 [INF]     Queue poll interval: 00:00:15.
+2026-06-11 20:14:17.728 +05:30 [INF]     Invisibility timeout: 00:30:00.
+2026-06-11 20:14:17.728 +05:30 [INF]     Use sliding invisibility timeout: False.
+2026-06-11 20:14:17.729 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-06-11 20:14:17.733 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-11 20:14:17.733 +05:30 [INF] Hosting environment: Development
+2026-06-11 20:14:17.733 +05:30 [INF] Content root path: /Users/laxmanp/Self Tasks/CGR/cgrwebapi
+2026-06-11 20:14:17.744 +05:30 [INF] Server w4n00tw13c-laxmanp:57539:7f405b05 successfully announced in 10.3602 ms
+2026-06-11 20:14:17.746 +05:30 [INF] Server w4n00tw13c-laxmanp:57539:7f405b05 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-06-11 20:14:17.748 +05:30 [INF] Server w4n00tw13c-laxmanp:57539:7f405b05 all the dispatchers started
+2026-06-11 20:15:03.723 +05:30 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-11 20:17:23.608 +05:30 [INF] Server w4n00tw13c-laxmanp:57539:7f405b05 caught stopping signal...
+2026-06-11 20:17:23.611 +05:30 [INF] Application is shutting down...
+2026-06-11 20:17:23.613 +05:30 [INF] Server w4n00tw13c-laxmanp:57539:7f405b05 All dispatchers stopped
+2026-06-11 20:17:23.617 +05:30 [INF] Server w4n00tw13c-laxmanp:57539:7f405b05 successfully reported itself as stopped in 2.897 ms
+2026-06-11 20:17:23.618 +05:30 [INF] Server w4n00tw13c-laxmanp:57539:7f405b05 has been stopped in total 7.0662 ms
+2026-06-11 20:17:29.300 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-06-11 20:17:29.386 +05:30 [INF] Hangfire SQL objects installed.
+2026-06-11 20:17:29.544 +05:30 [INF] Now listening on: http://localhost:5162
+2026-06-11 20:17:29.546 +05:30 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: cgrdb, Schema: hangfire'
+2026-06-11 20:17:29.546 +05:30 [INF] Using the following options for PostgreSQL job storage:
+2026-06-11 20:17:29.546 +05:30 [INF]     Queue poll interval: 00:00:15.
+2026-06-11 20:17:29.546 +05:30 [INF]     Invisibility timeout: 00:30:00.
+2026-06-11 20:17:29.546 +05:30 [INF]     Use sliding invisibility timeout: False.
+2026-06-11 20:17:29.546 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-06-11 20:17:29.551 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-11 20:17:29.551 +05:30 [INF] Hosting environment: Development
+2026-06-11 20:17:29.551 +05:30 [INF] Content root path: /Users/laxmanp/Self Tasks/CGR/cgrwebapi
+2026-06-11 20:17:29.558 +05:30 [INF] Server w4n00tw13c-laxmanp:57925:9bd4143f successfully announced in 6.7077 ms
+2026-06-11 20:17:29.560 +05:30 [INF] Server w4n00tw13c-laxmanp:57925:9bd4143f is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-06-11 20:17:29.563 +05:30 [INF] Server w4n00tw13c-laxmanp:57925:9bd4143f all the dispatchers started
+2026-06-11 20:20:15.510 +05:30 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-11 20:25:00.214 +05:30 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-11 20:30:00.516 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-11 20:30:17.113 +05:30 [INF] Server w4n00tw13c-laxmanp:57925:9bd4143f caught stopping signal...
+2026-06-11 20:30:17.114 +05:30 [INF] Application is shutting down...
+2026-06-11 20:30:17.116 +05:30 [INF] Server w4n00tw13c-laxmanp:57925:9bd4143f All dispatchers stopped
+2026-06-11 20:30:17.122 +05:30 [INF] Server w4n00tw13c-laxmanp:57925:9bd4143f successfully reported itself as stopped in 4.202 ms
+2026-06-11 20:30:17.123 +05:30 [INF] Server w4n00tw13c-laxmanp:57925:9bd4143f has been stopped in total 8.9851 ms
+2026-06-11 20:30:27.793 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-06-11 20:30:27.886 +05:30 [INF] Hangfire SQL objects installed.
+2026-06-11 20:30:28.053 +05:30 [INF] Now listening on: http://localhost:5162
+2026-06-11 20:30:28.054 +05:30 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: cgrdb, Schema: hangfire'
+2026-06-11 20:30:28.055 +05:30 [INF] Using the following options for PostgreSQL job storage:
+2026-06-11 20:30:28.055 +05:30 [INF]     Queue poll interval: 00:00:15.
+2026-06-11 20:30:28.055 +05:30 [INF]     Invisibility timeout: 00:30:00.
+2026-06-11 20:30:28.055 +05:30 [INF]     Use sliding invisibility timeout: False.
+2026-06-11 20:30:28.055 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-06-11 20:30:28.059 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-11 20:30:28.059 +05:30 [INF] Hosting environment: Development
+2026-06-11 20:30:28.059 +05:30 [INF] Content root path: /Users/laxmanp/Self Tasks/CGR/cgrwebapi
+2026-06-11 20:30:28.067 +05:30 [INF] Server w4n00tw13c-laxmanp:58708:f9203d38 successfully announced in 7.9015 ms
+2026-06-11 20:30:28.068 +05:30 [INF] Server w4n00tw13c-laxmanp:58708:f9203d38 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-06-11 20:30:28.070 +05:30 [INF] Server w4n00tw13c-laxmanp:58708:f9203d38 all the dispatchers started
+2026-06-11 20:41:54.514 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-11 20:45:09.125 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5

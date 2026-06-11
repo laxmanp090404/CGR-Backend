@@ -2,6 +2,7 @@ using cgrbussinesslogic.Interfaces;
 using cgrmodellibrary.DTOs.Comment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace cgrwebapi.Controllers;
 
@@ -25,7 +26,7 @@ public class ComplaintCommentController : ControllerBase
 
         return Ok(result);
     }
-
+    [EnableRateLimiting("ComplaintCommentCreate")]
     [HttpPost("complaint/{complaintId:int}")]
     public async Task<ActionResult<ComplaintCommentDto>> AddComment(int complaintId,CreateComplaintCommentDto dto)
     {

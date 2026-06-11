@@ -141,7 +141,7 @@ public class ComplaintController : ControllerBase
 
         return NoContent();
     }
-
+    [EnableRateLimiting("ComplaintEscalate")]
     [Authorize(Roles = "GRO,DEPARTMENT_HEAD")]
     [HttpPut("{complaintId:int}/escalate")]
     public async Task<ActionResult> Escalate(

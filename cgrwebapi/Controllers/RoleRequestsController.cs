@@ -4,6 +4,7 @@ using cgrmodellibrary.DTOs.RoleRequest;
 using cgrmodellibrary.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace cgrwebapi.Controllers;
 
@@ -19,6 +20,7 @@ public class RoleRequestsController : ControllerBase
 
     [HttpPost]
     [Authorize]
+    [EnableRateLimiting("RoleRequestCreate")]
     public async Task<ActionResult<RoleRequestDto>> Create([FromBody] CreateRoleRequestDto dto)
     {
         int employeeId = User.GetEmployeeId();

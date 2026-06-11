@@ -109,4 +109,14 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
             c.StatusId!=STATUS_RESOLVED)  
         .ToListAsync();
 }
+
+    public async Task<bool> ExistsRecentDuplicateAsync(int raisedByEmployeeId, string title, string description, TimeSpan window)
+    {
+        var threshold = DateTime.UtcNow.Subtract(window);   
+        return await _context.Complaints.AnyAsync(c =>
+            c.RaisedByEmployeeId == raisedByEmployeeId &&
+            c.CreatedAt >= threshold &&
+            c.ComplaintTitle == title &&
+            c.ComplaintDescription == description);
+    }
 }
