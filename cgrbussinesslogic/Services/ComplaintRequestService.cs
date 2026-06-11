@@ -5,6 +5,7 @@ using cgrmodellibrary.DTOs.Common;
 using cgrmodellibrary.DTOs.ComplaintRequest;
 using cgrmodellibrary.Exceptions;
 using cgrmodellibrary.Models;
+using Microsoft.Extensions.Logging;
 
 namespace cgrbussinesslogic.Services;
 
@@ -46,6 +47,7 @@ public class ComplaintRequestService : IComplaintRequestService
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IComplaintAssignmentEngine _assignmentEngine;
     private readonly CGRContext _context;
+    private readonly ILogger<ComplaintRequestService> _logger;
     private readonly short PRIORITY_CRITICAL = 4;
 
     public ComplaintRequestService(
@@ -57,7 +59,8 @@ public class ComplaintRequestService : IComplaintRequestService
         IComplaintHistoryRepository historyRepository,
         IEmployeeRepository employeeRepository,
         IComplaintAssignmentEngine assignmentEngine,
-        CGRContext context
+        CGRContext context,
+        ILogger<ComplaintRequestService> logger
         )
     {
         _requestRepository = requestRepository;
@@ -69,6 +72,7 @@ public class ComplaintRequestService : IComplaintRequestService
         _employeeRepository = employeeRepository;
         _assignmentEngine = assignmentEngine;
         _context = context;
+        _logger = logger;
     }
     public async Task<ComplaintRequestDto> CreateAsync(int complaintId, CreateComplaintRequestDto dto)
     {
@@ -116,6 +120,7 @@ public class ComplaintRequestService : IComplaintRequestService
         };
 
         var createdRequest = await _requestRepository.Create(request);
+        _logger.LogInformation($"Rejection request {request.RequestId} created for Complaint {complaint.ComplaintId}");
 
         return await ReloadDto(createdRequest.RequestId);
     }
@@ -187,6 +192,7 @@ public class ComplaintRequestService : IComplaintRequestService
                     "Complaint Rejected",
                     $"Your complaint '{complaint.ComplaintTitle}' has been rejected.",
                     complaint.ComplaintId);
+                    _logger.LogInformation($"Rejection request {request.RequestId} approved by Admin {_currentUserService.EmployeeId}");
             }
             // not approved rejection is rejected so complaint request is rejected
             //  and complaint is reopened with priority bump to compensate for the delay caused
@@ -286,6 +292,7 @@ complaint.ComplaintId);
             }
 
             await transaction.CommitAsync();
+            _logger.LogWarning($"Rejection request {request.RequestId} rejected by Admin {_currentUserService.EmployeeId}");
 
             return await ReloadDto(requestId);
         }

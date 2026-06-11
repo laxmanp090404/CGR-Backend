@@ -8,6 +8,7 @@ using cgrmodellibrary.DTOs.Common;
 using cgrmodellibrary.DTOs.Complaint;
 using cgrmodellibrary.Exceptions;
 using cgrmodellibrary.Models;
+using Microsoft.Extensions.Logging;
 
 namespace cgrbussinesslogic.Services;
 
@@ -51,6 +52,7 @@ public class ComplaintService : IComplaintService
     private readonly IComplaintEscalationRepository _escalationRepository;
     private readonly IComplaintAssignmentEngine _assignmentEngine;
     private readonly IEscalationRuleRepository _escalationRuleRepository;
+    private readonly ILogger<ComplaintService> _logger;
     private readonly CGRContext _context;
     #endregion
 
@@ -66,7 +68,8 @@ public class ComplaintService : IComplaintService
         IComplaintAttachmentService attachmentService,
         ICurrentUserService currentUserService,
         IComplaintEscalationRepository escalationRepository,
-        IEscalationRuleRepository escalationRuleRepository
+        IEscalationRuleRepository escalationRuleRepository,
+        ILogger<ComplaintService> logger
         )
     {
         _complaintRepository = complaintRepository;
@@ -81,6 +84,7 @@ public class ComplaintService : IComplaintService
         _context = context;
         _assignmentEngine = assignmentEngine;
         _escalationRuleRepository = escalationRuleRepository;
+        _logger = logger;
     }
     #endregion
 
@@ -211,7 +215,8 @@ public class ComplaintService : IComplaintService
             await transaction.CommitAsync();
 
             complaint = await _complaintRepository.GetDetailByIdAsync(complaint.ComplaintId) ?? throw new Exception("Failed to reload complaint.");
-
+        
+            _logger.LogInformation($"Complaint {complaint.ComplaintId} created by Employee {complaint.RaisedByEmployeeId}");
             return ComplaintHelper.MapToDto(complaint);
         }
         catch
@@ -330,6 +335,7 @@ public class ComplaintService : IComplaintService
     "Complaint Resolved",
     $"Your complaint '{complaint.ComplaintTitle}' has been resolved.",
     complaint.ComplaintId);
+    _logger.LogInformation($"Complaint {complaint.ComplaintId} resolved by Employee {_currentUserService.EmployeeId}");
     }
     // close complaint
     public async Task CloseAsync(int complaintId, CloseComplaintDto dto)
@@ -372,6 +378,7 @@ public class ComplaintService : IComplaintService
     "Complaint Closed",
     $"Complaint '{complaint.ComplaintTitle}' has been closed by the requester.",
     complaint.ComplaintId);
+    _logger.LogInformation($"Complaint {complaint.ComplaintId} closed by Employee {_currentUserService.EmployeeId}");
     }
 
     public async Task ReopenAsync(int complaintId, ReopenComplaintDto dto)
@@ -468,6 +475,7 @@ public class ComplaintService : IComplaintService
             $"Your complaint '{complaint.ComplaintTitle}' has been reopened.",
             complaint.ComplaintId);
             await transaction.CommitAsync();
+            _logger.LogWarning($"Complaint {complaint.ComplaintId} reopened by Employee {_currentUserService.EmployeeId}");
         }
         catch
         {
@@ -682,6 +690,7 @@ public class ComplaintService : IComplaintService
         "Complaint Reassigned",
         $"Your complaint '{complaint.ComplaintTitle}' has been reassigned.",
         complaint.ComplaintId);
+        _logger.LogInformation($"Complaint {complaint.ComplaintId} assigned to Employee {dto.GroEmployeeId}");
     }
 
     public async Task<IEnumerable<ComplaintAssignmentHistoryDto>> GetAssignmentHistoryAsync(int complaintId)

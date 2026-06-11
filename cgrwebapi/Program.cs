@@ -13,9 +13,20 @@ using Microsoft.IdentityModel.Tokens;
 // using Microsoft.OpenApi;
 // using Microsoft.OpenApi.Models;
 using System.Text;
+using Serilog;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//configure serilog
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File(
+        "logs/CGRApplog-.txt",
+        rollingInterval: RollingInterval.Day,
+        retainedFileCountLimit: 30)
+    .CreateLogger();
+builder.Host.UseSerilog();
 
 builder.Services.AddDbContext<CGRContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -101,7 +112,28 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Authenticated",      policy => policy.RequireAuthenticatedUser());
 });
 
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.InvalidModelStateResponseFactory =
+            context =>
+            {
+                var errors =
+                    context.ModelState
+                        .Values
+                        .SelectMany(v => v.Errors)
+                        .Select(e => e.ErrorMessage);
+
+                return new BadRequestObjectResult(
+                    new
+                    {
+                        statusCode = 400,
+                        error = "ValidationException",
+                        message = string.Join("; ", errors)
+                    });
+            };
+    });
 // builder.Services.AddOpenApi();
 // builder.Services.AddSwaggerGen(c =>
 // {

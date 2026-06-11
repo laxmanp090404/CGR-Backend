@@ -1,6 +1,7 @@
 using cgrbussinesslogic.Interfaces;
 using cgrdataaccesslibrary.Interfaces;
 using cgrmodellibrary.Models;
+using Microsoft.Extensions.Logging;
 
 namespace cgrbussinesslogic.Services;
 
@@ -27,6 +28,7 @@ public class SlaEscalationJob : ISlaEscalationJob
     private readonly IRepository<int, ComplaintEscalation> _escalationRepository;
     private readonly IEscalationRuleRepository _escalationRuleRepository;
     private readonly INotificationService _notificationService;
+    private readonly ILogger<SlaEscalationJob> _logger;
 
     public SlaEscalationJob(
         IComplaintRepository complaintRepository,
@@ -35,7 +37,8 @@ public class SlaEscalationJob : ISlaEscalationJob
         IComplaintHistoryRepository historyRepository,
         IRepository<int, ComplaintEscalation> escalationRepository,
         IEscalationRuleRepository escalationRuleRepository,
-        INotificationService notificationService)
+        INotificationService notificationService,
+        ILogger<SlaEscalationJob> logger)
     {
         _complaintRepository = complaintRepository;
         _assignmentEngine = assignmentEngine;
@@ -44,6 +47,7 @@ public class SlaEscalationJob : ISlaEscalationJob
         _escalationRepository = escalationRepository;
         _notificationService = notificationService;
         _escalationRuleRepository = escalationRuleRepository;
+        _logger = logger;
     }
 
     public async Task ProcessEscalationsAsync()
@@ -106,6 +110,7 @@ public class SlaEscalationJob : ISlaEscalationJob
             "Complaint Escalated",
             $"Complaint '{complaint.ComplaintTitle}' has been escalated to you.",
             complaint.ComplaintId);
+        _logger.LogWarning($"Complaint {complaint.ComplaintId} escalated from level {oldLevel} to {complaint.EscalationLevel}");
     }
 
     private async Task HandleExternalEscalationAsync(
@@ -155,6 +160,7 @@ public class SlaEscalationJob : ISlaEscalationJob
             "Complaint Externally Escalated",
             $"Your complaint '{complaint.ComplaintTitle}' has been escalated to a higher authority out of the system.",
             complaint.ComplaintId);
+        _logger.LogError($"Complaint {complaint.ComplaintId} externally escalated after final SLA breach");
     }
 
     private async Task CreateEscalationRecordAsync(Complaint complaint, int newHandlerId,short breachedLevel)

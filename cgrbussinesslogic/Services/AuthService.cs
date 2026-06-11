@@ -5,6 +5,7 @@ using cgrmodellibrary.Exceptions;
 using cgrmodellibrary.Models;
 using BCrypt.Net;
 using System.Transactions;
+using Microsoft.Extensions.Logging;
 
 namespace cgrbussinesslogic.Services;
 
@@ -14,16 +15,18 @@ public class AuthService : IAuthService
     private readonly ITokenService _tokenService;
 
     private readonly IRoleRequestRepository _roleRequestRepository;
-    private readonly IRepository<int, Department> _departmentRepository;
+    private readonly IDepartmentRepository _departmentRepository;
+    private readonly ILogger<AuthService> _logger;
     private short EMPLOYEE_ROLE_ID = 1;
     private short GRO_ROLE_ID = 2;
     private short ROLE_REQUEST_PENDING_STATUS_ID = 1;
-    public AuthService(IEmployeeRepository employeeRepository, ITokenService tokenService, IRoleRequestRepository roleRequestRepository, IRepository<int, Department> departmentRepository)
+    public AuthService(IEmployeeRepository employeeRepository, ITokenService tokenService, IRoleRequestRepository roleRequestRepository, IDepartmentRepository departmentRepository, ILogger<AuthService> logger)
     {
         _employeeRepository = employeeRepository;
         _tokenService = tokenService;
         _roleRequestRepository = roleRequestRepository;
         _departmentRepository = departmentRepository;
+        _logger = logger;
     }
 
     public async Task<LoginResponseDto> LoginAsync(LoginRequestDto dto)
@@ -32,20 +35,24 @@ public class AuthService : IAuthService
         // employee not there
         if (employee == null)
         {
-            throw new ValidationException("Invalid email or password and account may not exist.");
+            _logger.LogWarning($"Failed login attempt for email {dto.Email}");
+            throw new ValidationException("Account may not exist.");
         }
         // deactivated employee
         if (employee.IsActive == false)
         {
+            _logger.LogWarning($"Failed login attempt for email {dto.Email}");
             throw new BusinessRuleException("Account is deactivated. Please contact an administrator.");
         }
         // invalid credentials
         if (!BCrypt.Net.BCrypt.Verify(dto.Password, employee.PasswordHash))
         {
+            _logger.LogWarning($"Failed login attempt for email {dto.Email}");
             throw new ValidationException("Invalid email or password.");
         }
 
         var token = _tokenService.GenerateToken(employee);
+        _logger.LogInformation($"User {employee.EmployeeId} logged in");
         return new LoginResponseDto
         {
             Token = token,

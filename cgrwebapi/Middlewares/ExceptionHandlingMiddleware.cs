@@ -7,10 +7,12 @@ namespace cgrwebapi.Middlewares
     public class ExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionHandlingMiddleware> _logger;
 
-        public ExceptionHandlingMiddleware(RequestDelegate next)
+        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -20,7 +22,25 @@ namespace cgrwebapi.Middlewares
                 await _next(context);
             }
             catch (Exception ex)
-            { 
+            {
+                switch (ex)
+                {
+                    case ValidationException:
+                    case BusinessRuleException:
+                    case ConflictException:
+                    case NotFoundException:
+                    case UnauthorizedAccessException:
+                    case ForbiddenException:
+                        _logger.LogWarning(ex.Message);
+                        break;
+
+                    default:
+                        _logger.LogError(
+                            ex,
+                            $"Unhandled exception occurred {context.TraceIdentifier}");
+                        break;
+                }
+
                 await HandleExceptionAsync(context, ex);
             }
         }
@@ -28,10 +48,7 @@ namespace cgrwebapi.Middlewares
         private static Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
             HttpStatusCode statusCode;
-             var result = new
-            {
-                message = ex.Message
-            };
+
             switch (ex)
             {
                 case NotFoundException:
@@ -62,7 +79,13 @@ namespace cgrwebapi.Middlewares
                     statusCode = HttpStatusCode.InternalServerError;
                     break;
             }
-
+            var result = new
+            {
+                statusCode = (int)statusCode,
+                error = ex.GetType().Name,
+                message = ex.Message,
+                traceId = context.TraceIdentifier
+            };
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;
             return context.Response.WriteAsync(JsonSerializer.Serialize(result));
