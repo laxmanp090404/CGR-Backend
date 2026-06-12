@@ -61,6 +61,8 @@ builder.Services.AddScoped<IComplaintEscalationRepository, ComplaintEscalationRe
 // builder.Services.AddScoped<IRepository<int,ComplaintEscalation>,AbstractRepository<int,ComplaintEscalation>>();
 // builder.Services.AddScoped<IRepository<short,Priority>,AbstractRepository<short,Priority>>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
+builder.Services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
 // builder.Services.AddScoped<IRepository<int, EscalationRule>,AbstractRepository<int, EscalationRule>>();
 #endregion
 #region Services
@@ -80,7 +82,7 @@ builder.Services.AddScoped<IComplaintRequestService, ComplaintRequestService>();
 builder.Services.AddScoped<IRoleRequestService, RoleRequestService>();
 builder.Services.AddScoped<IComplaintAssignmentEngine,ComplaintAssignmentEngine>();
 builder.Services.AddScoped<ISlaEscalationJob, SlaEscalationJob>();
-builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
+builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 #endregion
 #region JWT
 var jwtSettings = builder.Configuration.GetSection("Jwt");
