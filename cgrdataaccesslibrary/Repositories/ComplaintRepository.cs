@@ -32,7 +32,7 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
             .Include(c=>c.ComplaintAttachments)
             .FirstOrDefaultAsync(c => c.ComplaintId == id);
     }
-
+    
     public async Task<(IEnumerable<VComplaintDashboard> Items, int TotalCount)> GetPagedDashboardAsync(
         int page, int pageSize, int? statusId, int? priorityId, int? categoryId, int? departmentId, string? search,
         int employeeIdFilter, string roleFilter, int? deptIdFilter)

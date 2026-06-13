@@ -653,7 +653,7 @@ public class ComplaintService : IComplaintService
         {
             var complaint = await _complaintRepository.GetDetailByIdAsync(complaintId) ?? throw new NotFoundException($"Complaint {complaintId}");
             var previoushandlers = await _assignmentRepository.GetPreviousHandlersAsync(complaintId);
-            if (_currentUserService.Role != "ADMIN")
+            if (_currentUserService.RoleId != ROLE_ADMIN)
             {
                 throw new ForbiddenException("Only admins can manually assign complaints.");
             }
