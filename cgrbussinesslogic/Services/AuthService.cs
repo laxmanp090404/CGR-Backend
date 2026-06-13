@@ -35,19 +35,19 @@ public class AuthService : IAuthService
         // employee not there
         if (employee == null)
         {
-            _logger.LogWarning($"Failed login attempt for email {dto.Email}");
+            _logger.LogWarning($"Failed login attempt for email {dto.Email} due to non-existent account.");
             throw new ValidationException("Account may not exist.");
         }
         // deactivated employee
         if (employee.IsActive == false)
         {
-            _logger.LogWarning($"Failed login attempt for email {dto.Email}");
+            _logger.LogWarning($"Failed login attempt for email {dto.Email} due to deactivated account.");
             throw new BusinessRuleException("Account is deactivated. Please contact an administrator.");
         }
         // invalid credentials
         if (!BCrypt.Net.BCrypt.Verify(dto.Password, employee.PasswordHash))
         {
-            _logger.LogWarning($"Failed login attempt for email {dto.Email}");
+            _logger.LogWarning($"Failed login attempt for email {dto.Email} due to invalid credentials.");
             throw new ValidationException("Invalid email or password.");
         }
 

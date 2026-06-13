@@ -18,6 +18,10 @@ public class ComplaintCommentService : IComplaintCommentService
     private const short STATUS_EXTERNALLY_ESCALATED = 9;
     #endregion
 
+    private const short ROLE_EMPLOYEE = 1;
+    private const short ROLE_GRO = 2;
+    private const short ROLE_DEPARTMENT_HEAD = 3;
+    private const short ROLE_ADMIN = 4;
     public ComplaintCommentService(
         IComplaintCommentRepository commentRepository,
         IComplaintRepository complaintRepository,
@@ -37,7 +41,7 @@ public class ComplaintCommentService : IComplaintCommentService
 
         var comments = await _commentRepository.GetByComplaintIdAsync(complaintId);
 
-        bool canSeeInternal = _currentUserService.Role is "GRO" or "DEPARTMENT_HEAD" or "ADMIN" && complaint.RaisedByEmployeeId != _currentUserService.EmployeeId;;
+        bool canSeeInternal = _currentUserService.RoleId is ROLE_GRO or ROLE_DEPARTMENT_HEAD or ROLE_ADMIN && complaint.RaisedByEmployeeId != _currentUserService.EmployeeId;;
 
         return comments
             .Where(c => canSeeInternal || !c.IsInternal)
@@ -56,7 +60,7 @@ public class ComplaintCommentService : IComplaintCommentService
 
         if (dto.IsInternal)
         {
-            if (_currentUserService.Role == "EMPLOYEE")
+            if (_currentUserService.RoleId == ROLE_EMPLOYEE)
                 throw new ForbiddenException("Employees cannot add internal comments.");
 
             if (complaint.RaisedByEmployeeId == _currentUserService.EmployeeId)
@@ -77,19 +81,19 @@ public class ComplaintCommentService : IComplaintCommentService
 
     private void ValidateCommentAccess(Complaint complaint)
     {
-        if (_currentUserService.Role == "ADMIN")
+        if (_currentUserService.RoleId == ROLE_ADMIN)
             return;
 
-        if (_currentUserService.Role == "EMPLOYEE" &&
+        if (_currentUserService.RoleId == ROLE_EMPLOYEE &&
             complaint.RaisedByEmployeeId != _currentUserService.EmployeeId)
             throw new ForbiddenException("You are not authorized to comment or view this.");
 
-        if (_currentUserService.Role == "GRO" &&
+        if (_currentUserService.RoleId == ROLE_GRO &&
             complaint.RaisedByEmployeeId != _currentUserService.EmployeeId &&
             complaint.CurrentHandlerEmployeeId != _currentUserService.EmployeeId)
             throw new ForbiddenException("You are not authorized to comment or view this.");
 
-        if (_currentUserService.Role == "DEPARTMENT_HEAD" &&
+        if (_currentUserService.RoleId == ROLE_DEPARTMENT_HEAD &&
             complaint.RaisedByEmployeeId != _currentUserService.EmployeeId &&
             complaint.Category.DepartmentId != _currentUserService.DepartmentId)
             throw new ForbiddenException("You are not authorized to comment or view this.");
