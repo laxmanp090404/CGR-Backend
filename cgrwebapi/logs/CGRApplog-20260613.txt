@@ -787,3 +787,531 @@ INNER JOIN categories AS c0 ON c.category_id = c0.category_id
 INNER JOIN priorities AS p ON c.priority_id = p.priority_id
 LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
 WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 20:50:07.234 +05:30 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 20:55:07.407 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 20:59:06.028 +05:30 [INF] Removed 2 outdated record(s) from 'aggregatedcounter' table.
+2026-06-13 20:59:07.079 +05:30 [INF] Removed 13 outdated record(s) from 'job' table.
+2026-06-13 21:00:07.625 +05:30 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 21:05:07.828 +05:30 [INF] Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 21:10:08.009 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 21:15:08.200 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 21:15:18.775 +05:30 [INF] Server w4n00tw13c-laxmanp:8573:baf9fff8 caught stopping signal...
+2026-06-13 21:15:18.777 +05:30 [INF] Application is shutting down...
+2026-06-13 21:15:18.779 +05:30 [INF] Server w4n00tw13c-laxmanp:8573:baf9fff8 All dispatchers stopped
+2026-06-13 21:15:18.783 +05:30 [INF] Server w4n00tw13c-laxmanp:8573:baf9fff8 successfully reported itself as stopped in 2.0629 ms
+2026-06-13 21:15:18.783 +05:30 [INF] Server w4n00tw13c-laxmanp:8573:baf9fff8 has been stopped in total 6.6037 ms
+2026-06-13 21:28:56.327 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-06-13 21:28:56.508 +05:30 [INF] Hangfire SQL objects installed.
+2026-06-13 21:28:56.703 +05:30 [INF] Now listening on: http://localhost:5162
+2026-06-13 21:28:56.706 +05:30 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: cgrdb, Schema: hangfire'
+2026-06-13 21:28:56.706 +05:30 [INF] Using the following options for PostgreSQL job storage:
+2026-06-13 21:28:56.706 +05:30 [INF]     Queue poll interval: 00:00:15.
+2026-06-13 21:28:56.706 +05:30 [INF]     Invisibility timeout: 00:30:00.
+2026-06-13 21:28:56.706 +05:30 [INF]     Use sliding invisibility timeout: False.
+2026-06-13 21:28:56.706 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-06-13 21:28:56.712 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-13 21:28:56.712 +05:30 [INF] Hosting environment: Development
+2026-06-13 21:28:56.712 +05:30 [INF] Content root path: /Users/laxmanp/Self Tasks/CGR/cgrwebapi
+2026-06-13 21:28:56.720 +05:30 [INF] Server w4n00tw13c-laxmanp:29323:3cdc252d successfully announced in 8.4027 ms
+2026-06-13 21:28:56.721 +05:30 [INF] Server w4n00tw13c-laxmanp:29323:3cdc252d is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-06-13 21:28:56.725 +05:30 [INF] Server w4n00tw13c-laxmanp:29323:3cdc252d all the dispatchers started
+2026-06-13 21:28:56.838 +05:30 [INF] Removed 1 outdated record(s) from 'aggregatedcounter' table.
+2026-06-13 21:28:57.558 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 21:28:57.872 +05:30 [INF] Removed 4 outdated record(s) from 'job' table.
+2026-06-13 21:29:18.038 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-13 21:29:18.068 +05:30 [INF] HTTP GET /swagger/v1/swagger.json/endpoints responded 404 in 32.3051 ms
+2026-06-13 21:30:12.042 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 21:35:12.365 +05:30 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 21:40:12.709 +05:30 [INF] Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 21:45:12.942 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 21:50:13.165 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 21:55:13.440 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 22:00:13.738 +05:30 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 22:05:13.973 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 22:10:14.225 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 22:14:45.694 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM employees AS e
+INNER JOIN roles AS r ON e.role_id = r.role_id
+LEFT JOIN departments AS d ON e.department_id = d.department_id
+WHERE e.email = @email AND e.is_active
+LIMIT 1
+2026-06-13 22:14:46.195 +05:30 [INF] User 12 logged in
+2026-06-13 22:14:46.200 +05:30 [INF] HTTP POST /api/auth/login responded 200 in 579.2144 ms
+2026-06-13 22:15:14.483 +05:30 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 22:15:34.446 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM employees AS e
+INNER JOIN roles AS r ON e.role_id = r.role_id
+LEFT JOIN departments AS d ON e.department_id = d.department_id
+WHERE e.email = @email AND e.is_active
+LIMIT 1
+2026-06-13 22:15:34.745 +05:30 [WRN] Failed login attempt for email admin@cgr.com due to invalid credentials.
+2026-06-13 22:15:34.745 +05:30 [WRN] Invalid email or password.
+2026-06-13 22:15:34.748 +05:30 [INF] HTTP POST /api/auth/login responded 400 in 313.5174 ms
+2026-06-13 22:16:35.920 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM employees AS e
+    WHERE e.email = @email)
+2026-06-13 22:16:36.279 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?', @p3='?', @p4='?' (DbType = StringFixedLength), @p5='?', @p6='?' (DbType = Int16), @p7='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO employees (created_at, department_id, email, employee_name, mobile_number, password_hash, role_id, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7)
+RETURNING employee_id, is_active;
+2026-06-13 22:16:36.292 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM employees AS e
+INNER JOIN roles AS r ON e.role_id = r.role_id
+LEFT JOIN departments AS d ON e.department_id = d.department_id
+WHERE e.email = @email AND e.is_active
+LIMIT 1
+2026-06-13 22:16:36.294 +05:30 [INF] HTTP POST /api/auth/register responded 201 in 397.9795 ms
+2026-06-13 22:16:51.836 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM employees AS e
+    WHERE e.email = @email)
+2026-06-13 22:16:51.837 +05:30 [WRN] An account with this email already exists.
+2026-06-13 22:16:51.837 +05:30 [INF] HTTP POST /api/auth/register responded 409 in 9.6303 ms
+2026-06-13 22:18:09.192 +05:30 [INF] HTTP GET /api/Employee/14 responded 401 in 20.1219 ms
+2026-06-13 22:18:24.515 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM employees AS e
+INNER JOIN roles AS r ON e.role_id = r.role_id
+LEFT JOIN departments AS d ON e.department_id = d.department_id
+WHERE e.email = @email AND e.is_active
+LIMIT 1
+2026-06-13 22:18:24.818 +05:30 [INF] User 12 logged in
+2026-06-13 22:18:24.818 +05:30 [INF] HTTP POST /api/auth/login responded 200 in 317.6475 ms
+2026-06-13 22:18:56.188 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM employees AS e
+INNER JOIN roles AS r ON e.role_id = r.role_id
+LEFT JOIN departments AS d ON e.department_id = d.department_id
+WHERE e.email = @email AND e.is_active
+LIMIT 1
+2026-06-13 22:18:56.492 +05:30 [INF] User 14 logged in
+2026-06-13 22:18:56.492 +05:30 [INF] HTTP POST /api/auth/login responded 200 in 309.9132 ms
+2026-06-13 22:20:14.886 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 22:25:00.103 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 22:26:27.045 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM employees AS e
+INNER JOIN roles AS r ON e.role_id = r.role_id
+LEFT JOIN departments AS d ON e.department_id = d.department_id
+WHERE e.employee_id = @employeeId
+LIMIT 1
+2026-06-13 22:26:27.054 +05:30 [INF] HTTP GET /api/Employee/14 responded 200 in 42.0628 ms
+2026-06-13 22:26:41.890 +05:30 [INF] HTTP GET /api/Employee/14 responded 401 in 2.9812 ms
+2026-06-13 22:27:15.898 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM employees AS e
+INNER JOIN roles AS r ON e.role_id = r.role_id
+LEFT JOIN departments AS d ON e.department_id = d.department_id
+WHERE e.employee_id = @employeeId
+LIMIT 1
+2026-06-13 22:27:15.898 +05:30 [INF] HTTP GET /api/Employee/14 responded 200 in 7.1247 ms
+2026-06-13 22:27:36.391 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM employees AS e
+INNER JOIN roles AS r ON e.role_id = r.role_id
+LEFT JOIN departments AS d ON e.department_id = d.department_id
+WHERE e.employee_id = @employeeId
+LIMIT 1
+2026-06-13 22:27:36.392 +05:30 [INF] HTTP GET /api/Employee/14 responded 200 in 6.4369 ms
+2026-06-13 22:27:59.042 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+2026-06-13 22:27:59.063 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    ORDER BY e.employee_id
+    LIMIT @p1 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:27:59.070 +05:30 [INF] HTTP GET /api/Employee responded 200 in 53.0102 ms
+2026-06-13 22:28:58.978 +05:30 [INF] Removed 1 outdated record(s) from 'aggregatedcounter' table.
+2026-06-13 22:29:00.024 +05:30 [INF] Removed 7 outdated record(s) from 'job' table.
+2026-06-13 22:30:00.326 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 22:32:08.293 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@roleId_Value='?' (DbType = Int16), @departmentId_Value='?' (DbType = Int32), @search_contains='?', @search_contains0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+WHERE e.role_id = @roleId_Value AND e.department_id = @departmentId_Value AND (e.employee_name LIKE @search_contains OR e.email LIKE @search_contains0)
+2026-06-13 22:32:08.309 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[@roleId_Value='?' (DbType = Int16), @departmentId_Value='?' (DbType = Int32), @search_contains='?', @search_contains0='?', @p5='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    WHERE e.role_id = @roleId_Value AND e.department_id = @departmentId_Value AND (e.employee_name LIKE @search_contains OR e.email LIKE @search_contains0)
+    ORDER BY e.employee_id
+    LIMIT @p5 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:32:08.309 +05:30 [INF] HTTP GET /api/Employee responded 200 in 36.7270 ms
+2026-06-13 22:32:13.824 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@search_contains='?', @search_contains0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+WHERE e.employee_name LIKE @search_contains OR e.email LIKE @search_contains0
+2026-06-13 22:32:13.834 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@search_contains='?', @search_contains0='?', @p3='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    WHERE e.employee_name LIKE @search_contains OR e.email LIKE @search_contains0
+    ORDER BY e.employee_id
+    LIMIT @p3 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:32:13.835 +05:30 [INF] HTTP GET /api/Employee responded 200 in 18.3933 ms
+2026-06-13 22:32:22.525 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@isActive_Value='?' (DbType = Boolean), @search_contains='?', @search_contains0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+WHERE e.is_active = @isActive_Value AND (e.employee_name LIKE @search_contains OR e.email LIKE @search_contains0)
+2026-06-13 22:32:22.533 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@isActive_Value='?' (DbType = Boolean), @search_contains='?', @search_contains0='?', @p4='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    WHERE e.is_active = @isActive_Value AND (e.employee_name LIKE @search_contains OR e.email LIKE @search_contains0)
+    ORDER BY e.employee_id
+    LIMIT @p4 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:32:22.534 +05:30 [INF] HTTP GET /api/Employee responded 200 in 17.1737 ms
+2026-06-13 22:33:04.900 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+2026-06-13 22:33:04.905 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    ORDER BY e.employee_id
+    LIMIT @p1 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:33:04.908 +05:30 [INF] HTTP GET /api/Employee responded 200 in 13.9798 ms
+2026-06-13 22:33:20.220 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@search_contains='?', @search_contains0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+WHERE e.employee_name LIKE @search_contains OR e.email LIKE @search_contains0
+2026-06-13 22:33:20.223 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@search_contains='?', @search_contains0='?', @p3='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    WHERE e.employee_name LIKE @search_contains OR e.email LIKE @search_contains0
+    ORDER BY e.employee_id
+    LIMIT @p3 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:33:20.223 +05:30 [INF] HTTP GET /api/Employee responded 200 in 8.9088 ms
+2026-06-13 22:33:30.848 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@search_contains='?', @search_contains0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+WHERE e.employee_name LIKE @search_contains OR e.email LIKE @search_contains0
+2026-06-13 22:33:30.850 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@search_contains='?', @search_contains0='?', @p3='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    WHERE e.employee_name LIKE @search_contains OR e.email LIKE @search_contains0
+    ORDER BY e.employee_id
+    LIMIT @p3 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:33:30.850 +05:30 [INF] HTTP GET /api/Employee responded 200 in 5.9206 ms
+2026-06-13 22:34:04.944 +05:30 [INF] Server w4n00tw13c-laxmanp:29323:3cdc252d caught stopping signal...
+2026-06-13 22:34:04.984 +05:30 [INF] Application is shutting down...
+2026-06-13 22:34:04.985 +05:30 [INF] Server w4n00tw13c-laxmanp:29323:3cdc252d All dispatchers stopped
+2026-06-13 22:34:04.988 +05:30 [INF] Server w4n00tw13c-laxmanp:29323:3cdc252d successfully reported itself as stopped in 1.8987 ms
+2026-06-13 22:34:04.988 +05:30 [INF] Server w4n00tw13c-laxmanp:29323:3cdc252d has been stopped in total 41.8077 ms
+2026-06-13 22:34:13.845 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-06-13 22:34:13.952 +05:30 [INF] Hangfire SQL objects installed.
+2026-06-13 22:34:14.169 +05:30 [INF] Now listening on: http://localhost:5162
+2026-06-13 22:34:14.171 +05:30 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: cgrdb, Schema: hangfire'
+2026-06-13 22:34:14.171 +05:30 [INF] Using the following options for PostgreSQL job storage:
+2026-06-13 22:34:14.171 +05:30 [INF]     Queue poll interval: 00:00:15.
+2026-06-13 22:34:14.171 +05:30 [INF]     Invisibility timeout: 00:30:00.
+2026-06-13 22:34:14.171 +05:30 [INF]     Use sliding invisibility timeout: False.
+2026-06-13 22:34:14.171 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-06-13 22:34:14.176 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-13 22:34:14.176 +05:30 [INF] Hosting environment: Development
+2026-06-13 22:34:14.177 +05:30 [INF] Content root path: /Users/laxmanp/Self Tasks/CGR/cgrwebapi
+2026-06-13 22:34:14.185 +05:30 [INF] Server w4n00tw13c-laxmanp:33338:ec8e8c1b successfully announced in 8.0907 ms
+2026-06-13 22:34:14.186 +05:30 [INF] Server w4n00tw13c-laxmanp:33338:ec8e8c1b is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-06-13 22:34:14.188 +05:30 [INF] Server w4n00tw13c-laxmanp:33338:ec8e8c1b all the dispatchers started
+2026-06-13 22:34:14.268 +05:30 [INF] Removed 1 outdated record(s) from 'job' table.
+2026-06-13 22:34:16.411 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-13 22:34:17.072 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[@ToLower_contains='?', @ToLower_contains0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+WHERE lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0
+2026-06-13 22:34:17.128 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[@ToLower_contains='?', @ToLower_contains0='?', @p3='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    WHERE lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0
+    ORDER BY e.employee_id
+    LIMIT @p3 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:34:17.199 +05:30 [INF] HTTP GET /api/Employee responded 200 in 789.6172 ms
+2026-06-13 22:34:22.554 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@ToLower_contains='?', @ToLower_contains0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+WHERE lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0
+2026-06-13 22:34:22.562 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@ToLower_contains='?', @ToLower_contains0='?', @p3='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    WHERE lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0
+    ORDER BY e.employee_id
+    LIMIT @p3 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:34:22.564 +05:30 [INF] HTTP GET /api/Employee responded 200 in 26.2141 ms
+2026-06-13 22:34:31.347 +05:30 [WRN] Only admins can perform this action.
+2026-06-13 22:34:31.350 +05:30 [INF] HTTP GET /api/Employee responded 403 in 10.6322 ms
+2026-06-13 22:34:58.170 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@ToLower_contains='?', @ToLower_contains0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+WHERE lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0
+2026-06-13 22:34:58.179 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[@ToLower_contains='?', @ToLower_contains0='?', @p3='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    WHERE lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0
+    ORDER BY e.employee_id
+    LIMIT @p3 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:34:58.180 +05:30 [INF] HTTP GET /api/Employee responded 200 in 49.4112 ms
+2026-06-13 22:35:14.494 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-13 22:35:34.795 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@ToLower_contains='?', @ToLower_contains0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+WHERE lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0
+2026-06-13 22:35:34.802 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@ToLower_contains='?', @ToLower_contains0='?', @p3='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    WHERE lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0
+    ORDER BY e.employee_id
+    LIMIT @p3 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:35:34.803 +05:30 [INF] HTTP GET /api/Employee responded 200 in 15.7665 ms
+2026-06-13 22:36:06.193 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@roleId_Value='?' (DbType = Int16), @ToLower_contains='?', @ToLower_contains0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+WHERE e.role_id = @roleId_Value AND (lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0)
+2026-06-13 22:36:06.209 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@roleId_Value='?' (DbType = Int16), @ToLower_contains='?', @ToLower_contains0='?', @p4='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    WHERE e.role_id = @roleId_Value AND (lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0)
+    ORDER BY e.employee_id
+    LIMIT @p4 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:36:06.210 +05:30 [INF] HTTP GET /api/Employee responded 200 in 24.0863 ms
+2026-06-13 22:36:10.088 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@roleId_Value='?' (DbType = Int16), @ToLower_contains='?', @ToLower_contains0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+WHERE e.role_id = @roleId_Value AND (lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0)
+2026-06-13 22:36:10.090 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@roleId_Value='?' (DbType = Int16), @ToLower_contains='?', @ToLower_contains0='?', @p4='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    WHERE e.role_id = @roleId_Value AND (lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0)
+    ORDER BY e.employee_id
+    LIMIT @p4 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:36:10.090 +05:30 [INF] HTTP GET /api/Employee responded 200 in 7.0725 ms
+2026-06-13 22:36:13.801 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@roleId_Value='?' (DbType = Int16), @ToLower_contains='?', @ToLower_contains0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+WHERE e.role_id = @roleId_Value AND (lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0)
+2026-06-13 22:36:13.824 +05:30 [INF] Executed DbCommand (23ms) [Parameters=[@roleId_Value='?' (DbType = Int16), @ToLower_contains='?', @ToLower_contains0='?', @p4='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+    FROM employees AS e
+    WHERE e.role_id = @roleId_Value AND (lower(e.employee_name) LIKE @ToLower_contains OR lower(e.email) LIKE @ToLower_contains0)
+    ORDER BY e.employee_id
+    LIMIT @p4 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-13 22:36:13.825 +05:30 [INF] HTTP GET /api/Employee responded 200 in 26.2665 ms

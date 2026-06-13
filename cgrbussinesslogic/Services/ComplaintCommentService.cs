@@ -84,19 +84,7 @@ public class ComplaintCommentService : IComplaintCommentService
         if (_currentUserService.RoleId == ROLE_ADMIN)
             return;
 
-        if (_currentUserService.RoleId == ROLE_EMPLOYEE &&
-            complaint.RaisedByEmployeeId != _currentUserService.EmployeeId)
-            throw new ForbiddenException("You are not authorized to comment or view this.");
-
-        if (_currentUserService.RoleId == ROLE_GRO &&
-            complaint.RaisedByEmployeeId != _currentUserService.EmployeeId &&
-            complaint.CurrentHandlerEmployeeId != _currentUserService.EmployeeId)
-            throw new ForbiddenException("You are not authorized to comment or view this.");
-
-        if (_currentUserService.RoleId == ROLE_DEPARTMENT_HEAD &&
-            complaint.RaisedByEmployeeId != _currentUserService.EmployeeId &&
-            complaint.Category.DepartmentId != _currentUserService.DepartmentId)
-            throw new ForbiddenException("You are not authorized to comment or view this.");
+        // All other roles are permitted to view comments. Specific visibility is handled in GetByComplaintIdAsync.
     }
 
     private static ComplaintCommentDto MapToDto(ComplaintComment c) => new()
