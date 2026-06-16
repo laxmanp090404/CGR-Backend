@@ -29,4 +29,5 @@ public interface IComplaintService
     Task<IEnumerable<ComplaintAssignmentHistoryDto>> GetAssignmentHistoryAsync(int complaintId);
 
     Task<IEnumerable<ComplaintEscalationDto>> GetEscalationHistoryAsync(int complaintId);
+    Task<PagedResultDto<ComplaintDashboardDto>> GetMyWorkQueueAsync(int page,int pageSize);
 }

@@ -10,7 +10,7 @@ namespace cgrdataaccesslibrary.Repositories;
 
 public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplaintRepository
 {
-    private  readonly CGRContext _context;
+    private readonly CGRContext _context;
     private const short STATUS_CLOSED = 6;
     private const short STATUS_REJECTED = 7;
     private const short STATUS_EXTERNALLY_ESCALATED = 9;
@@ -29,10 +29,10 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
                 .ThenInclude(cat => cat.Department)
             .Include(c => c.RaisedByEmployee)
             .Include(c => c.CurrentHandlerEmployee)
-            .Include(c=>c.ComplaintAttachments)
+            .Include(c => c.ComplaintAttachments)
             .FirstOrDefaultAsync(c => c.ComplaintId == id);
     }
-    
+
     public async Task<(IEnumerable<VComplaintDashboard> Items, int TotalCount)> GetPagedDashboardAsync(
         int page, int pageSize, int? statusId, int? priorityId, int? categoryId, int? departmentId, string? search,
         int employeeIdFilter, string roleFilter, int? deptIdFilter)
@@ -49,12 +49,12 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
         }
         else if (roleFilter == "GRO")
         {
-            query = query.Where(x => x.Complaint.RaisedByEmployeeId == employeeIdFilter 
+            query = query.Where(x => x.Complaint.RaisedByEmployeeId == employeeIdFilter
                                   || x.Complaint.CurrentHandlerEmployeeId == employeeIdFilter);
         }
         else if (roleFilter == "DEPARTMENT_HEAD")
         {
-            query = query.Where(x => x.Complaint.Category.DepartmentId == deptIdFilter 
+            query = query.Where(x => x.Complaint.Category.DepartmentId == deptIdFilter
                                   || x.Complaint.RaisedByEmployeeId == employeeIdFilter);
         }
         // ADMIN sees all
@@ -78,8 +78,8 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
         }
         if (!string.IsNullOrWhiteSpace(search))
         {
-            query = query.Where(x => x.View.ComplaintTitle!.Contains(search) 
-                                  || x.View.RaisedByName!.Contains(search) 
+            query = query.Where(x => x.View.ComplaintTitle!.Contains(search)
+                                  || x.View.RaisedByName!.Contains(search)
                                   || x.View.CurrentHandlerName!.Contains(search));
         }
 
@@ -96,27 +96,48 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
 
     // get complaints that expired above escalationdueat
     public async Task<IEnumerable<Complaint>> GetEscalationDueComplaintsAsync()
-{
-    return await _context.Complaints
-        .Include(c => c.Category)
-        .Include(c => c.Priority)
-        .Include(c => c.CurrentHandlerEmployee)
-        .Where(c =>
-            c.EscalationDueAt <= DateTime.UtcNow &&
-            c.StatusId != STATUS_CLOSED && 
-            c.StatusId != STATUS_REJECTED && 
-            c.StatusId != STATUS_EXTERNALLY_ESCALATED &&
-            c.StatusId!=STATUS_RESOLVED)  
-        .ToListAsync();
-}
+    {
+        return await _context.Complaints
+            .Include(c => c.Category)
+            .Include(c => c.Priority)
+            .Include(c => c.CurrentHandlerEmployee)
+            .Where(c =>
+                c.EscalationDueAt <= DateTime.UtcNow &&
+                c.StatusId != STATUS_CLOSED &&
+                c.StatusId != STATUS_REJECTED &&
+                c.StatusId != STATUS_EXTERNALLY_ESCALATED &&
+                c.StatusId != STATUS_RESOLVED)
+            .ToListAsync();
+    }
 
     public async Task<bool> ExistsRecentDuplicateAsync(int raisedByEmployeeId, string title, string description, TimeSpan window)
     {
-        var threshold = DateTime.UtcNow.Subtract(window);   
+        var threshold = DateTime.UtcNow.Subtract(window);
         return await _context.Complaints.AnyAsync(c =>
             c.RaisedByEmployeeId == raisedByEmployeeId &&
             c.CreatedAt >= threshold &&
             c.ComplaintTitle == title &&
             c.ComplaintDescription == description);
+    }
+    public async Task<(IEnumerable<Complaint> Items, int TotalCount)> GetMyWorkQueueAsync(int page, int pageSize, int employeeId)
+    {
+        var query = _context.Complaints
+            .Include(c => c.Status)
+            .Include(c => c.Priority)
+            .Include(c => c.Category).ThenInclude(cat => cat.Department)
+            .Include(c => c.RaisedByEmployee)
+            .Include(c => c.CurrentHandlerEmployee)
+            .Where(c => c.CurrentHandlerEmployeeId == employeeId &&
+                        (c.StatusId == 2 || c.StatusId == 3 || c.StatusId == 4));
+
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+            .OrderBy(c => c.EscalationDueAt)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (items, totalCount);
     }
 }

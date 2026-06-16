@@ -175,4 +175,18 @@ public async Task<ActionResult<
             .GetEscalationHistoryAsync(
                 complaintId));
 }
+
+[HttpGet("my-work-queue")]
+public async Task<ActionResult<PagedResultDto<ComplaintDashboardDto>>>
+    GetMyWorkQueue(
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10)
+{
+    var result =
+        await _complaintService.GetMyWorkQueueAsync(
+            page,
+            pageSize);
+
+    return Ok(result);
+}
 }

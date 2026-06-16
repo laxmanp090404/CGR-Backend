@@ -8,7 +8,7 @@ public static class RateLimiterExtensions
 {
     public static IServiceCollection AddAppRateLimiting(this IServiceCollection services)
     {
-        services.AddRateLimiter(options =>
+    services.AddRateLimiter(options =>
         {
             options.RejectionStatusCode = 429;
             //rejection response

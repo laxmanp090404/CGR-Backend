@@ -9,3 +9,4 @@ Project Artificats/SecurityPractice.txt
 cgrtest/CoverageReport
 cgrtest/TestResults
 .vscode
+CGR Db.session.sql

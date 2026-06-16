@@ -131,7 +131,7 @@ public class ComplaintService : IComplaintService
                 throw new BusinessRuleException("Category is inactive.");
             }
             //check for duplicate complaint in last 2 minutes with same title and description by same employee
-            var duplicateExists =await _complaintRepository.ExistsRecentDuplicateAsync(_currentUserService.EmployeeId,dto.ComplaintTitle.Trim(),dto.ComplaintDescription.Trim(),TimeSpan.FromMinutes(2));
+            var duplicateExists = await _complaintRepository.ExistsRecentDuplicateAsync(_currentUserService.EmployeeId, dto.ComplaintTitle.Trim(), dto.ComplaintDescription.Trim(), TimeSpan.FromMinutes(2));
 
             if (duplicateExists)
             {
@@ -822,5 +822,43 @@ public class ComplaintService : IComplaintService
             Reason = e.Reason,
             EscalatedAt = e.EscalatedAt
         }).ToList();
+    }
+
+    public async Task<PagedResultDto<ComplaintDashboardDto>> GetMyWorkQueueAsync(int page, int pageSize)
+    {
+        if (_currentUserService.RoleId == ROLE_EMPLOYEE)
+        {
+            throw new ForbiddenException("Employees do not have a complaint work queue.");
+        }
+
+        var result = await _complaintRepository.GetMyWorkQueueAsync(
+            page,
+            pageSize,
+            _currentUserService.EmployeeId);
+
+        var items = result.Items.Select(c => new ComplaintDashboardDto
+        {
+            ComplaintId = c.ComplaintId,
+            ComplaintTitle = c.ComplaintTitle,
+            StatusName = c.Status.StatusName,
+            PriorityName = c.Priority.PriorityName,
+            CategoryName = c.Category.CategoryName,
+            DepartmentName = c.Category.Department.DepartmentName,
+            RaisedByName = c.RaisedByEmployee.EmployeeName,
+            CurrentHandlerName = c.CurrentHandlerEmployee?.EmployeeName,
+            EscalationLevel = c.EscalationLevel,
+            EscalationDueAt = c.EscalationDueAt,
+            CreatedAt = c.CreatedAt,
+            UpdatedAt = c.UpdatedAt,
+            ClosedAt = c.ClosedAt
+        });
+
+        return new PagedResultDto<ComplaintDashboardDto>
+        {
+            Items = items,
+            TotalCount = result.TotalCount,
+            Page = page,
+            PageSize = pageSize
+        };
     }
 }

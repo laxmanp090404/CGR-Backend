@@ -1,4 +1,5 @@
 using cgrbussinesslogic.Interfaces;
+using cgrdataaccesslibrary.Context;
 using cgrdataaccesslibrary.Interfaces;
 using cgrmodellibrary.Models;
 using Microsoft.Extensions.Logging;
@@ -30,6 +31,8 @@ public class SlaEscalationJob : ISlaEscalationJob
     private readonly INotificationService _notificationService;
     private readonly ILogger<SlaEscalationJob> _logger;
 
+    private readonly CGRContext _context;
+
     public SlaEscalationJob(
         IComplaintRepository complaintRepository,
         IComplaintAssignmentEngine assignmentEngine,
@@ -38,7 +41,8 @@ public class SlaEscalationJob : ISlaEscalationJob
         IRepository<int, ComplaintEscalation> escalationRepository,
         IEscalationRuleRepository escalationRuleRepository,
         INotificationService notificationService,
-        ILogger<SlaEscalationJob> logger)
+        ILogger<SlaEscalationJob> logger,
+        CGRContext context)
     {
         _complaintRepository = complaintRepository;
         _assignmentEngine = assignmentEngine;
@@ -48,6 +52,7 @@ public class SlaEscalationJob : ISlaEscalationJob
         _notificationService = notificationService;
         _escalationRuleRepository = escalationRuleRepository;
         _logger = logger;
+        _context = context;
     }
 
     public async Task ProcessEscalationsAsync()
@@ -66,6 +71,9 @@ public class SlaEscalationJob : ISlaEscalationJob
 
     private async Task ProcessComplaintAsync(Complaint complaint)
     {
+        using var transaction = await _context.Database.BeginTransactionAsync();
+        try
+        {
         var oldHandler = complaint.CurrentHandlerEmployeeId;
 
         var oldLevel = complaint.EscalationLevel;
@@ -77,6 +85,7 @@ public class SlaEscalationJob : ISlaEscalationJob
         if (assignment.EscalationLevel == 3)
         {
             await HandleExternalEscalationAsync(complaint);
+            await transaction.CommitAsync();
 
             return;
         }
@@ -110,7 +119,15 @@ public class SlaEscalationJob : ISlaEscalationJob
             "Complaint Escalated",
             $"Complaint '{complaint.ComplaintTitle}' has been escalated to you.",
             complaint.ComplaintId);
+            await transaction.CommitAsync();
         _logger.LogWarning($"Complaint {complaint.ComplaintId} escalated from level {oldLevel} to {complaint.EscalationLevel}");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Error processing escalation for complaint {complaint.ComplaintId}");
+            await transaction.RollbackAsync();
+        }
+      
     }
 
     private async Task HandleExternalEscalationAsync(
@@ -132,6 +149,7 @@ public class SlaEscalationJob : ISlaEscalationJob
 
         complaint.UpdatedAt =
             DateTime.UtcNow;
+            
 
         await _complaintRepository.Update(
             complaint,
@@ -161,6 +179,7 @@ public class SlaEscalationJob : ISlaEscalationJob
             $"Your complaint '{complaint.ComplaintTitle}' has been escalated to a higher authority out of the system.",
             complaint.ComplaintId);
         _logger.LogError($"Complaint {complaint.ComplaintId} externally escalated after final SLA breach");
+
     }
 
     private async Task CreateEscalationRecordAsync(Complaint complaint, int newHandlerId,short breachedLevel)
