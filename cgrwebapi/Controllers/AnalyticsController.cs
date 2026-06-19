@@ -93,7 +93,6 @@ public class AnalyticsController : ControllerBase
     }
 
 [HttpGet("complaint-summary")]
-[Authorize(Policy = "DeptHeadOrAdmin")]
 public async Task<IActionResult> GetComplaintSummary()
 {
     var result = await _analyticsService.GetComplaintAnalyticsAsync();

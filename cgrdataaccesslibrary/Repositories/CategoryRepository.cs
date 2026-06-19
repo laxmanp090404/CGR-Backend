@@ -36,6 +36,7 @@ public class CategoryRepository : AbstractRepository<int, Category>, ICategoryRe
         var query = _context.Categories
             .Include(c => c.Department)
             .Include(c => c.DefaultPriority)
+            .Include(c => c.EscalationRules)
             .AsQueryable();
 
         if (departmentId.HasValue)

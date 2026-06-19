@@ -37,10 +37,10 @@ public class CategoryService : ICategoryService
         _context = context;
     }
 
-    public async Task<IEnumerable<CategoryDto>> GetAllAsync(bool? isActive)
+    public async Task<IEnumerable<CategoryDto>> GetAllAsync(bool? isActive,int? departmentId)
     {
         var categories =
-            await _categoryRepository.GetAllAsync(isActive);
+            await _categoryRepository.GetByDepartmentAsync(departmentId, isActive);
 
         return categories.Select(MapToDto);
     }

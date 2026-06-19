@@ -88,7 +88,7 @@ public class AnalyticsRepository : IAnalyticsRepository
     var overdueComplaints = await complaints.CountAsync(c =>
         c.EscalationDueAt != null &&
         c.EscalationDueAt < DateTime.UtcNow &&
-        !c.Status.IsTerminal);
+        OpenStatuses.Contains(c.StatusId));
 
     var pendingComplaintRequests = await _context.ComplaintRequests
         .AsNoTracking()
@@ -224,7 +224,7 @@ public async Task<GroDashboardDto> GetGroDashboardAsync(int employeeId)
         OverdueAssignedToMe = await complaints.CountAsync(c =>
             c.EscalationDueAt != null &&
             c.EscalationDueAt < DateTime.UtcNow &&
-            !c.Status.IsTerminal),
+            OpenStatuses.Contains(c.StatusId)),
 
         AvgResolutionHours = resolutionHours.Count == 0
             ? null
@@ -288,7 +288,7 @@ public async Task<GroDashboardDto> GetGroDashboardAsync(int employeeId)
             OverdueComplaints = await complaints.CountAsync(c =>
                 c.EscalationDueAt != null &&
                 c.EscalationDueAt < DateTime.UtcNow &&
-                !c.Status.IsTerminal),
+                OpenStatuses.Contains(c.StatusId)),
             AvgResolutionHours = resolutionHours.Count == 0
                 ? null
                 : Math.Round(resolutionHours.Average(), 1),
@@ -376,7 +376,7 @@ public async Task<ComplaintAnalyticsDto> GetComplaintAnalyticsAsync(short roleId
 
     var slaBreachedComplaintsCount = await complaints.CountAsync(c =>
         c.EscalationDueAt != null &&
-        ((c.ResolvedAt == null && !c.Status.IsTerminal && c.EscalationDueAt < DateTime.UtcNow) ||
+        ((c.ResolvedAt == null && OpenStatuses.Contains(c.StatusId) && c.EscalationDueAt < DateTime.UtcNow) ||
          (c.ResolvedAt != null && (c.StatusId == STATUS_RESOLVED || c.StatusId == STATUS_CLOSED) && c.ResolvedAt > c.EscalationDueAt)));
 
     var resolutionHours = await complaints

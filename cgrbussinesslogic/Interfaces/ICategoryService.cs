@@ -5,7 +5,7 @@ namespace cgrbussinesslogic.Interfaces;
 public interface ICategoryService
 {
     Task<IEnumerable<CategoryDto>> GetAllAsync(
-        bool? isActive);
+        bool? isActive, int? departmentId);
 
     Task<CategoryDto> GetByIdAsync(
         int categoryId);

@@ -18,9 +18,9 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAll([FromQuery] bool? isActive)
+    public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAll([FromQuery] bool? isActive, [FromQuery] int? departmentId)
     {
-        var result =await _categoryService.GetAllAsync(isActive);
+        var result =await _categoryService.GetAllAsync(isActive, departmentId);
 
         return Ok(result);
     }
