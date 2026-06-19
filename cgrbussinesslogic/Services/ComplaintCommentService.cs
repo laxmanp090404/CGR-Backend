@@ -39,8 +39,25 @@ public class ComplaintCommentService : IComplaintCommentService
 
         ValidateCommentAccess(complaint);
 
+
         var comments = await _commentRepository.GetByComplaintIdAsync(complaintId);
 
+        if(_currentUserService.RoleId == ROLE_DEPARTMENT_HEAD)
+        {
+            if(complaint.Category.DepartmentId != _currentUserService.DepartmentId &&
+               complaint.RaisedByEmployeeId != _currentUserService.EmployeeId)
+            {
+                throw new ForbiddenException("You do not have access to view comments on this complaint.");
+            }
+        }
+        if(_currentUserService.RoleId == ROLE_GRO || _currentUserService.RoleId == ROLE_EMPLOYEE)
+        {
+            if(complaint.RaisedByEmployeeId != _currentUserService.EmployeeId &&
+               complaint.CurrentHandlerEmployeeId != _currentUserService.EmployeeId)
+            {
+                throw new ForbiddenException("You do not have access to view comments on this complaint.");
+            }
+        }
         bool canSeeInternal = _currentUserService.RoleId is ROLE_GRO or ROLE_DEPARTMENT_HEAD or ROLE_ADMIN && complaint.RaisedByEmployeeId != _currentUserService.EmployeeId;;
 
         return comments
@@ -57,6 +74,11 @@ public class ComplaintCommentService : IComplaintCommentService
 
         if (complaint.StatusId is STATUS_CLOSED or STATUS_REJECTED or STATUS_EXTERNALLY_ESCALATED)
             throw new BusinessRuleException($"Cannot comment on complaints in status {complaint.Status?.StatusName}");
+        bool isRaiserorHandler = complaint.RaisedByEmployeeId == _currentUserService.EmployeeId ||
+                                    complaint.CurrentHandlerEmployeeId == _currentUserService.EmployeeId;
+        if(!isRaiserorHandler && _currentUserService.RoleId!=ROLE_ADMIN)
+            throw new ForbiddenException("Only the complaint raiser,Handler or Admin can comment on this complaint.");
+        
 
         if (dto.IsInternal)
         {
@@ -66,6 +88,8 @@ public class ComplaintCommentService : IComplaintCommentService
             if (complaint.RaisedByEmployeeId == _currentUserService.EmployeeId)
                 throw new ForbiddenException("Cannot add internal comments on your own complaint.");
         }
+        if(await _commentRepository.ExistsRecentDuplicateAsync(_currentUserService.EmployeeId, dto.CommentText, TimeSpan.FromMinutes(5)))
+            throw new BusinessRuleException("You have already added a similar comment recently. Please wait if you want to add the same comment again.");
         var comment = new ComplaintComment
         {
             ComplaintId = complaintId,
@@ -76,7 +100,9 @@ public class ComplaintCommentService : IComplaintCommentService
         };
 
         var created = await _commentRepository.Create(comment);
-        return MapToDto(created);
+        var reloaded = await _commentRepository.Get(created.CommentId)
+            ?? created;
+        return MapToDto(reloaded);
     }
 
     private void ValidateCommentAccess(Complaint complaint)
@@ -84,7 +110,7 @@ public class ComplaintCommentService : IComplaintCommentService
         if (_currentUserService.RoleId == ROLE_ADMIN)
             return;
 
-        // All other roles are permitted to view comments. Specific visibility is handled in GetByComplaintIdAsync.
+        
     }
 
     private static ComplaintCommentDto MapToDto(ComplaintComment c) => new()

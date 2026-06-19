@@ -53,6 +53,15 @@ public static class RateLimiterExtensions
                         Window = TimeSpan.FromMinutes(1),
                         QueueLimit = 0
                     }));
+            options.AddPolicy("EmployeeUpdate", context =>
+                RateLimitPartition.GetFixedWindowLimiter(
+                    context.User.FindFirst("employee_id")?.Value ?? context.Connection.RemoteIpAddress?.ToString() ?? "anonymous",
+                    _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 3,
+                        Window = TimeSpan.FromMinutes(1),
+                        QueueLimit = 0
+                    }));
 
             options.AddPolicy("Login", context =>
                 RateLimitPartition.GetFixedWindowLimiter(

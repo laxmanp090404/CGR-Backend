@@ -50,6 +50,7 @@ public async Task<ActionResult>Review(int requestId,ReviewComplaintRequestDto dt
 }
 
 [HttpGet]
+[Authorize(Roles = "ADMIN,DEPARTMENT_HEAD,GRO")]
 public async Task<ActionResult<PagedResultDto<ComplaintRequestDto>>> GetPaged(
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 10,

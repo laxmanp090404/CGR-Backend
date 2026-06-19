@@ -5,6 +5,7 @@ using cgrmodellibrary.DTOs.RoleRequest;
 using cgrmodellibrary.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace cgrwebapi.Controllers;
 [Route("api/[controller]")]
@@ -51,7 +52,7 @@ public class EmployeeController : ControllerBase
 
         return Ok(result);
     }
-
+    [EnableRateLimiting("EmployeeUpdate")]
     [HttpPut("{employeeId:int}")]
     public async Task<ActionResult<EmployeeDto>> Update(
         int employeeId,

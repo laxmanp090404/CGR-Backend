@@ -1,0 +1,1276 @@
+2026-06-18 00:19:34.240 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 01:00:20.344 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 01:34:32.436 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 02:01:24.881 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 02:34:37.153 +05:30 [INF] Executed DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 03:02:21.302 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 03:54:56.768 +05:30 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 04:20:25.449 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 05:04:22.533 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 05:56:14.930 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 06:05:22.871 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 06:20:14.981 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 06:25:03.596 +05:30 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 06:30:03.751 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 06:35:04.003 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 06:40:04.234 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 06:57:34.402 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 07:00:04.506 +05:30 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 07:04:37.360 +05:30 [INF] HTTP PUT /api/complaint-requests/3/review responded 403 in 6.9653 ms
+2026-06-18 07:05:00.879 +05:30 [INF] Removed 8 outdated record(s) from 'aggregatedcounter' table.
+2026-06-18 07:05:01.950 +05:30 [INF] Removed 17 outdated record(s) from 'job' table.
+2026-06-18 07:05:04.729 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 07:10:04.923 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 07:15:02.124 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 07:20:02.299 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 07:25:02.451 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 07:26:39.694 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@requestTypeId_Value='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM complaint_requests AS c
+WHERE c.request_type_id = @requestTypeId_Value
+2026-06-18 07:26:39.730 +05:30 [INF] Executed DbCommand (17ms) [Parameters=[@requestTypeId_Value='?' (DbType = Int16), @p2='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c1.request_id, c1.complaint_id, c1.created_at, c1.remarks, c1.request_status_id, c1.request_type_id, c1.requested_by, c1.reviewed_at, c1.reviewed_by, c0.complaint_id, c0.category_id, c0.closed_at, c0.complaint_description, c0.complaint_title, c0.created_at, c0.current_handler_employee_id, c0.escalation_due_at, c0.escalation_level, c0.priority_id, c0.raised_by_employee_id, c0.reopened_count, c0.resolved_at, c0.status_id, c0.updated_at, r.request_type_id, r.request_type_name, r0.request_status_id, r0.status_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at, e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at
+FROM (
+    SELECT c.request_id, c.complaint_id, c.created_at, c.remarks, c.request_status_id, c.request_type_id, c.requested_by, c.reviewed_at, c.reviewed_by
+    FROM complaint_requests AS c
+    WHERE c.request_type_id = @requestTypeId_Value
+    ORDER BY c.created_at DESC
+    LIMIT @p2 OFFSET @p
+) AS c1
+INNER JOIN complaints AS c0 ON c1.complaint_id = c0.complaint_id
+INNER JOIN request_types AS r ON c1.request_type_id = r.request_type_id
+INNER JOIN request_statuses AS r0 ON c1.request_status_id = r0.request_status_id
+INNER JOIN employees AS e ON c1.requested_by = e.employee_id
+LEFT JOIN employees AS e0 ON c1.reviewed_by = e0.employee_id
+ORDER BY c1.created_at DESC
+2026-06-18 07:26:39.740 +05:30 [INF] HTTP GET /api/complaint-requests responded 200 in 70.5289 ms
+2026-06-18 07:27:27.166 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@requestedBy_Value='?' (DbType = Int32), @requestTypeId_Value='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM complaint_requests AS c
+WHERE c.requested_by = @requestedBy_Value AND c.request_type_id = @requestTypeId_Value
+2026-06-18 07:27:27.188 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[@requestedBy_Value='?' (DbType = Int32), @requestTypeId_Value='?' (DbType = Int16), @p3='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c1.request_id, c1.complaint_id, c1.created_at, c1.remarks, c1.request_status_id, c1.request_type_id, c1.requested_by, c1.reviewed_at, c1.reviewed_by, c0.complaint_id, c0.category_id, c0.closed_at, c0.complaint_description, c0.complaint_title, c0.created_at, c0.current_handler_employee_id, c0.escalation_due_at, c0.escalation_level, c0.priority_id, c0.raised_by_employee_id, c0.reopened_count, c0.resolved_at, c0.status_id, c0.updated_at, r.request_type_id, r.request_type_name, r0.request_status_id, r0.status_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at, e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at
+FROM (
+    SELECT c.request_id, c.complaint_id, c.created_at, c.remarks, c.request_status_id, c.request_type_id, c.requested_by, c.reviewed_at, c.reviewed_by
+    FROM complaint_requests AS c
+    WHERE c.requested_by = @requestedBy_Value AND c.request_type_id = @requestTypeId_Value
+    ORDER BY c.created_at DESC
+    LIMIT @p3 OFFSET @p
+) AS c1
+INNER JOIN complaints AS c0 ON c1.complaint_id = c0.complaint_id
+INNER JOIN request_types AS r ON c1.request_type_id = r.request_type_id
+INNER JOIN request_statuses AS r0 ON c1.request_status_id = r0.request_status_id
+INNER JOIN employees AS e ON c1.requested_by = e.employee_id
+LEFT JOIN employees AS e0 ON c1.reviewed_by = e0.employee_id
+ORDER BY c1.created_at DESC
+2026-06-18 07:27:27.189 +05:30 [INF] HTTP GET /api/complaint-requests responded 200 in 31.6438 ms
+2026-06-18 07:28:38.918 +05:30 [INF] Server w4n00tw13c-laxmanp:99691:7e1a282f caught stopping signal...
+2026-06-18 07:28:38.919 +05:30 [INF] Application is shutting down...
+2026-06-18 07:28:38.921 +05:30 [INF] Server w4n00tw13c-laxmanp:99691:7e1a282f All dispatchers stopped
+2026-06-18 07:28:38.960 +05:30 [INF] Server w4n00tw13c-laxmanp:99691:7e1a282f successfully reported itself as stopped in 1.2615 ms
+2026-06-18 07:28:38.960 +05:30 [INF] Server w4n00tw13c-laxmanp:99691:7e1a282f has been stopped in total 40.9406 ms
+2026-06-18 07:28:48.637 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-06-18 07:28:48.739 +05:30 [INF] Hangfire SQL objects installed.
+2026-06-18 07:28:48.911 +05:30 [INF] Now listening on: http://localhost:5162
+2026-06-18 07:28:48.913 +05:30 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: cgrdb, Schema: hangfire'
+2026-06-18 07:28:48.913 +05:30 [INF] Using the following options for PostgreSQL job storage:
+2026-06-18 07:28:48.913 +05:30 [INF]     Queue poll interval: 00:00:15.
+2026-06-18 07:28:48.913 +05:30 [INF]     Invisibility timeout: 00:30:00.
+2026-06-18 07:28:48.913 +05:30 [INF]     Use sliding invisibility timeout: False.
+2026-06-18 07:28:48.913 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-06-18 07:28:48.918 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-18 07:28:48.918 +05:30 [INF] Hosting environment: Development
+2026-06-18 07:28:48.918 +05:30 [INF] Content root path: /Users/laxmanp/Self Tasks/CGR/cgrwebapi
+2026-06-18 07:28:48.924 +05:30 [INF] Server w4n00tw13c-laxmanp:3563:91afe30a successfully announced in 6.5324 ms
+2026-06-18 07:28:48.926 +05:30 [INF] Server w4n00tw13c-laxmanp:3563:91afe30a is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-06-18 07:28:48.928 +05:30 [INF] Server w4n00tw13c-laxmanp:3563:91afe30a all the dispatchers started
+2026-06-18 07:28:48.988 +05:30 [INF] Removed 1 outdated record(s) from 'aggregatedcounter' table.
+2026-06-18 07:28:50.015 +05:30 [INF] Removed 1 outdated record(s) from 'job' table.
+2026-06-18 07:28:56.626 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-18 07:28:56.672 +05:30 [INF] HTTP GET /api/complaint-requests responded 403 in 46.9174 ms
+2026-06-18 07:30:04.735 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 07:35:04.407 +05:30 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 07:40:04.099 +05:30 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 07:45:03.889 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 07:50:03.609 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 07:55:03.869 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 08:00:04.138 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 08:36:40.128 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 09:10:07.707 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 12:43:14.213 +05:30 [INF] Start installing Hangfire SQL objects...
+2026-06-18 12:43:14.339 +05:30 [INF] Hangfire SQL objects installed.
+2026-06-18 12:43:14.597 +05:30 [INF] Now listening on: http://localhost:5162
+2026-06-18 12:43:14.599 +05:30 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: cgrdb, Schema: hangfire'
+2026-06-18 12:43:14.599 +05:30 [INF] Using the following options for PostgreSQL job storage:
+2026-06-18 12:43:14.600 +05:30 [INF]     Queue poll interval: 00:00:15.
+2026-06-18 12:43:14.600 +05:30 [INF]     Invisibility timeout: 00:30:00.
+2026-06-18 12:43:14.600 +05:30 [INF]     Use sliding invisibility timeout: False.
+2026-06-18 12:43:14.600 +05:30 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-06-18 12:43:14.605 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-18 12:43:14.605 +05:30 [INF] Hosting environment: Development
+2026-06-18 12:43:14.605 +05:30 [INF] Content root path: /Users/laxmanp/Self Tasks/CGR/cgrwebapi
+2026-06-18 12:43:14.619 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:cbd34009 successfully announced in 13.6825 ms
+2026-06-18 12:43:14.621 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:cbd34009 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-06-18 12:43:14.624 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:cbd34009 all the dispatchers started
+2026-06-18 12:43:14.632 +05:30 [INF] 1 servers were removed due to timeout
+2026-06-18 12:43:14.696 +05:30 [INF] Removed 5 outdated record(s) from 'aggregatedcounter' table.
+2026-06-18 12:43:15.473 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 12:43:15.733 +05:30 [INF] Removed 8 outdated record(s) from 'job' table.
+2026-06-18 12:43:26.301 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-06-18 12:43:26.440 +05:30 [INF] Executed DbCommand (44ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM v_complaint_dashboard AS v
+INNER JOIN complaints AS c ON v.complaint_id = c.complaint_id
+2026-06-18 12:43:26.499 +05:30 [INF] Executed DbCommand (43ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT v.category_name, v.closed_at, v.complaint_id, v.complaint_title, v.created_at, v.current_handler_name, v.current_handler_role, v.department_name, v.escalation_due_at, v.escalation_level, v.is_terminal, v.priority_name, v.priority_weight, v.raised_by_name, v.reopened_count, v.resolved_at, v.status_name, v.updated_at
+FROM v_complaint_dashboard AS v
+INNER JOIN complaints AS c ON v.complaint_id = c.complaint_id
+ORDER BY c.created_at DESC
+LIMIT @p1 OFFSET @p
+2026-06-18 12:43:26.520 +05:30 [INF] HTTP GET /api/Complaint responded 200 in 219.8473 ms
+2026-06-18 12:45:17.693 +05:30 [INF] Executed DbCommand (525ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 12:50:02.434 +05:30 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 12:55:02.626 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 13:00:03.315 +05:30 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 13:18:05.900 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 13:34:05.461 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 13:34:16.672 +05:30 [INF] 1 servers were removed due to timeout
+2026-06-18 13:34:17.162 +05:30 [WRN] Server w4n00tw13c-laxmanp:26474:cbd34009 was considered dead by other servers, restarting...
+2026-06-18 13:34:17.163 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:cbd34009 caught restart signal...
+2026-06-18 13:34:17.165 +05:30 [WRN] Server w4n00tw13c-laxmanp:26474:cbd34009 stopped non-gracefully due to ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler. Outstanding work on those dispatchers could be aborted, and there can be delays in background processing. This server instance will be incorrectly shown as active for a while. To avoid non-graceful shutdowns, investigate what prevents from stopping gracefully and add CancellationToken support for those methods.
+2026-06-18 13:34:17.169 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:cbd34009 successfully reported itself as stopped in 1.1675 ms
+2026-06-18 13:34:17.169 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:cbd34009 has been stopped in total 5.0577 ms
+2026-06-18 13:34:17.173 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:4b4164b2 successfully announced in 3.7455 ms
+2026-06-18 13:34:17.174 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:4b4164b2 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-06-18 13:34:17.177 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:4b4164b2 all the dispatchers started
+2026-06-18 13:34:17.234 +05:30 [INF] Removed 1 outdated record(s) from 'aggregatedcounter' table.
+2026-06-18 13:34:18.270 +05:30 [INF] Removed 2 outdated record(s) from 'job' table.
+2026-06-18 13:35:02.450 +05:30 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 13:40:02.709 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 13:45:03.762 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 13:50:03.987 +05:30 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 13:55:04.226 +05:30 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 14:00:04.433 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 14:05:04.825 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 14:10:05.036 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 14:15:05.298 +05:30 [INF] Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 14:20:05.496 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 14:25:05.723 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 14:30:06.045 +05:30 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 14:30:12.078 +05:30 [INF] Executed DbCommand (27ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.category_id, c.category_name, c.created_at, c.default_priority_id, c.department_id, c.is_active, c.sla_hours, c.updated_at, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.escalation_rule_id, e.category_id, e.escalate_after_hours, e.escalation_level, e.priority_id
+FROM categories AS c
+INNER JOIN departments AS d ON c.department_id = d.department_id
+INNER JOIN priorities AS p ON c.default_priority_id = p.priority_id
+LEFT JOIN escalation_rules AS e ON c.category_id = e.category_id
+ORDER BY c.category_name, c.category_id, d.department_id, p.priority_id
+2026-06-18 14:30:12.153 +05:30 [INF] HTTP GET /api/Category responded 200 in 166.6269 ms
+2026-06-18 14:30:46.341 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.category_id, c.category_name, c.created_at, c.default_priority_id, c.department_id, c.is_active, c.sla_hours, c.updated_at
+FROM categories AS c
+WHERE c.category_id = @p
+LIMIT 1
+2026-06-18 14:30:46.357 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@raisedByEmployeeId='?' (DbType = Int32), @threshold='?' (DbType = DateTime), @ToLower='?', @ToLower3='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM complaints AS c
+    WHERE c.raised_by_employee_id = @raisedByEmployeeId AND c.created_at >= @threshold AND lower(btrim(c.complaint_title, E' \t\n\r')) = @ToLower AND lower(btrim(c.complaint_description, E' \t\n\r')) = @ToLower3)
+2026-06-18 14:30:46.445 +05:30 [INF] Executed DbCommand (20ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime), @p7='?' (DbType = Int16), @p8='?' (DbType = Int16), @p9='?' (DbType = Int32), @p10='?' (DbType = Int16), @p11='?' (DbType = DateTime), @p12='?' (DbType = Int16), @p13='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaints (category_id, closed_at, complaint_description, complaint_title, created_at, current_handler_employee_id, escalation_due_at, escalation_level, priority_id, raised_by_employee_id, reopened_count, resolved_at, status_id, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13)
+RETURNING complaint_id;
+2026-06-18 14:30:46.482 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (DbType = Int32), @p5='?' (DbType = Int16), @p6='?' (DbType = Int32), @p7='?' (DbType = Int16), @p8='?', @p9='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaint_history (changed_by, complaint_id, created_at, escalation_level_snapshot, new_handler_employee_id, new_status_id, old_handler_employee_id, old_status_id, remarks, role_id_at_action_time)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9)
+RETURNING history_id;
+2026-06-18 14:30:46.493 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@complaintId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT DISTINCT c.new_handler_employee_id
+FROM complaint_assignment_history AS c
+WHERE c.complaint_id = @complaintId
+2026-06-18 14:30:46.504 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@departmentId_Value='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT v.active_complaint_count, v.department_id, v.employee_created_at, v.employee_id, v.employee_name, v.weighted_score
+FROM v_gro_active_workload AS v
+WHERE v.department_id = @departmentId_Value
+ORDER BY v.weighted_score, v.employee_created_at
+2026-06-18 14:30:46.510 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p14='?' (DbType = Int32), @p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime), @p7='?' (DbType = Int16), @p8='?' (DbType = Int16), @p9='?' (DbType = Int32), @p10='?' (DbType = Int16), @p11='?' (DbType = DateTime), @p12='?' (DbType = Int16), @p13='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+UPDATE complaints SET category_id = @p0, closed_at = @p1, complaint_description = @p2, complaint_title = @p3, created_at = @p4, current_handler_employee_id = @p5, escalation_due_at = @p6, escalation_level = @p7, priority_id = @p8, raised_by_employee_id = @p9, reopened_count = @p10, resolved_at = @p11, status_id = @p12, updated_at = @p13
+WHERE complaint_id = @p14;
+2026-06-18 14:30:46.524 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?', @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaint_assignment_history (assigned_at, assigned_by, assignment_reason, complaint_id, new_handler_employee_id, old_handler_employee_id)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING assignment_history_id;
+2026-06-18 14:30:46.548 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Boolean), @p3='?', @p4='?' (DbType = Int16), @p5='?' (DbType = Int32), @p6='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO notifications (created_at, employee_id, is_read, message, notification_type_id, reference_complaint_id, title)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING notification_id;
+2026-06-18 14:30:46.552 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Boolean), @p3='?', @p4='?' (DbType = Int16), @p5='?' (DbType = Int32), @p6='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO notifications (created_at, employee_id, is_read, message, notification_type_id, reference_complaint_id, title)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING notification_id;
+2026-06-18 14:30:46.556 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (DbType = Int32), @p5='?' (DbType = Int16), @p6='?' (DbType = Int32), @p7='?' (DbType = Int16), @p8='?', @p9='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaint_history (changed_by, complaint_id, created_at, escalation_level_snapshot, new_handler_employee_id, new_status_id, old_handler_employee_id, old_status_id, remarks, role_id_at_action_time)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9)
+RETURNING history_id;
+2026-06-18 14:30:46.564 +05:30 [WRN] Attachment exceeds allowed size of 5 MB.
+2026-06-18 14:30:46.567 +05:30 [INF] HTTP POST /api/Complaint responded 400 in 302.1658 ms
+2026-06-18 14:30:59.163 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.category_id, c.category_name, c.created_at, c.default_priority_id, c.department_id, c.is_active, c.sla_hours, c.updated_at
+FROM categories AS c
+WHERE c.category_id = @p
+LIMIT 1
+2026-06-18 14:30:59.164 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@raisedByEmployeeId='?' (DbType = Int32), @threshold='?' (DbType = DateTime), @ToLower='?', @ToLower3='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM complaints AS c
+    WHERE c.raised_by_employee_id = @raisedByEmployeeId AND c.created_at >= @threshold AND lower(btrim(c.complaint_title, E' \t\n\r')) = @ToLower AND lower(btrim(c.complaint_description, E' \t\n\r')) = @ToLower3)
+2026-06-18 14:30:59.166 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime), @p7='?' (DbType = Int16), @p8='?' (DbType = Int16), @p9='?' (DbType = Int32), @p10='?' (DbType = Int16), @p11='?' (DbType = DateTime), @p12='?' (DbType = Int16), @p13='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaints (category_id, closed_at, complaint_description, complaint_title, created_at, current_handler_employee_id, escalation_due_at, escalation_level, priority_id, raised_by_employee_id, reopened_count, resolved_at, status_id, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13)
+RETURNING complaint_id;
+2026-06-18 14:30:59.169 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (DbType = Int32), @p5='?' (DbType = Int16), @p6='?' (DbType = Int32), @p7='?' (DbType = Int16), @p8='?', @p9='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaint_history (changed_by, complaint_id, created_at, escalation_level_snapshot, new_handler_employee_id, new_status_id, old_handler_employee_id, old_status_id, remarks, role_id_at_action_time)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9)
+RETURNING history_id;
+2026-06-18 14:30:59.170 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@complaintId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT DISTINCT c.new_handler_employee_id
+FROM complaint_assignment_history AS c
+WHERE c.complaint_id = @complaintId
+2026-06-18 14:30:59.172 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@departmentId_Value='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT v.active_complaint_count, v.department_id, v.employee_created_at, v.employee_id, v.employee_name, v.weighted_score
+FROM v_gro_active_workload AS v
+WHERE v.department_id = @departmentId_Value
+ORDER BY v.weighted_score, v.employee_created_at
+2026-06-18 14:30:59.174 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p14='?' (DbType = Int32), @p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime), @p7='?' (DbType = Int16), @p8='?' (DbType = Int16), @p9='?' (DbType = Int32), @p10='?' (DbType = Int16), @p11='?' (DbType = DateTime), @p12='?' (DbType = Int16), @p13='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+UPDATE complaints SET category_id = @p0, closed_at = @p1, complaint_description = @p2, complaint_title = @p3, created_at = @p4, current_handler_employee_id = @p5, escalation_due_at = @p6, escalation_level = @p7, priority_id = @p8, raised_by_employee_id = @p9, reopened_count = @p10, resolved_at = @p11, status_id = @p12, updated_at = @p13
+WHERE complaint_id = @p14;
+2026-06-18 14:30:59.176 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?', @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaint_assignment_history (assigned_at, assigned_by, assignment_reason, complaint_id, new_handler_employee_id, old_handler_employee_id)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+RETURNING assignment_history_id;
+2026-06-18 14:30:59.177 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Boolean), @p3='?', @p4='?' (DbType = Int16), @p5='?' (DbType = Int32), @p6='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO notifications (created_at, employee_id, is_read, message, notification_type_id, reference_complaint_id, title)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING notification_id;
+2026-06-18 14:30:59.179 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Boolean), @p3='?', @p4='?' (DbType = Int16), @p5='?' (DbType = Int32), @p6='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO notifications (created_at, employee_id, is_read, message, notification_type_id, reference_complaint_id, title)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING notification_id;
+2026-06-18 14:30:59.182 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (DbType = Int32), @p5='?' (DbType = Int16), @p6='?' (DbType = Int32), @p7='?' (DbType = Int16), @p8='?', @p9='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaint_history (changed_by, complaint_id, created_at, escalation_level_snapshot, new_handler_employee_id, new_status_id, old_handler_employee_id, old_status_id, remarks, role_id_at_action_time)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9)
+RETURNING history_id;
+2026-06-18 14:30:59.206 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?', @p3='?' (DbType = Int64), @p4='?', @p5='?', @p6='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaint_attachments (complaint_id, created_at, file_path, file_size_bytes, mime_type, original_file_name, uploaded_by)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING attachment_id;
+2026-06-18 14:30:59.250 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:30:59.277 +05:30 [INF] Complaint 35 created by Employee 18
+2026-06-18 14:30:59.292 +05:30 [INF] HTTP POST /api/Complaint responded 201 in 143.0978 ms
+2026-06-18 14:33:11.864 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:33:11.871 +05:30 [INF] HTTP GET /api/Complaint/35 responded 200 in 30.1111 ms
+2026-06-18 14:33:20.128 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:33:20.129 +05:30 [WRN] You are not authorized to view this complaint.
+2026-06-18 14:33:20.129 +05:30 [INF] HTTP GET /api/Complaint/35 responded 403 in 9.3595 ms
+2026-06-18 14:33:30.284 +05:30 [INF] Executed DbCommand (20ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:33:30.288 +05:30 [WRN] You are not authorized to view this complaint.
+2026-06-18 14:33:30.289 +05:30 [INF] HTTP GET /api/Complaint/35 responded 403 in 27.4595 ms
+2026-06-18 14:33:37.621 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:33:37.622 +05:30 [INF] HTTP GET /api/Complaint/35 responded 200 in 9.9161 ms
+2026-06-18 14:34:07.764 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:34:07.768 +05:30 [WRN] Only the current handler can start progress.
+2026-06-18 14:34:07.768 +05:30 [INF] HTTP PUT /api/complaint/35/start-progress responded 403 in 27.8477 ms
+2026-06-18 14:34:18.901 +05:30 [INF] Executed DbCommand (22ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:34:18.906 +05:30 [WRN] Only the current handler can start progress.
+2026-06-18 14:34:18.906 +05:30 [INF] HTTP PUT /api/complaint/35/start-progress responded 403 in 28.4765 ms
+2026-06-18 14:34:19.458 +05:30 [INF] Removed 1 outdated record(s) from 'aggregatedcounter' table.
+2026-06-18 14:34:20.505 +05:30 [INF] Removed 3 outdated record(s) from 'job' table.
+2026-06-18 14:34:25.178 +05:30 [INF] Executed DbCommand (19ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:34:25.198 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@p14='?' (DbType = Int32), @p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime), @p7='?' (DbType = Int16), @p8='?' (DbType = Int16), @p9='?' (DbType = Int32), @p10='?' (DbType = Int16), @p11='?' (DbType = DateTime), @p12='?' (DbType = Int16), @p13='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+UPDATE complaints SET category_id = @p0, closed_at = @p1, complaint_description = @p2, complaint_title = @p3, created_at = @p4, current_handler_employee_id = @p5, escalation_due_at = @p6, escalation_level = @p7, priority_id = @p8, raised_by_employee_id = @p9, reopened_count = @p10, resolved_at = @p11, status_id = @p12, updated_at = @p13
+WHERE complaint_id = @p14;
+2026-06-18 14:34:25.207 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (DbType = Int32), @p5='?' (DbType = Int16), @p6='?' (DbType = Int32), @p7='?' (DbType = Int16), @p8='?', @p9='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaint_history (changed_by, complaint_id, created_at, escalation_level_snapshot, new_handler_employee_id, new_status_id, old_handler_employee_id, old_status_id, remarks, role_id_at_action_time)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9)
+RETURNING history_id;
+2026-06-18 14:34:25.209 +05:30 [INF] HTTP PUT /api/complaint/35/start-progress responded 204 in 50.2268 ms
+2026-06-18 14:34:28.407 +05:30 [INF] Executed DbCommand (15ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:34:28.408 +05:30 [WRN] Only assigned complaints can be started progress.
+2026-06-18 14:34:28.408 +05:30 [INF] HTTP PUT /api/complaint/35/start-progress responded 422 in 19.0903 ms
+2026-06-18 14:35:06.354 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 14:35:14.250 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:35:14.252 +05:30 [WRN] Only current handler can resolve.
+2026-06-18 14:35:14.252 +05:30 [INF] HTTP PUT /api/complaint/35/resolve responded 403 in 22.9185 ms
+2026-06-18 14:35:30.398 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:35:30.401 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p14='?' (DbType = Int32), @p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime), @p7='?' (DbType = Int16), @p8='?' (DbType = Int16), @p9='?' (DbType = Int32), @p10='?' (DbType = Int16), @p11='?' (DbType = DateTime), @p12='?' (DbType = Int16), @p13='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+UPDATE complaints SET category_id = @p0, closed_at = @p1, complaint_description = @p2, complaint_title = @p3, created_at = @p4, current_handler_employee_id = @p5, escalation_due_at = @p6, escalation_level = @p7, priority_id = @p8, raised_by_employee_id = @p9, reopened_count = @p10, resolved_at = @p11, status_id = @p12, updated_at = @p13
+WHERE complaint_id = @p14;
+2026-06-18 14:35:30.404 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (DbType = Int32), @p5='?' (DbType = Int16), @p6='?' (DbType = Int32), @p7='?' (DbType = Int16), @p8='?', @p9='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaint_history (changed_by, complaint_id, created_at, escalation_level_snapshot, new_handler_employee_id, new_status_id, old_handler_employee_id, old_status_id, remarks, role_id_at_action_time)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9)
+RETURNING history_id;
+2026-06-18 14:35:30.412 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Boolean), @p3='?', @p4='?' (DbType = Int16), @p5='?' (DbType = Int32), @p6='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO notifications (created_at, employee_id, is_read, message, notification_type_id, reference_complaint_id, title)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING notification_id;
+2026-06-18 14:35:30.413 +05:30 [INF] Complaint 35 resolved by Employee 15
+2026-06-18 14:35:30.413 +05:30 [INF] HTTP PUT /api/complaint/35/resolve responded 204 in 25.5903 ms
+2026-06-18 14:35:33.876 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:35:33.879 +05:30 [WRN] Complaint is not in progress.
+2026-06-18 14:35:33.879 +05:30 [INF] HTTP PUT /api/complaint/35/resolve responded 422 in 13.0215 ms
+2026-06-18 14:36:07.537 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:36:07.539 +05:30 [WRN] Only complaint creator can close a complaint.
+2026-06-18 14:36:07.539 +05:30 [INF] HTTP PUT /api/complaint/24/close responded 403 in 22.7454 ms
+2026-06-18 14:36:18.341 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:36:18.343 +05:30 [WRN] Only resolved complaints can be closed.
+2026-06-18 14:36:18.343 +05:30 [INF] HTTP PUT /api/complaint/24/close responded 422 in 9.7654 ms
+2026-06-18 14:36:27.489 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:36:27.492 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p14='?' (DbType = Int32), @p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime), @p7='?' (DbType = Int16), @p8='?' (DbType = Int16), @p9='?' (DbType = Int32), @p10='?' (DbType = Int16), @p11='?' (DbType = DateTime), @p12='?' (DbType = Int16), @p13='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+UPDATE complaints SET category_id = @p0, closed_at = @p1, complaint_description = @p2, complaint_title = @p3, created_at = @p4, current_handler_employee_id = @p5, escalation_due_at = @p6, escalation_level = @p7, priority_id = @p8, raised_by_employee_id = @p9, reopened_count = @p10, resolved_at = @p11, status_id = @p12, updated_at = @p13
+WHERE complaint_id = @p14;
+2026-06-18 14:36:27.500 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int16), @p4='?' (DbType = Int32), @p5='?' (DbType = Int16), @p6='?' (DbType = Int32), @p7='?' (DbType = Int16), @p8='?', @p9='?' (DbType = Int16)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO complaint_history (changed_by, complaint_id, created_at, escalation_level_snapshot, new_handler_employee_id, new_status_id, old_handler_employee_id, old_status_id, remarks, role_id_at_action_time)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9)
+RETURNING history_id;
+2026-06-18 14:36:27.507 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (DbType = Boolean), @p3='?', @p4='?' (DbType = Int16), @p5='?' (DbType = Int32), @p6='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO notifications (created_at, employee_id, is_read, message, notification_type_id, reference_complaint_id, title)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6)
+RETURNING notification_id;
+2026-06-18 14:36:27.508 +05:30 [INF] Complaint 35 closed by Employee 18
+2026-06-18 14:36:27.508 +05:30 [INF] HTTP PUT /api/complaint/35/close responded 204 in 26.5693 ms
+2026-06-18 14:36:30.352 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:36:30.353 +05:30 [WRN] Only resolved complaints can be closed.
+2026-06-18 14:36:30.353 +05:30 [INF] HTTP PUT /api/complaint/35/close responded 422 in 9.6661 ms
+2026-06-18 14:36:50.400 +05:30 [INF] Executed DbCommand (28ms) [Parameters=[@id='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT s.complaint_id, s.category_id, s.closed_at, s.complaint_description, s.complaint_title, s.created_at, s.current_handler_employee_id, s.escalation_due_at, s.escalation_level, s.priority_id, s.raised_by_employee_id, s.reopened_count, s.resolved_at, s.status_id, s.updated_at, s.status_id0, s.is_terminal, s.status_name, s.priority_id0, s.escalation_order, s.priority_name, s.category_id0, s.category_name, s.created_at0, s.default_priority_id, s.department_id, s.is_active, s.sla_hours, s.updated_at0, s.department_id0, s.created_at1, s.department_head_employee_id, s.department_name, s.is_active0, s.updated_at1, s.employee_id, s.created_at2, s.department_id1, s.email, s.employee_name, s.is_active1, s.mobile_number, s.password_hash, s.role_id, s.updated_at2, s.employee_id0, s.created_at3, s.department_id2, s.email0, s.employee_name0, s.is_active2, s.mobile_number0, s.password_hash0, s.role_id0, s.updated_at3, c2.attachment_id, c2.complaint_id, c2.created_at, c2.file_path, c2.file_size_bytes, c2.mime_type, c2.original_file_name, c2.uploaded_by
+FROM (
+    SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.status_id AS status_id0, c0.is_terminal, c0.status_name, p.priority_id AS priority_id0, p.escalation_order, p.priority_name, c1.category_id AS category_id0, c1.category_name, c1.created_at AS created_at0, c1.default_priority_id, c1.department_id, c1.is_active, c1.sla_hours, c1.updated_at AS updated_at0, d.department_id AS department_id0, d.created_at AS created_at1, d.department_head_employee_id, d.department_name, d.is_active AS is_active0, d.updated_at AS updated_at1, e.employee_id, e.created_at AS created_at2, e.department_id AS department_id1, e.email, e.employee_name, e.is_active AS is_active1, e.mobile_number, e.password_hash, e.role_id, e.updated_at AS updated_at2, e0.employee_id AS employee_id0, e0.created_at AS created_at3, e0.department_id AS department_id2, e0.email AS email0, e0.employee_name AS employee_name0, e0.is_active AS is_active2, e0.mobile_number AS mobile_number0, e0.password_hash AS password_hash0, e0.role_id AS role_id0, e0.updated_at AS updated_at3
+    FROM complaints AS c
+    INNER JOIN complaint_statuses AS c0 ON c.status_id = c0.status_id
+    INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+    INNER JOIN categories AS c1 ON c.category_id = c1.category_id
+    INNER JOIN departments AS d ON c1.department_id = d.department_id
+    INNER JOIN employees AS e ON c.raised_by_employee_id = e.employee_id
+    LEFT JOIN employees AS e0 ON c.current_handler_employee_id = e0.employee_id
+    WHERE c.complaint_id = @id
+    LIMIT 1
+) AS s
+LEFT JOIN complaint_attachments AS c2 ON s.complaint_id = c2.complaint_id
+ORDER BY s.complaint_id, s.status_id0, s.priority_id0, s.category_id0, s.department_id0, s.employee_id, s.employee_id0
+2026-06-18 14:36:50.429 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[@complaintId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.history_id, c.changed_by, c.complaint_id, c.created_at, c.escalation_level_snapshot, c.new_handler_employee_id, c.new_status_id, c.old_handler_employee_id, c.old_status_id, c.remarks, c.role_id_at_action_time, c0.status_id, c0.is_terminal, c0.status_name, c1.status_id, c1.is_terminal, c1.status_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at, e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.role_id, e0.updated_at, e1.employee_id, e1.created_at, e1.department_id, e1.email, e1.employee_name, e1.is_active, e1.mobile_number, e1.password_hash, e1.role_id, e1.updated_at, r.role_id, r.created_at, r.role_name
+FROM complaint_history AS c
+LEFT JOIN complaint_statuses AS c0 ON c.old_status_id = c0.status_id
+INNER JOIN complaint_statuses AS c1 ON c.new_status_id = c1.status_id
+LEFT JOIN employees AS e ON c.old_handler_employee_id = e.employee_id
+LEFT JOIN employees AS e0 ON c.new_handler_employee_id = e0.employee_id
+LEFT JOIN employees AS e1 ON c.changed_by = e1.employee_id
+LEFT JOIN roles AS r ON c.role_id_at_action_time = r.role_id
+WHERE c.complaint_id = @complaintId
+ORDER BY c.created_at
+2026-06-18 14:36:50.440 +05:30 [INF] HTTP GET /api/Complaint/35/history responded 200 in 74.1568 ms
+2026-06-18 14:40:06.613 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 14:44:23.625 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[@p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT c.category_id AS "CategoryId", c0.category_name AS "CategoryName", d.department_name AS "DepartmentName", count(*)::int AS "ComplaintCount"
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN departments AS d ON c0.department_id = d.department_id
+GROUP BY c.category_id, c0.category_name, d.department_name
+ORDER BY count(*)::int DESC
+LIMIT @p
+2026-06-18 14:44:23.628 +05:30 [INF] HTTP GET /api/Analytics/top-categories responded 200 in 60.0671 ms
+2026-06-18 14:45:06.966 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 14:50:07.221 +05:30 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 14:55:07.466 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 15:00:07.620 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 15:05:07.861 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 15:10:08.047 +05:30 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 15:15:08.315 +05:30 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 15:20:08.511 +05:30 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 15:25:08.683 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 15:30:08.990 +05:30 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 15:34:21.571 +05:30 [INF] Removed 1 outdated record(s) from 'aggregatedcounter' table.
+2026-06-18 15:34:22.672 +05:30 [INF] Removed 2 outdated record(s) from 'job' table.
+2026-06-18 15:35:09.235 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 15:40:09.444 +05:30 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 15:45:09.646 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 15:50:09.904 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 15:55:10.153 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 16:00:10.412 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 16:05:10.639 +05:30 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 16:10:10.929 +05:30 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 16:15:11.167 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 16:20:11.371 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 16:25:11.589 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 16:30:11.838 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 16:34:23.796 +05:30 [INF] Removed 1 outdated record(s) from 'aggregatedcounter' table.
+2026-06-18 16:34:24.879 +05:30 [INF] Removed 2 outdated record(s) from 'job' table.
+2026-06-18 16:35:12.041 +05:30 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 16:40:12.290 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 16:45:12.514 +05:30 [INF] Executed DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 16:50:12.700 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 16:55:12.961 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 17:00:13.135 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 17:05:13.328 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 17:10:13.524 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 17:15:13.723 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 17:20:13.913 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 17:25:14.113 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 17:44:01.610 +05:30 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 18:32:34.822 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 19:05:15.493 +05:30 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 19:43:18.139 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 20:19:46.107 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 20:20:01.425 +05:30 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 20:44:52.900 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 21:18:08.307 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 21:19:01.906 +05:30 [INF] 1 servers were removed due to timeout
+2026-06-18 21:19:05.738 +05:30 [WRN] Server w4n00tw13c-laxmanp:26474:4b4164b2 was considered dead by other servers, restarting...
+2026-06-18 21:19:05.740 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:4b4164b2 caught restart signal...
+2026-06-18 21:19:05.744 +05:30 [WRN] Server w4n00tw13c-laxmanp:26474:4b4164b2 stopped non-gracefully due to ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler. Outstanding work on those dispatchers could be aborted, and there can be delays in background processing. This server instance will be incorrectly shown as active for a while. To avoid non-graceful shutdowns, investigate what prevents from stopping gracefully and add CancellationToken support for those methods.
+2026-06-18 21:19:05.936 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:4b4164b2 successfully reported itself as stopped in 181.8058 ms
+2026-06-18 21:19:05.936 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:4b4164b2 has been stopped in total 187.81 ms
+2026-06-18 21:19:05.939 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:825e62c1 successfully announced in 2.8997 ms
+2026-06-18 21:19:05.940 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:825e62c1 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-06-18 21:19:05.945 +05:30 [INF] Server w4n00tw13c-laxmanp:26474:825e62c1 all the dispatchers started
+2026-06-18 21:19:06.097 +05:30 [INF] Removed 4 outdated record(s) from 'aggregatedcounter' table.
+2026-06-18 21:19:07.157 +05:30 [INF] Removed 24 outdated record(s) from 'job' table.
+2026-06-18 21:20:06.819 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 21:25:07.070 +05:30 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 21:30:07.251 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-18 21:35:07.502 +05:30 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5

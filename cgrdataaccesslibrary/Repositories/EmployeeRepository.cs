@@ -60,7 +60,7 @@ public class EmployeeRepository : AbstractRepository<int, Employee>, IEmployeeRe
         }
         if (!string.IsNullOrWhiteSpace(search))
         {
-            query = query.Where(e => e.EmployeeName.ToLower().Contains(search.ToLower()) || e.Email.ToLower().Contains(search.ToLower()));
+            query = query.Where(e => e.EmployeeName.Trim().ToLower().Contains(search.ToLower()) || e.Email.Trim().ToLower().Contains(search.ToLower()));
         }
 
         int totalCount = await query.CountAsync();

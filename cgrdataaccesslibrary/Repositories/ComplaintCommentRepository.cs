@@ -25,4 +25,12 @@ public class ComplaintCommentRepository : AbstractRepository<int, ComplaintComme
             .OrderBy(c => c.CreatedAt)
             .ToListAsync();
     }
+     public async Task<bool> ExistsRecentDuplicateAsync(int commentedByEmployeeId, string message, TimeSpan window)
+    {
+        var threshold = DateTime.UtcNow.Subtract(window);
+        return await _context.ComplaintComments.AnyAsync(c =>
+            c.CommentedBy == commentedByEmployeeId &&
+            c.CreatedAt >= threshold &&
+            c.CommentText.Trim().ToLower() == message.Trim().ToLower());
+    }
 }

@@ -116,8 +116,8 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
         return await _context.Complaints.AnyAsync(c =>
             c.RaisedByEmployeeId == raisedByEmployeeId &&
             c.CreatedAt >= threshold &&
-            c.ComplaintTitle == title &&
-            c.ComplaintDescription == description);
+            c.ComplaintTitle.Trim().ToLower() == title.Trim().ToLower() &&
+            c.ComplaintDescription.Trim().ToLower() == description.Trim().ToLower());
     }
     public async Task<(IEnumerable<Complaint> Items, int TotalCount)> GetMyWorkQueueAsync(int page, int pageSize, int employeeId)
     {

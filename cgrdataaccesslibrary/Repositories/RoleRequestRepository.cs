@@ -30,6 +30,7 @@ public class RoleRequestRepository : AbstractRepository<int, RoleRequest>, IRole
             .Include(r => r.CurrentRole)
             .Include(r => r.RequestedRole)
             .Include(r => r.RequestStatus)
+            .Include(r => r.ReviewedByNavigation)
             .AsQueryable();
 
         if (statusId.HasValue)
