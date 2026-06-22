@@ -19,6 +19,7 @@ public class DepartmentController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<DepartmentDto>>> GetAll(
         [FromQuery] bool? isActive)
     {

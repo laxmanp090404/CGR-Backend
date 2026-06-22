@@ -39,7 +39,15 @@ builder.Services.AddHangfire(config =>
             builder.Configuration.GetConnectionString("DefaultConnection"));
     });
 });
-
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:4200")
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 builder.Services.AddHangfireServer();
 // custom rate limiting policies extension method
 builder.Services.AddAppRateLimiting();
@@ -63,6 +71,7 @@ builder.Services.AddScoped<IComplaintEscalationRepository, ComplaintEscalationRe
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
 builder.Services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
+builder.Services.AddScoped<ILookupRepository, LookupRepository>();
 // builder.Services.AddScoped<IRepository<int, EscalationRule>,AbstractRepository<int, EscalationRule>>();
 #endregion
 #region Services
@@ -83,6 +92,7 @@ builder.Services.AddScoped<IRoleRequestService, RoleRequestService>();
 builder.Services.AddScoped<IComplaintAssignmentEngine,ComplaintAssignmentEngine>();
 builder.Services.AddScoped<ISlaEscalationJob, SlaEscalationJob>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
+builder.Services.AddScoped<ILookUpService, LookUpService>();
 #endregion
 #region JWT
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -165,6 +175,7 @@ app.UseSerilogRequestLogging(options =>
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHangfireDashboard();
 app.UseHttpsRedirection();
+app.UseCors();
 app.UseAuthentication();
 app.UseRateLimiter();//after auth otherwise empid null
 app.UseAuthorization();
