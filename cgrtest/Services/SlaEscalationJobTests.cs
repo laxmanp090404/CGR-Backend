@@ -46,7 +46,8 @@ namespace cgrtest.Services
                 _escalationRepoMock.Object,
                 _escalationRuleRepoMock.Object,
                 _notificationServiceMock.Object,
-                _loggerMock.Object);
+                _loggerMock.Object,
+                null);
         }
 
         [Test]
@@ -62,7 +63,7 @@ namespace cgrtest.Services
 
             // Spy on the private ProcessComplaintAsync via reflection
             var procMethod = typeof(SlaEscalationJob).GetMethod("ProcessComplaintAsync", BindingFlags.NonPublic | BindingFlags.Instance);
-            var callCount = 0;
+            // var callCount = 0;
             procMethod!.Invoke(_job, new object[] { due }); // will be called by the job
             // Replace the method body is not feasible; instead we verify that the repository's Update is called only for due complaint.
             _assignmentEngineMock.Setup(e => e.DetermineEscalationAssignmentAsync(It.IsAny<Complaint>()))
@@ -114,7 +115,9 @@ namespace cgrtest.Services
             _complaintRepoMock.Verify(r => r.Update(It.IsAny<Complaint>(), complaint.ComplaintId), Times.Once);
             _historyRepoMock.Verify(r => r.Create(It.IsAny<ComplaintHistory>()), Times.Once);
             _notificationServiceMock.Verify(n => n.SendAsync(complaint.RaisedByEmployeeId, It.IsAny<short>(), It.IsAny<string>(), It.IsAny<string>(), complaint.ComplaintId), Times.Once);
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
             _loggerMock.Verify(l => l.Log(It.Is<LogLevel>(lvl => lvl == LogLevel.Error), It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), null, (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()), Times.AtLeastOnce);
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
         }
 
         [Test]

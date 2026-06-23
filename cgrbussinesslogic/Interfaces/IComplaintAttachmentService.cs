@@ -13,4 +13,5 @@ public interface IComplaintAttachmentService
     Task<(List<ComplaintAttachment> Attachments, List<string> CreatedFiles)> SaveAttachmentsAsync(int complaintId, List<IFormFile> files);
     Task DeleteFilesAsync(IEnumerable<string> filePaths);
     Task DeleteComplaintFolderAsync(int complaintId);
+    Task<(string FilePath, string MimeType, string OriginalFileName)> GetAttachmentFileByPathAsync(string filePath);
 }

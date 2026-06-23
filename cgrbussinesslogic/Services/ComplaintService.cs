@@ -90,12 +90,12 @@ public class ComplaintService : IComplaintService
 
     // get complaints with pagination and filtering for dashboard
     public async Task<PagedResultDto<ComplaintDashboardDto>> GetPagedAsync(int page, int pageSize, int? statusId, int? priorityId, int? categoryId,
-      int? departmentId, string? search)
+      int? departmentId, string? search, bool? raisedbyme)
     {
         var (items, totalCount) =
             await _complaintRepository
                 .GetPagedDashboardAsync(page, pageSize, statusId, priorityId, categoryId, departmentId, search, _currentUserService.EmployeeId,
-                    _currentUserService.Role, _currentUserService.DepartmentId);
+                    _currentUserService.Role, _currentUserService.DepartmentId,raisedbyme);
 
         return new PagedResultDto<ComplaintDashboardDto>
         {

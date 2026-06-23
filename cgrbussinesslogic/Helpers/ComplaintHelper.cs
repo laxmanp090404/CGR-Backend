@@ -149,9 +149,9 @@ public class ComplaintHelper
         NewHandlerName = h.NewHandlerEmployee?.EmployeeName,
         Remarks = h.Remarks,
         ChangedBy = h.ChangedBy,
-        ChangedByName = h.ChangedByNavigation?.EmployeeName,
+        ChangedByName = h.ChangedByNavigation?.EmployeeName ?? "System",
         RoleIdAtActionTime = h.RoleIdAtActionTime,
-        RoleNameAtActionTime = h.RoleIdAtActionTimeNavigation?.RoleName ?? string.Empty,
+        RoleNameAtActionTime = h.RoleIdAtActionTimeNavigation?.RoleName ?? "System",
         CreatedAt = h.CreatedAt
     };
 

@@ -13,11 +13,14 @@ namespace cgrwebapi.Controllers;
 public class ComplaintController : ControllerBase
 {
     private readonly IComplaintService _complaintService;
+    private readonly IComplaintAttachmentService _attachmentService;
 
     public ComplaintController(
-        IComplaintService complaintService)
+        IComplaintService complaintService,
+        IComplaintAttachmentService attachmentService)
     {
         _complaintService = complaintService;
+        _attachmentService = attachmentService;
     }
     
     [HttpPost]
@@ -55,7 +58,8 @@ public class ComplaintController : ControllerBase
         [FromQuery] int? priorityId = null,
         [FromQuery] int? categoryId = null,
         [FromQuery] int? departmentId = null,
-        [FromQuery] string? search = null)
+        [FromQuery] string? search = null,
+        [FromQuery] bool? raisedByMe = false)
     {
         var result =
             await _complaintService.GetPagedAsync(
@@ -65,7 +69,8 @@ public class ComplaintController : ControllerBase
                 priorityId,
                 categoryId,
                 departmentId,
-                search);
+                search,
+                raisedByMe);
 
         return Ok(result);
     }
@@ -189,4 +194,19 @@ public async Task<ActionResult<PagedResultDto<ComplaintDashboardDto>>>
 
     return Ok(result);
 }
+
+    [HttpGet("attachments")]
+    public async Task<IActionResult> GetAttachment([FromQuery] string filePath)
+    {
+        var (physicalPath, mimeType, fileName) = await _attachmentService.GetAttachmentFileByPathAsync(filePath);
+
+        var contentDisposition = new System.Net.Mime.ContentDisposition
+        {
+            FileName = fileName,
+            Inline = true
+        };
+        Response.Headers["Content-Disposition"] = contentDisposition.ToString();
+
+        return PhysicalFile(physicalPath, mimeType);
+    }
 }

@@ -24,4 +24,10 @@ public class ComplaintAttachmentRepository : AbstractRepository<int, ComplaintAt
             .OrderBy(a => a.CreatedAt)
             .ToListAsync();
     }
+
+    public async Task<ComplaintAttachment?> GetByFilePathAsync(string filePath)
+    {
+        return await _context.ComplaintAttachments
+            .FirstOrDefaultAsync(a => a.FilePath == filePath);
+    }
 }

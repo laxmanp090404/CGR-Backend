@@ -35,7 +35,7 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
 
     public async Task<(IEnumerable<VComplaintDashboard> Items, int TotalCount)> GetPagedDashboardAsync(
         int page, int pageSize, int? statusId, int? priorityId, int? categoryId, int? departmentId, string? search,
-        int employeeIdFilter, string roleFilter, int? deptIdFilter)
+        int employeeIdFilter, string roleFilter, int? deptIdFilter,bool? raisedbyMe)
     {
         var query = _context.VComplaintDashboards
             .Join(_context.Complaints,
@@ -60,6 +60,10 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
         // ADMIN sees all
 
         // Filter parameters
+        if (raisedbyMe.HasValue && raisedbyMe.Value)
+        {
+            query = query.Where(x => x.Complaint.RaisedByEmployeeId == employeeIdFilter);
+        }
         if (statusId.HasValue)
         {
             query = query.Where(x => x.Complaint.StatusId == statusId.Value);
@@ -76,12 +80,22 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
         {
             query = query.Where(x => x.Complaint.Category.DepartmentId == departmentId.Value);
         }
-        if (!string.IsNullOrWhiteSpace(search))
-        {
-            query = query.Where(x => x.View.ComplaintTitle!.Contains(search)
-                                  || x.View.RaisedByName!.Contains(search)
-                                  || x.View.CurrentHandlerName!.Contains(search));
-        }
+      if (!string.IsNullOrWhiteSpace(search))
+{
+   var searchText = search.Trim().ToLower();
+
+query = query.Where(x =>
+   
+        (x.View.ComplaintTitle != null &&
+         x.View.ComplaintTitle.ToLower().Contains(searchText))
+        ||
+        (x.View.RaisedByName != null &&
+         x.View.RaisedByName.ToLower().Contains(searchText))
+        ||
+        (x.View.CurrentHandlerName != null &&
+         x.View.CurrentHandlerName.ToLower().Contains(searchText))
+    );
+}
 
         int totalCount = await query.CountAsync();
         var items = await query

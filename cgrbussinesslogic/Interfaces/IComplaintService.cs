@@ -11,7 +11,7 @@ public interface IComplaintService
 
     Task<PagedResultDto<ComplaintDashboardDto>> GetPagedAsync(
         int page, int pageSize, int? statusId, int? priorityId,
-        int? categoryId, int? departmentId, string? search);
+        int? categoryId, int? departmentId, string? search,bool? raisedByMe);
     Task<IEnumerable<ComplaintHistoryDto>> GetHistoryAsync(int complaintId);
 
     Task StartProgressAsync(int complaintId);

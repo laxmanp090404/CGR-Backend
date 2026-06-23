@@ -1,3 +1,4 @@
+using cgrbussinesslogic.Helpers;
 using cgrbussinesslogic.Interfaces;
 using cgrdataaccesslibrary.Interfaces;
 using cgrmodellibrary.DTOs.Attachment;
@@ -199,6 +200,32 @@ public class ComplaintAttachmentService : IComplaintAttachmentService
         CreatedAt = a.CreatedAt
     };
 
+    public async Task<(string FilePath, string MimeType, string OriginalFileName)> GetAttachmentFileByPathAsync(string filePath)
+    {
+        var attachment = await _attachmentRepository.GetByFilePathAsync(filePath);
+        if (attachment == null)
+        {
+            throw new NotFoundException("Attachment not found.");
+        }
+        
+        var complaint = await _complaintRepository.GetDetailByIdAsync(attachment.ComplaintId);
+        if (complaint == null)
+        {
+            throw new NotFoundException($"Complaint with key {attachment.ComplaintId} not found");
+        }
 
+        await ComplaintHelper.ValidateViewPermissionAsync(
+            complaint,
+            _currentUserService.EmployeeId,
+            _currentUserService.RoleId,
+            _currentUserService.DepartmentId);
 
+        var fullPath = Path.Combine(Directory.GetCurrentDirectory(), attachment.FilePath);
+        if (!File.Exists(fullPath))
+        {
+            throw new NotFoundException("Attachment file not found on disk.");
+        }
+
+        return (fullPath, attachment.MimeType, attachment.OriginalFileName);
+    }
 }

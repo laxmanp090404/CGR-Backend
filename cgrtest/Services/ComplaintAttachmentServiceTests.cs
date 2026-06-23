@@ -284,7 +284,7 @@ public class ComplaintAttachmentServiceTests
         var ex = Assert.ThrowsAsync<ValidationException>(() =>
             _serviceSut.SaveAttachmentsAsync(1, files));
 
-        Assert.That(ex!.Message, Is.EqualTo("Attachment exceeds allowed size."));
+        Assert.That(ex!.Message, Is.EqualTo("Attachment exceeds allowed size of 5 MB."));
     }
 
     [Test]
@@ -301,7 +301,7 @@ public class ComplaintAttachmentServiceTests
         var ex = Assert.ThrowsAsync<ValidationException>(() =>
             _serviceSut.SaveAttachmentsAsync(1, files));
 
-        Assert.That(ex!.Message, Is.EqualTo("Attachment exceeds allowed size."));
+        Assert.That(ex!.Message, Is.EqualTo("Attachment exceeds allowed size of 3 MB."));
     }
 
     [Test]
@@ -476,6 +476,157 @@ public class ComplaintAttachmentServiceTests
     {
         // Act & Assert
         Assert.DoesNotThrowAsync(() => _serviceSut.DeleteComplaintFolderAsync(8888));
+    }
+
+    #endregion
+
+    #region GetAttachmentFileByPathAsync Tests
+
+    [Test]
+    public void GetAttachmentFileByPathAsync_AttachmentNotFound_ThrowsNotFoundException()
+    {
+        // Arrange
+        var filePath = "somepath.pdf";
+        _mockAttachmentRepo.Setup(r => r.GetByFilePathAsync(filePath))
+            .ReturnsAsync((ComplaintAttachment?)null);
+
+        // Act & Assert
+        Assert.ThrowsAsync<NotFoundException>(() =>
+            _serviceSut.GetAttachmentFileByPathAsync(filePath));
+    }
+
+    [Test]
+    public async Task GetAttachmentFileByPathAsync_ComplaintNotFound_ThrowsNotFoundException()
+    {
+        // Arrange
+        var filePath = "somepath.pdf";
+        var attachment = new ComplaintAttachment
+        {
+            AttachmentId = 123,
+            ComplaintId = 10,
+            FilePath = filePath
+        };
+        _mockAttachmentRepo.Setup(r => r.GetByFilePathAsync(filePath)).ReturnsAsync(attachment);
+        _mockComplaintRepo.Setup(r => r.GetDetailByIdAsync(10)).ReturnsAsync((Complaint?)null);
+
+        // Act & Assert
+        var ex = Assert.ThrowsAsync<NotFoundException>(() =>
+            _serviceSut.GetAttachmentFileByPathAsync(filePath));
+        Assert.That(ex!.Message, Is.EqualTo("Complaint with key 10 not found"));
+    }
+
+    [Test]
+    public async Task GetAttachmentFileByPathAsync_UserNotAuthorized_ThrowsForbiddenException()
+    {
+        // Arrange
+        var filePath = "somepath.pdf";
+        var attachment = new ComplaintAttachment
+        {
+            AttachmentId = 123,
+            ComplaintId = 10,
+            FilePath = filePath
+        };
+        var complaint = new Complaint
+        {
+            ComplaintId = 10,
+            RaisedByEmployeeId = 99, // Raised by another employee
+            CurrentHandlerEmployeeId = 88, // Handled by someone else
+            Category = new Category { DepartmentId = 2 } // Department 2
+        };
+
+        _mockAttachmentRepo.Setup(r => r.GetByFilePathAsync(filePath)).ReturnsAsync(attachment);
+        _mockComplaintRepo.Setup(r => r.GetDetailByIdAsync(10)).ReturnsAsync(complaint);
+
+        // Current user is employee 5 with role employee
+        _mockUserService.Setup(u => u.EmployeeId).Returns(5);
+        _mockUserService.Setup(u => u.RoleId).Returns(1); // Employee
+        _mockUserService.Setup(u => u.DepartmentId).Returns(1);
+
+        // Act & Assert
+        Assert.ThrowsAsync<ForbiddenException>(() =>
+            _serviceSut.GetAttachmentFileByPathAsync(filePath));
+    }
+
+    [Test]
+    public async Task GetAttachmentFileByPathAsync_FileNotFoundOnDisk_ThrowsNotFoundException()
+    {
+        // Arrange
+        var filePath = "nonexistent_file.pdf";
+        var attachment = new ComplaintAttachment
+        {
+            AttachmentId = 123,
+            ComplaintId = 10,
+            FilePath = filePath
+        };
+        var complaint = new Complaint
+        {
+            ComplaintId = 10,
+            RaisedByEmployeeId = 5,
+            Category = new Category { DepartmentId = 1 }
+        };
+
+        _mockAttachmentRepo.Setup(r => r.GetByFilePathAsync(filePath)).ReturnsAsync(attachment);
+        _mockComplaintRepo.Setup(r => r.GetDetailByIdAsync(10)).ReturnsAsync(complaint);
+
+        _mockUserService.Setup(u => u.EmployeeId).Returns(5);
+        _mockUserService.Setup(u => u.RoleId).Returns(1);
+
+        // Act & Assert
+        var ex = Assert.ThrowsAsync<NotFoundException>(() =>
+            _serviceSut.GetAttachmentFileByPathAsync(filePath));
+        Assert.That(ex!.Message, Is.EqualTo("Attachment file not found on disk."));
+    }
+
+    [Test]
+    public async Task GetAttachmentFileByPathAsync_AuthorizedAndFileExists_ReturnsFileDetails()
+    {
+        // Arrange
+        var relativePath = Path.Combine(TestUploadDir, "temp_doc.pdf");
+        var fullPath = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
+
+        // Create the file
+        var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), TestUploadDir);
+        Directory.CreateDirectory(uploadDir);
+        await File.WriteAllTextAsync(fullPath, "pdf content");
+
+        var attachment = new ComplaintAttachment
+        {
+            AttachmentId = 123,
+            ComplaintId = 10,
+            FilePath = relativePath,
+            MimeType = "application/pdf",
+            OriginalFileName = "test.pdf"
+        };
+        var complaint = new Complaint
+        {
+            ComplaintId = 10,
+            RaisedByEmployeeId = 5,
+            Category = new Category { DepartmentId = 1 }
+        };
+
+        _mockAttachmentRepo.Setup(r => r.GetByFilePathAsync(relativePath)).ReturnsAsync(attachment);
+        _mockComplaintRepo.Setup(r => r.GetDetailByIdAsync(10)).ReturnsAsync(complaint);
+
+        _mockUserService.Setup(u => u.EmployeeId).Returns(5);
+        _mockUserService.Setup(u => u.RoleId).Returns(1);
+
+        try
+        {
+            // Act
+            var result = await _serviceSut.GetAttachmentFileByPathAsync(relativePath);
+
+            // Assert
+            Assert.That(result.FilePath, Is.EqualTo(fullPath));
+            Assert.That(result.MimeType, Is.EqualTo("application/pdf"));
+            Assert.That(result.OriginalFileName, Is.EqualTo("test.pdf"));
+        }
+        finally
+        {
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
+        }
     }
 
     #endregion
