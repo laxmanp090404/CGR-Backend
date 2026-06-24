@@ -98,7 +98,7 @@ public class ComplaintAttachmentService : IComplaintAttachmentService
             {
                 var maxsizeInMB = isPdf ? MaxPdfSizeBytes / (1024 * 1024) : MaxImageSizeBytes / (1024 * 1024);
                 throw new ValidationException(
-                    $"Attachment exceeds allowed size of {maxsizeInMB} MB.");
+                    $"Attachment exceeds allowed size of {maxsizeInMB} MB for a {Path.GetExtension(file.FileName)} file.");
             }
             if (!folderCreated)
             {

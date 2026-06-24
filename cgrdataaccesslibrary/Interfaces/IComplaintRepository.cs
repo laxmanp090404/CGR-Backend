@@ -13,5 +13,13 @@ public interface IComplaintRepository : IRepository<int, Complaint>
      Task<IEnumerable<Complaint>> GetEscalationDueComplaintsAsync();
      // For duplicate complaint check
      Task<bool> ExistsRecentDuplicateAsync(int raisedByEmployeeId,string title,string description,TimeSpan window);
-     Task<(IEnumerable<Complaint> Items, int TotalCount)> GetMyWorkQueueAsync(int page,int pageSize,int employeeId);
+     Task<(IEnumerable<Complaint> Items, int TotalCount)> GetMyWorkQueueAsync(
+         int page,
+         int pageSize,
+         int employeeId,
+         int? statusId = null,
+         int? priorityId = null,
+         int? categoryId = null,
+         int? departmentId = null,
+         string? search = null);
 }

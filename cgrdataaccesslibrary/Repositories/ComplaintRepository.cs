@@ -133,7 +133,15 @@ query = query.Where(x =>
             c.ComplaintTitle.Trim().ToLower() == title.Trim().ToLower() &&
             c.ComplaintDescription.Trim().ToLower() == description.Trim().ToLower());
     }
-    public async Task<(IEnumerable<Complaint> Items, int TotalCount)> GetMyWorkQueueAsync(int page, int pageSize, int employeeId)
+    public async Task<(IEnumerable<Complaint> Items, int TotalCount)> GetMyWorkQueueAsync(
+        int page,
+        int pageSize,
+        int employeeId,
+        int? statusId = null,
+        int? priorityId = null,
+        int? categoryId = null,
+        int? departmentId = null,
+        string? search = null)
     {
         var query = _context.Complaints
             .Include(c => c.Status)
@@ -142,7 +150,32 @@ query = query.Where(x =>
             .Include(c => c.RaisedByEmployee)
             .Include(c => c.CurrentHandlerEmployee)
             .Where(c => c.CurrentHandlerEmployeeId == employeeId &&
-                        (c.StatusId == 2 || c.StatusId == 3 || c.StatusId == 4));
+                        (c.StatusId == 2 || c.StatusId == 3 || c.StatusId == 4))
+            .AsQueryable();
+
+        if (statusId.HasValue)
+        {
+            query = query.Where(c => c.StatusId == statusId.Value);
+        }
+        if (priorityId.HasValue)
+        {
+            query = query.Where(c => c.PriorityId == priorityId.Value);
+        }
+        if (categoryId.HasValue)
+        {
+            query = query.Where(c => c.CategoryId == categoryId.Value);
+        }
+        if (departmentId.HasValue)
+        {
+            query = query.Where(c => c.Category.DepartmentId == departmentId.Value);
+        }
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var searchLower = search.ToLower();
+            query = query.Where(c => c.ComplaintTitle.ToLower().Contains(searchLower) ||
+                                     c.ComplaintDescription.ToLower().Contains(searchLower) ||
+                                     c.RaisedByEmployee.EmployeeName.ToLower().Contains(searchLower));
+        }
 
         var totalCount = await query.CountAsync();
 

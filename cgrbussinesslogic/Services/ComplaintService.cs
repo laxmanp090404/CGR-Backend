@@ -824,7 +824,14 @@ public class ComplaintService : IComplaintService
         }).ToList();
     }
 
-    public async Task<PagedResultDto<ComplaintDashboardDto>> GetMyWorkQueueAsync(int page, int pageSize)
+    public async Task<PagedResultDto<ComplaintDashboardDto>> GetMyWorkQueueAsync(
+        int page,
+        int pageSize,
+        int? statusId = null,
+        int? priorityId = null,
+        int? categoryId = null,
+        int? departmentId = null,
+        string? search = null)
     {
         if (_currentUserService.RoleId == ROLE_EMPLOYEE)
         {
@@ -834,7 +841,12 @@ public class ComplaintService : IComplaintService
         var result = await _complaintRepository.GetMyWorkQueueAsync(
             page,
             pageSize,
-            _currentUserService.EmployeeId);
+            _currentUserService.EmployeeId,
+            statusId,
+            priorityId,
+            categoryId,
+            departmentId,
+            search);
 
         var items = result.Items.Select(c => new ComplaintDashboardDto
         {

@@ -185,12 +185,22 @@ public async Task<ActionResult<
 public async Task<ActionResult<PagedResultDto<ComplaintDashboardDto>>>
     GetMyWorkQueue(
         [FromQuery] int page = 1,
-        [FromQuery] int pageSize = 10)
+        [FromQuery] int pageSize = 10,
+        [FromQuery] int? statusId = null,
+        [FromQuery] int? priorityId = null,
+        [FromQuery] int? categoryId = null,
+        [FromQuery] int? departmentId = null,
+        [FromQuery] string? search = null)
 {
     var result =
         await _complaintService.GetMyWorkQueueAsync(
             page,
-            pageSize);
+            pageSize,
+            statusId,
+            priorityId,
+            categoryId,
+            departmentId,
+            search);
 
     return Ok(result);
 }
