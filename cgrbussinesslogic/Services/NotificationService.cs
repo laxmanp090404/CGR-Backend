@@ -4,16 +4,19 @@ using cgrmodellibrary.DTOs.Common;
 using cgrmodellibrary.DTOs.Notification;
 using cgrmodellibrary.Exceptions;
 using cgrmodellibrary.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace cgrbussinesslogic.Services;
 
 public class NotificationService : INotificationService
 {
     private readonly INotificationRepository _notificationRepository;
+    private readonly IServiceProvider _serviceProvider;
 
-    public NotificationService(INotificationRepository notificationRepository)
+    public NotificationService(INotificationRepository notificationRepository, IServiceProvider serviceProvider)
     {
         _notificationRepository = notificationRepository;
+        _serviceProvider = serviceProvider;
     }
 
     public async Task<PagedResultDto<NotificationDto>> GetMyNotificationsAsync(int employeeId, bool? isRead, int page, int pageSize)
@@ -64,8 +67,35 @@ public class NotificationService : INotificationService
             CreatedAt = DateTime.UtcNow
         };
         await _notificationRepository.Create(notification);
-    }
 
+        var dto = new NotificationDto
+        {
+            NotificationId = notification.NotificationId,
+            NotificationTypeId = notification.NotificationTypeId,
+            NotificationTypeName = string.Empty,
+            ReferenceComplaintId = notification.ReferenceComplaintId,
+            Title = notification.Title,
+            Message = notification.Message,
+            IsRead = notification.IsRead,
+            CreatedAt = notification.CreatedAt
+        };
+
+        var provider = _serviceProvider;
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await Task.Delay(200);
+                using var scope = provider.CreateScope();
+                var pusher = scope.ServiceProvider.GetRequiredService<INotificationPusher>();
+                await pusher.PushAsync(employeeId, dto);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[SignalR Push Error]: {ex.Message}");
+            }
+        });
+    }
     private static NotificationDto MapToDto(Notification n) => new()
     {
         NotificationId = n.NotificationId,
