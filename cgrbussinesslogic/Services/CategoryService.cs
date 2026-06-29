@@ -2,6 +2,7 @@ using cgrbussinesslogic.Interfaces;
 using cgrdataaccesslibrary.Context;
 using cgrdataaccesslibrary.Interfaces;
 using cgrmodellibrary.DTOs.Category;
+using cgrmodellibrary.DTOs.Common;
 using cgrmodellibrary.Exceptions;
 using cgrmodellibrary.Models;
 
@@ -43,6 +44,28 @@ public class CategoryService : ICategoryService
             await _categoryRepository.GetByDepartmentAsync(departmentId, isActive);
 
         return categories.Select(MapToDto);
+    }
+
+    public async Task<PagedResultDto<CategoryDto>> GetPagedAsync(int page, int pageSize, bool? isActive, int? departmentId)
+    {
+        var categories =
+            await _categoryRepository.GetByDepartmentAsync(departmentId, isActive);
+
+        var list = categories.ToList();
+        var totalCount = list.Count;
+        var pagedItems = list
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(MapToDto)
+            .ToList();
+
+        return new PagedResultDto<CategoryDto>
+        {
+            Items = pagedItems,
+            TotalCount = totalCount,
+            Page = page,
+            PageSize = pageSize
+        };
     }
 
     public async Task<CategoryDto> GetByIdAsync(int categoryId)

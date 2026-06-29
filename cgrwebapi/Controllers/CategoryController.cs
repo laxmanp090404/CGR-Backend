@@ -1,5 +1,6 @@
 using cgrbussinesslogic.Interfaces;
 using cgrmodellibrary.DTOs.Category;
+using cgrmodellibrary.DTOs.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,11 +19,22 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAll([FromQuery] bool? isActive, [FromQuery] int? departmentId)
+    public async Task<ActionResult<object>> GetAll(
+        [FromQuery] int? page = null,
+        [FromQuery] int? pageSize = null,
+        [FromQuery] bool? isActive = null,
+        [FromQuery] int? departmentId = null)
     {
-        var result =await _categoryService.GetAllAsync(isActive, departmentId);
-
-        return Ok(result);
+        if (page.HasValue && pageSize.HasValue)
+        {
+            var pagedResult = await _categoryService.GetPagedAsync(page.Value, pageSize.Value, isActive, departmentId);
+            return Ok(pagedResult);
+        }
+        else
+        {
+            var result = await _categoryService.GetAllAsync(isActive, departmentId);
+            return Ok(result);
+        }
     }
 
     [HttpGet("{categoryId:int}")]

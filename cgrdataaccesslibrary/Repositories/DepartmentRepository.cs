@@ -30,7 +30,7 @@ public class DepartmentRepository
         }
 
         return await query
-            .OrderBy(d => d.DepartmentName)
+            .OrderByDescending(d => d.CreatedAt)
             .ToListAsync();
     }
 
