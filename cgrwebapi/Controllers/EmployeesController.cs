@@ -85,4 +85,11 @@ public class EmployeeController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("gro-workload")]
+    public async Task<ActionResult<IEnumerable<GroActiveWorkloadDto>>> GetGroWorkload([FromQuery] int? departmentId = null)
+    {
+        var result = await _employeeService.GetGroActiveWorkloadAsync(departmentId);
+        return Ok(result);
+    }
 }

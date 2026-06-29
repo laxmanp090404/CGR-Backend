@@ -34,6 +34,7 @@ public class ComplaintServiceTests
     private const short STATUS_SUBMITTED   = 1;
     private const short STATUS_ASSIGNED    = 2;
     private const short STATUS_IN_PROGRESS = 3;
+    private const short STATUS_ESCALATED   = 4;
     private const short STATUS_RESOLVED    = 5;
     private const short STATUS_CLOSED      = 6;
     private const short STATUS_REJECTED    = 7;
@@ -105,6 +106,10 @@ public class ComplaintServiceTests
             _logger.Object);
 
         // ── default stubs used by most tests ──────────────────────────
+        _employeeRepo
+            .Setup(r => r.Get(It.IsAny<int>()))
+            .ReturnsAsync((int id) => new Employee { EmployeeId = id, IsActive = true });
+
         _historyRepo
             .Setup(r => r.Create(It.IsAny<ComplaintHistory>()))
             .ReturnsAsync((ComplaintHistory h) => h);
@@ -225,6 +230,19 @@ public class ComplaintServiceTests
 
             Assert.ThrowsAsync<BusinessRuleException>(
                 () => _sut.CreateAsync(DefaultDto()));
+        }
+
+        [Test]
+        public async Task CreateAsync_InactiveEmployee_ThrowsBusinessRuleException()
+        {
+            SetupCurrentUser(employeeId: 10, roleId: ROLE_EMPLOYEE, role: "EMPLOYEE");
+            _employeeRepo
+                .Setup(r => r.Get(10))
+                .ReturnsAsync(new Employee { EmployeeId = 10, IsActive = false });
+
+            var ex = Assert.ThrowsAsync<BusinessRuleException>(
+                () => _sut.CreateAsync(DefaultDto()));
+            Assert.That(ex!.Message, Is.EqualTo("Employee is inactive."));
         }
 
         [Test]
@@ -490,6 +508,26 @@ public class ComplaintServiceTests
             _historyRepo.Verify(r => r.Create(
                 It.Is<ComplaintHistory>(h =>
                     h.OldStatusId == STATUS_ASSIGNED &&
+                    h.NewStatusId == STATUS_IN_PROGRESS)),
+                Times.Once);
+        }
+
+        [Test]
+        public async Task StartProgressAsync_StatusIsEscalated_UpdatesStatusAndCreatesHistory()
+        {
+            SetupCurrentUser(employeeId: 20, roleId: ROLE_ADMIN);
+            var complaint = BuildComplaint(statusId: STATUS_ESCALATED, currentHandler: 20);
+            _complaintRepo.Setup(r => r.GetDetailByIdAsync(1)).ReturnsAsync(complaint);
+
+            await _sut.StartProgressAsync(1);
+
+            _complaintRepo.Verify(r => r.Update(
+                It.Is<Complaint>(c => c.StatusId == STATUS_IN_PROGRESS),
+                1), Times.Once);
+
+            _historyRepo.Verify(r => r.Create(
+                It.Is<ComplaintHistory>(h =>
+                    h.OldStatusId == STATUS_ESCALATED &&
                     h.NewStatusId == STATUS_IN_PROGRESS)),
                 Times.Once);
         }

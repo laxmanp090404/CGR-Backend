@@ -24,6 +24,7 @@ public class RoleRequestServiceTests
     private Mock<IRoleRequestRepository> _mockRoleRequestRepo = null!;
     private Mock<IEmployeeRepository> _mockEmployeeRepo = null!;
     private Mock<IRepository<int, Department>> _mockDepartmentRepo = null!;
+    private Mock<INotificationService> _mockNotificationService = null!;
     private CGRContext _context = null!;
     private RoleRequestService _serviceSut = null!;
 
@@ -42,6 +43,7 @@ public class RoleRequestServiceTests
         _mockRoleRequestRepo = new Mock<IRoleRequestRepository>();
         _mockEmployeeRepo = new Mock<IEmployeeRepository>();
         _mockDepartmentRepo = new Mock<IRepository<int, Department>>();
+        _mockNotificationService = new Mock<INotificationService>();
 
         var options = new DbContextOptionsBuilder<CGRContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -54,7 +56,8 @@ public class RoleRequestServiceTests
             _mockRoleRequestRepo.Object,
             _mockEmployeeRepo.Object,
             _mockDepartmentRepo.Object,
-            _context
+            _context,
+            _mockNotificationService.Object
         );
     }
 
@@ -322,6 +325,29 @@ public class RoleRequestServiceTests
     }
 
     [Test]
+    public void ApproveAsync_EmployeeIsInactive_ThrowsBusinessRuleException()
+    {
+        // Arrange
+        var request = new RoleRequest
+        {
+            RoleRequestId = 1,
+            EmployeeId = 5,
+            RequestStatusId = REQUEST_STATUS_PENDING
+        };
+        _mockRoleRequestRepo.Setup(r => r.Get(1)).ReturnsAsync((RoleRequest?)request);
+
+        var employee = new Employee { EmployeeId = 5, IsActive = false };
+        _mockEmployeeRepo.Setup(r => r.Get(5)).ReturnsAsync(employee);
+
+        var dto = new ApproveRoleRequestDto();
+
+        // Act & Assert
+        var ex = Assert.ThrowsAsync<BusinessRuleException>(() =>
+            _serviceSut.ApproveAsync(1, dto, 99));
+        Assert.That(ex!.Message, Is.EqualTo("Cannot approve request for an inactive employee."));
+    }
+
+    [Test]
     public void ApproveAsync_EmployeeHasNoDepartmentAndAssignDepartmentIdNull_ThrowsValidationException()
     {
         // Arrange
@@ -333,7 +359,7 @@ public class RoleRequestServiceTests
         };
         _mockRoleRequestRepo.Setup(r => r.Get(1)).ReturnsAsync((RoleRequest?)request);
 
-        var employee = new Employee { EmployeeId = 5, DepartmentId = null };
+        var employee = new Employee { EmployeeId = 5, DepartmentId = null, IsActive = true };
         _mockEmployeeRepo.Setup(r => r.Get(5)).ReturnsAsync(employee);
 
         var dto = new ApproveRoleRequestDto { AssignDepartmentId = null }; // Missing department assignment
@@ -357,7 +383,7 @@ public class RoleRequestServiceTests
         };
         _mockRoleRequestRepo.Setup(r => r.Get(1)).ReturnsAsync((RoleRequest?)request);
 
-        var employee = new Employee { EmployeeId = 5, DepartmentId = 3 };
+        var employee = new Employee { EmployeeId = 5, DepartmentId = 3, IsActive = true };
         _mockEmployeeRepo.Setup(r => r.Get(5)).ReturnsAsync(employee);
 
         var department = new Department { DepartmentId = 3, DepartmentHeadEmployeeId = 10 }; // Already has head employee 10
@@ -384,7 +410,7 @@ public class RoleRequestServiceTests
         };
         _mockRoleRequestRepo.Setup(r => r.Get(1)).ReturnsAsync((RoleRequest?)request);
 
-        var employee = new Employee { EmployeeId = 5, DepartmentId = 3 };
+        var employee = new Employee { EmployeeId = 5, DepartmentId = 3, IsActive = true };
         _mockEmployeeRepo.Setup(r => r.Get(5)).ReturnsAsync(employee);
 
         var department = new Department { DepartmentId = 3, DepartmentHeadEmployeeId = null };
@@ -418,7 +444,7 @@ public class RoleRequestServiceTests
         };
         _mockRoleRequestRepo.Setup(r => r.Get(1)).ReturnsAsync((RoleRequest?)request);
 
-        var employee = new Employee { EmployeeId = 5, DepartmentId = 3, RoleId = ROLE_GRO };
+        var employee = new Employee { EmployeeId = 5, DepartmentId = 3, RoleId = ROLE_GRO, IsActive = true };
         _mockEmployeeRepo.Setup(r => r.Get(5)).ReturnsAsync(employee);
 
         var department = new Department { DepartmentId = 3, DepartmentHeadEmployeeId = null };
@@ -472,7 +498,7 @@ public class RoleRequestServiceTests
         };
         _mockRoleRequestRepo.Setup(r => r.Get(1)).ReturnsAsync((RoleRequest?)request);
 
-        var employee = new Employee { EmployeeId = 5, DepartmentId = null, RoleId = ROLE_EMPLOYEE };
+        var employee = new Employee { EmployeeId = 5, DepartmentId = null, RoleId = ROLE_EMPLOYEE, IsActive = true };
         _mockEmployeeRepo.Setup(r => r.Get(5)).ReturnsAsync(employee);
 
         var department = new Department { DepartmentId = 3 };
@@ -517,7 +543,7 @@ public class RoleRequestServiceTests
         };
         _mockRoleRequestRepo.Setup(r => r.Get(1)).ReturnsAsync((RoleRequest?)request);
 
-        var employee = new Employee { EmployeeId = 5, DepartmentId = 3 };
+        var employee = new Employee { EmployeeId = 5, DepartmentId = 3, IsActive = true };
         _mockEmployeeRepo.Setup(r => r.Get(5)).ReturnsAsync(employee);
 
         // Force exception

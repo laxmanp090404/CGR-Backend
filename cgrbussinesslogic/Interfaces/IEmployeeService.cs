@@ -20,4 +20,6 @@ public interface IEmployeeService
     Task DeactivateAsync(int employeeId);
 
     Task RestoreAsync(int employeeId);
+
+    Task<IEnumerable<GroActiveWorkloadDto>> GetGroActiveWorkloadAsync(int? departmentId);
 }

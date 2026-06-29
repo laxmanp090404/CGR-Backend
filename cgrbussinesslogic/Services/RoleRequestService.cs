@@ -143,6 +143,10 @@ public class RoleRequestService : IRoleRequestService
             }
 
             var employee = await _employeeRepository.Get(request.EmployeeId);
+            if (employee == null || !employee.IsActive)
+            {
+                throw new BusinessRuleException("Cannot approve request for an inactive employee.");
+            }
 
             int? finalDepartmentId = employee.DepartmentId;
 

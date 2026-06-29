@@ -123,6 +123,11 @@ public class ComplaintService : IComplaintService
         try
         {
             var employeeId = _currentUserService.EmployeeId;
+            var employee = await _employeeRepository.Get(employeeId);
+            if (employee == null || !employee.IsActive)
+            {
+                throw new BusinessRuleException("Employee is inactive.");
+            }
 
             var category = await _categoryRepository.Get(dto.CategoryId);
 
@@ -283,9 +288,9 @@ public class ComplaintService : IComplaintService
                 throw new ForbiddenException("Only the current handler can start progress.");
             }
 
-            if (complaint.StatusId != STATUS_ASSIGNED)
+            if (complaint.StatusId != STATUS_ASSIGNED && complaint.StatusId != STATUS_ESCALATED)
             {
-                throw new BusinessRuleException("Only assigned complaints can be started progress.");
+                throw new BusinessRuleException("Only assigned or escalated complaints can be started progress.");
             }
 
             var oldStatus = complaint.StatusId;
@@ -298,7 +303,7 @@ public class ComplaintService : IComplaintService
             await ComplaintHelper.CreateHistoryAsync(
                 _historyRepository,
                 complaint.ComplaintId,
-                STATUS_ASSIGNED,
+                oldStatus,
                 STATUS_IN_PROGRESS,
                 complaint.CurrentHandlerEmployeeId,
                 complaint.CurrentHandlerEmployeeId,
