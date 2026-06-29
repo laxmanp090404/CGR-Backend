@@ -5,6 +5,7 @@ using cgrmodellibrary.DTOs.Common;
 using cgrmodellibrary.DTOs.RoleRequest;
 using cgrmodellibrary.Exceptions;
 using cgrmodellibrary.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace cgrbussinesslogic.Services;
 
@@ -25,12 +26,20 @@ public class RoleRequestService : IRoleRequestService
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IRepository<int, Department> _departmentRepository;
     private readonly CGRContext _context;
-    public RoleRequestService(IRoleRequestRepository roleRequestRepository, IEmployeeRepository employeeRepository, IRepository<int, Department> departmentRepository, CGRContext context)
+    private readonly INotificationService _notificationService;
+
+    public RoleRequestService(
+        IRoleRequestRepository roleRequestRepository,
+        IEmployeeRepository employeeRepository,
+        IRepository<int, Department> departmentRepository,
+        CGRContext context,
+        INotificationService notificationService)
     {
         _roleRequestRepository = roleRequestRepository;
         _employeeRepository = employeeRepository;
         _departmentRepository = departmentRepository;
         _context = context;
+        _notificationService = notificationService;
     }
     
     public async Task<RoleRequestDto> CreateAsync(CreateRoleRequestDto dto, int employeeId, string currentRole)
@@ -116,7 +125,8 @@ public class RoleRequestService : IRoleRequestService
         ReviewedByName = r.ReviewedByNavigation?.EmployeeName,
         Remarks = r.Remarks,
         CreatedAt = r.CreatedAt,
-        ReviewedAt = r.ReviewedAt
+        ReviewedAt = r.ReviewedAt,
+        CurrentDepartmentName = r.Employee?.Department?.DepartmentName
     };
 
     public async Task<RoleRequestDto> ApproveAsync(int roleRequestId, ApproveRoleRequestDto dto, int adminId)
@@ -190,6 +200,19 @@ public class RoleRequestService : IRoleRequestService
             await _roleRequestRepository.Update(request, roleRequestId);
 
             await dbTxn.CommitAsync();
+
+            var roleName = await _context.Roles
+                .Where(r => r.RoleId == request.RequestedRoleId)
+                .Select(r => r.RoleName)
+                .FirstOrDefaultAsync() ?? "new";
+
+            await _notificationService.SendAsync(
+                employee.EmployeeId,
+                NOTIF_ROLE_REQUEST_OUTCOME,
+                "Role Update",
+                $"You have been promoted or transferred to the {roleName} role. Please relogin to continue your privilege.",
+                null
+            );
 
             var requests = await _roleRequestRepository.GetByEmployeeIdAsync(employee.EmployeeId);
 
@@ -327,6 +350,19 @@ public class RoleRequestService : IRoleRequestService
             var created = await _roleRequestRepository.Create(roleRequest);
 
             await dbTxn.CommitAsync();
+
+            var roleName = await _context.Roles
+                .Where(r => r.RoleId == dto.TargetRoleId)
+                .Select(r => r.RoleName)
+                .FirstOrDefaultAsync() ?? "new";
+
+            await _notificationService.SendAsync(
+                employee.EmployeeId,
+                NOTIF_ROLE_REQUEST_OUTCOME,
+                "Role Update",
+                $"You have been promoted or transferred to the {roleName} role. Please relogin to continue your privilege.",
+                null
+            );
 
             var requests = await _roleRequestRepository.GetByEmployeeIdAsync(employee.EmployeeId);
 

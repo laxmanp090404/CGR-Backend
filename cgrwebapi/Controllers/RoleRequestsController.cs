@@ -69,5 +69,13 @@ public class RoleRequestsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("manual/{employeeId:int}")]
+    [Authorize(Policy = "AdminOnly")]
+    public async Task<ActionResult<RoleRequestDto>> ManualRoleChange(int employeeId, [FromBody] ManualRoleChangeDto dto)
+    {
+        int adminId = User.GetEmployeeId();
+        var result = await _roleRequestService.ManualRoleChangeAsync(employeeId, dto, adminId);
+        return Ok(result);
+    }
 
 }

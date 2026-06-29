@@ -27,6 +27,7 @@ public class RoleRequestRepository : AbstractRepository<int, RoleRequest>, IRole
     {
         var query = _context.RoleRequests
             .Include(r => r.Employee)
+                .ThenInclude(e => e.Department)
             .Include(r => r.CurrentRole)
             .Include(r => r.RequestedRole)
             .Include(r => r.RequestStatus)
@@ -52,6 +53,7 @@ public class RoleRequestRepository : AbstractRepository<int, RoleRequest>, IRole
     {
         return await _context.RoleRequests
             .Include(r => r.Employee)
+                .ThenInclude(e => e.Department)
             .Include(r => r.CurrentRole)
             .Include(r => r.RequestedRole)
             .Include(r => r.RequestStatus)

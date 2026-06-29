@@ -11,12 +11,12 @@ namespace cgrbussinesslogic.Services;
 public class NotificationService : INotificationService
 {
     private readonly INotificationRepository _notificationRepository;
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public NotificationService(INotificationRepository notificationRepository, IServiceProvider serviceProvider)
+    public NotificationService(INotificationRepository notificationRepository, IServiceScopeFactory serviceScopeFactory)
     {
         _notificationRepository = notificationRepository;
-        _serviceProvider = serviceProvider;
+        _serviceScopeFactory = serviceScopeFactory;
     }
 
     public async Task<PagedResultDto<NotificationDto>> GetMyNotificationsAsync(int employeeId, bool? isRead, int page, int pageSize)
@@ -80,13 +80,13 @@ public class NotificationService : INotificationService
             CreatedAt = notification.CreatedAt
         };
 
-        var provider = _serviceProvider;
+        var scopeFactory = _serviceScopeFactory;
         _ = Task.Run(async () =>
         {
             try
             {
                 await Task.Delay(200);
-                using var scope = provider.CreateScope();
+                using var scope = scopeFactory.CreateScope();
                 var pusher = scope.ServiceProvider.GetRequiredService<INotificationPusher>();
                 await pusher.PushAsync(employeeId, dto);
             }

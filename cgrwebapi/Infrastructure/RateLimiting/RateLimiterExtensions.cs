@@ -108,7 +108,7 @@ public static class RateLimiterExtensions
                     context.User.FindFirst("employee_id")?.Value ?? context.Connection.RemoteIpAddress?.ToString() ?? "anonymous",
                     _ => new FixedWindowRateLimiterOptions
                     {
-                        PermitLimit = 3,
+                        PermitLimit = 6,
                         Window = TimeSpan.FromHours(1),
                         QueueLimit = 0
                     }));

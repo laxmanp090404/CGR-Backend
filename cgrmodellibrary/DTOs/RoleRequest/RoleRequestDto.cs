@@ -16,4 +16,5 @@ public class RoleRequestDto
     public string? Remarks { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? ReviewedAt { get; set; }
+    public string? CurrentDepartmentName { get; set; }
 }
