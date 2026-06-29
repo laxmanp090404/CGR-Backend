@@ -52,10 +52,17 @@ public class AuthService : IAuthService
         }
 
         var token = _tokenService.GenerateToken(employee);
+        var refreshToken = _tokenService.GenerateRefreshToken();
+
+        employee.RefreshToken = refreshToken;
+        employee.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
+        await _employeeRepository.Update(employee, employee.EmployeeId);
+
         _logger.LogInformation($"User {employee.EmployeeId} logged in");
         return new LoginResponseDto
         {
             Token = token,
+            RefreshToken = refreshToken,
             EmployeeName = employee.EmployeeName,
             Role = employee.Role.RoleName,
             EmployeeId = employee.EmployeeId
@@ -119,12 +126,57 @@ public class AuthService : IAuthService
         var reloaded = await _employeeRepository.GetByEmailAsync(created.Email);
 
         var token = _tokenService.GenerateToken(reloaded!);
+        var refreshToken = _tokenService.GenerateRefreshToken();
+
+        reloaded!.RefreshToken = refreshToken;
+        reloaded.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
+        await _employeeRepository.Update(reloaded, reloaded.EmployeeId);
+
         return new LoginResponseDto
         {
             Token = token,
-            EmployeeName = reloaded!.EmployeeName,
+            RefreshToken = refreshToken,
+            EmployeeName = reloaded.EmployeeName,
             Role = reloaded.Role?.RoleName ?? string.Empty,
             EmployeeId = reloaded.EmployeeId
+        };
+    }
+
+    public async Task<LoginResponseDto> RefreshTokenAsync(TokenRefreshRequestDto dto)
+    {
+        var principal = _tokenService.GetPrincipalFromExpiredToken(dto.AccessToken);
+        var employeeIdStr = principal.FindFirst("employee_id")?.Value;
+        if (string.IsNullOrEmpty(employeeIdStr) || !int.TryParse(employeeIdStr, out int employeeId))
+        {
+            throw new UnauthorizedAccessException("Invalid token claims.");
+        }
+
+        var employee = await _employeeRepository.GetByIdWithRoleAsync(employeeId);
+        if (employee == null || !employee.IsActive)
+        {
+            throw new UnauthorizedAccessException("Employee is inactive or not found.");
+        }
+
+        if (employee.RefreshToken != dto.RefreshToken || employee.RefreshTokenExpiry <= DateTime.UtcNow)
+        {
+            throw new UnauthorizedAccessException("Invalid or expired refresh token.");
+        }
+
+        // Generate new Access and Refresh tokens (Rotation)
+        var newAccessToken = _tokenService.GenerateToken(employee);
+        var newRefreshToken = _tokenService.GenerateRefreshToken();
+
+        employee.RefreshToken = newRefreshToken;
+        employee.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
+        await _employeeRepository.Update(employee, employee.EmployeeId);
+
+        return new LoginResponseDto
+        {
+            Token = newAccessToken,
+            RefreshToken = newRefreshToken,
+            EmployeeName = employee.EmployeeName,
+            Role = employee.Role?.RoleName ?? string.Empty,
+            EmployeeId = employee.EmployeeId
         };
     }
 }

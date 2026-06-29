@@ -36,6 +36,9 @@ namespace cgrtest.Services
                 _roleRequestRepoMock.Object,
                 _deptRepoMock.Object,
                 _loggerMock.Object);
+
+            _tokenServiceMock.Setup(t => t.GenerateRefreshToken()).Returns("mock-refresh-token");
+            _employeeRepoMock.Setup(r => r.Update(It.IsAny<Employee>(), It.IsAny<int>())).ReturnsAsync((Employee emp, int id) => emp);
         }
 
         [Test]
@@ -143,6 +146,62 @@ namespace cgrtest.Services
             _employeeRepoMock.Setup(r => r.ExistsByEmailAsync(dto.Email, null)).ReturnsAsync(false);
             var ex = Assert.ThrowsAsync<ValidationException>(async () => await _service.RegisterAsync(dto));
             Assert.That(ex.Message, Is.EqualTo("Department is required when requesting GRO role."));
+        }
+
+        [Test]
+        public async Task RefreshTokenAsync_Success_ReturnsNewTokens()
+        {
+            var claimsPrincipal = new System.Security.Claims.ClaimsPrincipal(new System.Security.Claims.ClaimsIdentity(new[]
+            {
+                new System.Security.Claims.Claim("employee_id", "1"),
+                new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Role, "Employee")
+            }));
+
+            var employee = new Employee
+            {
+                EmployeeId = 1,
+                EmployeeName = "John Doe",
+                Email = "john@example.com",
+                IsActive = true,
+                RefreshToken = "valid-refresh-token",
+                RefreshTokenExpiry = DateTime.UtcNow.AddDays(1),
+                Role = new Role { RoleName = "Employee" }
+            };
+
+            _tokenServiceMock.Setup(t => t.GetPrincipalFromExpiredToken("expired-access-token")).Returns(claimsPrincipal);
+            _employeeRepoMock.Setup(r => r.GetByIdWithRoleAsync(1)).ReturnsAsync(employee);
+            _tokenServiceMock.Setup(t => t.GenerateToken(employee)).Returns("new-access-token");
+            _tokenServiceMock.Setup(t => t.GenerateRefreshToken()).Returns("new-refresh-token");
+
+            var dto = new TokenRefreshRequestDto { AccessToken = "expired-access-token", RefreshToken = "valid-refresh-token" };
+            var result = await _service.RefreshTokenAsync(dto);
+
+            Assert.That(result.Token, Is.EqualTo("new-access-token"));
+            Assert.That(result.RefreshToken, Is.EqualTo("new-refresh-token"));
+            Assert.That(result.EmployeeName, Is.EqualTo("John Doe"));
+        }
+
+        [Test]
+        public void RefreshTokenAsync_InvalidOrExpiredRefreshToken_ThrowsUnauthorizedAccessException()
+        {
+            var claimsPrincipal = new System.Security.Claims.ClaimsPrincipal(new System.Security.Claims.ClaimsIdentity(new[]
+            {
+                new System.Security.Claims.Claim("employee_id", "1")
+            }));
+
+            var employee = new Employee
+            {
+                EmployeeId = 1,
+                IsActive = true,
+                RefreshToken = "some-other-token",
+                RefreshTokenExpiry = DateTime.UtcNow.AddDays(1)
+            };
+
+            _tokenServiceMock.Setup(t => t.GetPrincipalFromExpiredToken("expired-access-token")).Returns(claimsPrincipal);
+            _employeeRepoMock.Setup(r => r.GetByIdWithRoleAsync(1)).ReturnsAsync(employee);
+
+            var dto = new TokenRefreshRequestDto { AccessToken = "expired-access-token", RefreshToken = "expired-or-invalid-token" };
+            Assert.ThrowsAsync<UnauthorizedAccessException>(async () => await _service.RefreshTokenAsync(dto));
         }
     }
 }
