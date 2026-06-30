@@ -11,7 +11,7 @@ public interface IComplaintService
 
     Task<PagedResultDto<ComplaintDashboardDto>> GetPagedAsync(
         int page, int pageSize, int? statusId, int? priorityId,
-        int? categoryId, int? departmentId, string? search,bool? raisedByMe);
+        int? categoryId, int? departmentId, string? search, bool? raisedByMe, string? sortBy = null);
     Task<IEnumerable<ComplaintHistoryDto>> GetHistoryAsync(int complaintId);
 
     Task StartProgressAsync(int complaintId);
@@ -36,5 +36,6 @@ public interface IComplaintService
         int? priorityId = null,
         int? categoryId = null,
         int? departmentId = null,
-        string? search = null);
+        string? search = null,
+        string? sortBy = null);
 }

@@ -90,12 +90,12 @@ public class ComplaintService : IComplaintService
 
     // get complaints with pagination and filtering for dashboard
     public async Task<PagedResultDto<ComplaintDashboardDto>> GetPagedAsync(int page, int pageSize, int? statusId, int? priorityId, int? categoryId,
-      int? departmentId, string? search, bool? raisedbyme)
+      int? departmentId, string? search, bool? raisedbyme, string? sortBy = null)
     {
         var (items, totalCount) =
             await _complaintRepository
                 .GetPagedDashboardAsync(page, pageSize, statusId, priorityId, categoryId, departmentId, search, _currentUserService.EmployeeId,
-                    _currentUserService.Role, _currentUserService.DepartmentId,raisedbyme);
+                    _currentUserService.Role, _currentUserService.DepartmentId, raisedbyme, sortBy);
 
         return new PagedResultDto<ComplaintDashboardDto>
         {
@@ -169,6 +169,7 @@ public class ComplaintService : IComplaintService
                     _currentUserService.RoleId);
 
             complaint.CurrentHandlerEmployeeId = assignment.HandlerId;
+            complaint.CurrentHandlerEmployee = await _employeeRepository.Get(assignment.HandlerId);
             complaint.StatusId = STATUS_ASSIGNED;
             complaint.EscalationLevel = assignment.EscalationLevel;
 
@@ -836,7 +837,8 @@ public class ComplaintService : IComplaintService
         int? priorityId = null,
         int? categoryId = null,
         int? departmentId = null,
-        string? search = null)
+        string? search = null,
+        string? sortBy = null)
     {
         if (_currentUserService.RoleId == ROLE_EMPLOYEE)
         {
@@ -851,7 +853,8 @@ public class ComplaintService : IComplaintService
             priorityId,
             categoryId,
             departmentId,
-            search);
+            search,
+            sortBy);
 
         var items = result.Items.Select(c => new ComplaintDashboardDto
         {

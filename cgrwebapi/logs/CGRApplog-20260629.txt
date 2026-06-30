@@ -47077,3 +47077,250 @@ SELECT count(*)::int
 FROM notifications AS n
 WHERE n.employee_id = @employeeId AND NOT (n.is_read)
 2026-06-29 22:41:45.354 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 5.5685 ms
+2026-06-29 22:42:45.349 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 1.7073 ms
+2026-06-29 22:42:45.369 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 22:42:45.370 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 16.4039 ms
+2026-06-29 22:44:10.356 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 0.2908 ms
+2026-06-29 22:44:10.379 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 22:44:10.380 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 21.1982 ms
+2026-06-29 22:45:10.352 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 0.2709 ms
+2026-06-29 22:45:10.372 +05:30 [INF] HTTP GET /api/notification/unread-count responded 401 in 11.9612 ms
+2026-06-29 22:45:10.379 +05:30 [INF] HTTP OPTIONS /api/auth/refresh responded 204 in 0.0210 ms
+2026-06-29 22:45:10.406 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.refresh_token, e.refresh_token_expiry, e.role_id, e.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM employees AS e
+INNER JOIN roles AS r ON e.role_id = r.role_id
+LEFT JOIN departments AS d ON e.department_id = d.department_id
+WHERE e.employee_id = @employeeId AND e.is_active
+LIMIT 1
+2026-06-29 22:45:10.434 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[@p11='?' (DbType = Int32), @p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?', @p3='?', @p4='?' (DbType = Boolean), @p5='?' (DbType = StringFixedLength), @p6='?', @p7='?', @p8='?' (DbType = DateTime), @p9='?' (DbType = Int16), @p10='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+UPDATE employees SET created_at = @p0, department_id = @p1, email = @p2, employee_name = @p3, is_active = @p4, mobile_number = @p5, password_hash = @p6, refresh_token = @p7, refresh_token_expiry = @p8, role_id = @p9, updated_at = @p10
+WHERE employee_id = @p11;
+2026-06-29 22:45:10.434 +05:30 [INF] HTTP POST /api/auth/refresh responded 200 in 54.8569 ms
+2026-06-29 22:45:10.443 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 22:45:10.443 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 3.9385 ms
+2026-06-29 22:45:13.294 +05:30 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.refresh_token, e.refresh_token_expiry, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-29 22:46:11.354 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 0.6232 ms
+2026-06-29 22:46:11.392 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 22:46:11.392 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 23.0713 ms
+2026-06-29 22:47:11.343 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 0.5003 ms
+2026-06-29 22:47:11.366 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 22:47:11.367 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 19.5640 ms
+2026-06-29 22:48:11.338 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 0.2643 ms
+2026-06-29 22:48:11.345 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 22:48:11.345 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 6.0483 ms
+2026-06-29 22:49:11.344 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 0.6078 ms
+2026-06-29 22:49:11.367 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 22:49:11.368 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 20.2918 ms
+2026-06-29 22:50:11.343 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 0.2238 ms
+2026-06-29 22:50:11.364 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 22:50:11.364 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 16.4132 ms
+2026-06-29 22:50:13.627 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.refresh_token, e.refresh_token_expiry, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-29 22:52:10.369 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 1.6064 ms
+2026-06-29 22:52:10.392 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 22:52:10.392 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 11.7854 ms
+2026-06-29 22:54:10.382 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 0.6160 ms
+2026-06-29 22:54:10.420 +05:30 [INF] Executed DbCommand (16ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 22:54:10.420 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 33.6969 ms
+2026-06-29 22:55:13.887 +05:30 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.refresh_token, e.refresh_token_expiry, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-29 22:56:10.350 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 2.3481 ms
+2026-06-29 22:56:10.359 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 22:56:10.360 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 4.9823 ms
+2026-06-29 22:58:10.362 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 10.6793 ms
+2026-06-29 22:58:10.411 +05:30 [INF] Executed DbCommand (24ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 22:58:10.412 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 44.4844 ms
+2026-06-29 22:58:25.092 +05:30 [INF] Removed 1 outdated record(s) from 'aggregatedcounter' table.
+2026-06-29 22:58:26.175 +05:30 [INF] Removed 3 outdated record(s) from 'job' table.
+2026-06-29 23:00:10.372 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 0.4301 ms
+2026-06-29 23:00:10.381 +05:30 [INF] HTTP GET /api/notification/unread-count responded 401 in 6.3367 ms
+2026-06-29 23:00:10.386 +05:30 [INF] HTTP OPTIONS /api/auth/refresh responded 204 in 0.0386 ms
+2026-06-29 23:00:10.409 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.refresh_token, e.refresh_token_expiry, e.role_id, e.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM employees AS e
+INNER JOIN roles AS r ON e.role_id = r.role_id
+LEFT JOIN departments AS d ON e.department_id = d.department_id
+WHERE e.employee_id = @employeeId AND e.is_active
+LIMIT 1
+2026-06-29 23:00:10.418 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p11='?' (DbType = Int32), @p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?', @p3='?', @p4='?' (DbType = Boolean), @p5='?' (DbType = StringFixedLength), @p6='?', @p7='?', @p8='?' (DbType = DateTime), @p9='?' (DbType = Int16), @p10='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+UPDATE employees SET created_at = @p0, department_id = @p1, email = @p2, employee_name = @p3, is_active = @p4, mobile_number = @p5, password_hash = @p6, refresh_token = @p7, refresh_token_expiry = @p8, role_id = @p9, updated_at = @p10
+WHERE employee_id = @p11;
+2026-06-29 23:00:10.420 +05:30 [INF] HTTP POST /api/auth/refresh responded 200 in 31.4143 ms
+2026-06-29 23:00:10.426 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 23:00:10.426 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 3.8258 ms
+2026-06-29 23:00:14.235 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.refresh_token, e.refresh_token_expiry, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5
+2026-06-29 23:01:11.346 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 0.1439 ms
+2026-06-29 23:01:11.365 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 23:01:11.365 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 6.4059 ms
+2026-06-29 23:02:11.349 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 0.6268 ms
+2026-06-29 23:02:11.366 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 23:02:11.367 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 9.5103 ms
+2026-06-29 23:02:43.547 +05:30 [INF] HTTP OPTIONS /hubs/notifications/negotiate responded 204 in 0.0315 ms
+2026-06-29 23:02:43.559 +05:30 [INF] HTTP POST /hubs/notifications/negotiate responded 200 in 0.6182 ms
+2026-06-29 23:02:43.572 +05:30 [INF] HTTP GET /hubs/notifications responded 101 in 1498984.8588 ms
+2026-06-29 23:02:43.754 +05:30 [INF] HTTP GET /hubs/notifications responded 101 in 185.9628 ms
+2026-06-29 23:02:43.945 +05:30 [INF] HTTP OPTIONS /api/analytics/admin-dashboard responded 204 in 0.0255 ms
+2026-06-29 23:02:43.978 +05:30 [INF] HTTP OPTIONS /api/LookUp/roles responded 204 in 0.0518 ms
+2026-06-29 23:02:43.979 +05:30 [INF] HTTP OPTIONS /api/department responded 204 in 0.0054 ms
+2026-06-29 23:02:43.979 +05:30 [INF] HTTP OPTIONS /api/Employee responded 204 in 0.0288 ms
+2026-06-29 23:02:43.990 +05:30 [INF] HTTP OPTIONS /hubs/notifications/negotiate responded 204 in 0.0170 ms
+2026-06-29 23:02:43.995 +05:30 [INF] HTTP POST /hubs/notifications/negotiate responded 200 in 0.2585 ms
+2026-06-29 23:02:44.013 +05:30 [INF] HTTP OPTIONS /api/notification/unread-count responded 204 in 0.0185 ms
+2026-06-29 23:02:44.044 +05:30 [INF] Executed DbCommand (58ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT r.role_id, r.created_at, r.role_name
+FROM roles AS r
+ORDER BY r.role_id
+2026-06-29 23:02:44.048 +05:30 [INF] HTTP GET /api/LookUp/roles responded 200 in 63.3162 ms
+2026-06-29 23:02:44.049 +05:30 [INF] Executed DbCommand (62ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.refresh_token, e.refresh_token_expiry, e.role_id, e.updated_at
+FROM departments AS d
+LEFT JOIN employees AS e ON d.department_head_employee_id = e.employee_id
+ORDER BY d.created_at DESC
+2026-06-29 23:02:44.051 +05:30 [INF] HTTP GET /api/department responded 200 in 65.5446 ms
+2026-06-29 23:02:44.079 +05:30 [INF] Executed DbCommand (127ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM complaints AS c
+2026-06-29 23:02:44.085 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM complaints AS c
+WHERE c.status_id IN (1, 2, 3, 4, 8)
+2026-06-29 23:02:44.105 +05:30 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM complaints AS c
+WHERE c.status_id = 5
+2026-06-29 23:02:44.119 +05:30 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM complaints AS c
+WHERE c.status_id = 6
+2026-06-29 23:02:44.128 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM complaints AS c
+WHERE c.status_id = 7
+2026-06-29 23:02:44.130 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM complaints AS c
+WHERE c.status_id = 9
+2026-06-29 23:02:44.132 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM complaints AS c
+WHERE c.escalation_due_at IS NOT NULL AND c.escalation_due_at < now() AND c.status_id IN (1, 2, 3, 4, 8)
+2026-06-29 23:02:44.137 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[@employeeId='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM notifications AS n
+WHERE n.employee_id = @employeeId AND NOT (n.is_read)
+2026-06-29 23:02:44.137 +05:30 [INF] HTTP GET /api/notification/unread-count responded 200 in 123.1635 ms
+2026-06-29 23:02:44.144 +05:30 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM complaint_requests AS c
+WHERE c.request_status_id = 1
+2026-06-29 23:02:44.145 +05:30 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+2026-06-29 23:02:44.158 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM role_requests AS r
+WHERE r.request_status_id = 1
+2026-06-29 23:02:44.160 +05:30 [INF] Executed DbCommand (15ms) [Parameters=[@p1='?' (DbType = Int32), @p='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT e0.employee_id, e0.created_at, e0.department_id, e0.email, e0.employee_name, e0.is_active, e0.mobile_number, e0.password_hash, e0.refresh_token, e0.refresh_token_expiry, e0.role_id, e0.updated_at, r.role_id, r.created_at, r.role_name, d.department_id, d.created_at, d.department_head_employee_id, d.department_name, d.is_active, d.updated_at
+FROM (
+    SELECT e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.refresh_token, e.refresh_token_expiry, e.role_id, e.updated_at
+    FROM employees AS e
+    ORDER BY e.employee_id
+    LIMIT @p1 OFFSET @p
+) AS e0
+INNER JOIN roles AS r ON e0.role_id = r.role_id
+LEFT JOIN departments AS d ON e0.department_id = d.department_id
+ORDER BY e0.employee_id
+2026-06-29 23:02:44.161 +05:30 [INF] HTTP GET /api/Employee responded 200 in 174.3873 ms
+2026-06-29 23:02:44.162 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM employees AS e
+WHERE e.is_active
+2026-06-29 23:02:44.166 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM departments AS d
+WHERE d.is_active
+2026-06-29 23:02:44.173 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT date_part('epoch', c.resolved_at - c.created_at) / 3600.0
+FROM complaints AS c
+WHERE c.status_id IN (5, 6) AND c.resolved_at IS NOT NULL
+2026-06-29 23:02:44.174 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at
+FROM complaints AS c
+WHERE c.status_id IN (5, 6) AND c.resolved_at IS NOT NULL AND c.escalation_due_at IS NOT NULL
+2026-06-29 23:02:44.175 +05:30 [INF] HTTP GET /api/analytics/admin-dashboard responded 200 in 227.4068 ms
+2026-06-29 23:36:35.235 +05:30 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT c.complaint_id, c.category_id, c.closed_at, c.complaint_description, c.complaint_title, c.created_at, c.current_handler_employee_id, c.escalation_due_at, c.escalation_level, c.priority_id, c.raised_by_employee_id, c.reopened_count, c.resolved_at, c.status_id, c.updated_at, c0.category_id, c0.category_name, c0.created_at, c0.default_priority_id, c0.department_id, c0.is_active, c0.sla_hours, c0.updated_at, p.priority_id, p.escalation_order, p.priority_name, e.employee_id, e.created_at, e.department_id, e.email, e.employee_name, e.is_active, e.mobile_number, e.password_hash, e.refresh_token, e.refresh_token_expiry, e.role_id, e.updated_at
+FROM complaints AS c
+INNER JOIN categories AS c0 ON c.category_id = c0.category_id
+INNER JOIN priorities AS p ON c.priority_id = p.priority_id
+LEFT JOIN employees AS e ON c.current_handler_employee_id = e.employee_id
+WHERE c.escalation_due_at <= now() AND c.status_id <> 6 AND c.status_id <> 7 AND c.status_id <> 9 AND c.status_id <> 5

@@ -59,7 +59,8 @@ public class ComplaintController : ControllerBase
         [FromQuery] int? categoryId = null,
         [FromQuery] int? departmentId = null,
         [FromQuery] string? search = null,
-        [FromQuery] bool? raisedByMe = false)
+        [FromQuery] bool? raisedByMe = false,
+        [FromQuery] string? sortBy = null)
     {
         var result =
             await _complaintService.GetPagedAsync(
@@ -70,7 +71,8 @@ public class ComplaintController : ControllerBase
                 categoryId,
                 departmentId,
                 search,
-                raisedByMe);
+                raisedByMe,
+                sortBy);
 
         return Ok(result);
     }
@@ -190,7 +192,8 @@ public async Task<ActionResult<PagedResultDto<ComplaintDashboardDto>>>
         [FromQuery] int? priorityId = null,
         [FromQuery] int? categoryId = null,
         [FromQuery] int? departmentId = null,
-        [FromQuery] string? search = null)
+        [FromQuery] string? search = null,
+        [FromQuery] string? sortBy = null)
 {
     var result =
         await _complaintService.GetMyWorkQueueAsync(
@@ -200,7 +203,8 @@ public async Task<ActionResult<PagedResultDto<ComplaintDashboardDto>>>
             priorityId,
             categoryId,
             departmentId,
-            search);
+            search,
+            sortBy);
 
     return Ok(result);
 }

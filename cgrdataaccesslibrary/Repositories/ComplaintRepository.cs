@@ -35,7 +35,7 @@ public class ComplaintRepository : AbstractRepository<int, Complaint>, IComplain
 
     public async Task<(IEnumerable<VComplaintDashboard> Items, int TotalCount)> GetPagedDashboardAsync(
         int page, int pageSize, int? statusId, int? priorityId, int? categoryId, int? departmentId, string? search,
-        int employeeIdFilter, string roleFilter, int? deptIdFilter,bool? raisedbyMe)
+        int employeeIdFilter, string roleFilter, int? deptIdFilter, bool? raisedbyMe, string? sortBy = null)
     {
         var query = _context.VComplaintDashboards
             .Join(_context.Complaints,
@@ -98,11 +98,18 @@ query = query.Where(x =>
 }
 
         int totalCount = await query.CountAsync();
-        var items = await query
-            .OrderByDescending(x => x.Complaint.CreatedAt)
+
+        IQueryable<VComplaintDashboard> ordered = sortBy switch
+        {
+            "filed_oldest"  => query.OrderBy(x => x.Complaint.CreatedAt).Select(x => x.View),
+            "due_soonest"   => query.OrderBy(x => (DateTime?)x.Complaint.EscalationDueAt == null ? DateTime.MaxValue : x.Complaint.EscalationDueAt).Select(x => x.View),
+            "due_latest"    => query.OrderByDescending(x => (DateTime?)x.Complaint.EscalationDueAt).Select(x => x.View),
+            _               => query.OrderByDescending(x => x.Complaint.CreatedAt).Select(x => x.View),
+        };
+
+        var items = await ordered
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .Select(x => x.View)
             .ToListAsync();
 
         return (items, totalCount);
@@ -141,7 +148,8 @@ query = query.Where(x =>
         int? priorityId = null,
         int? categoryId = null,
         int? departmentId = null,
-        string? search = null)
+        string? search = null,
+        string? sortBy = null)
     {
         var query = _context.Complaints
             .Include(c => c.Status)
@@ -179,8 +187,13 @@ query = query.Where(x =>
 
         var totalCount = await query.CountAsync();
 
-        var items = await query
-            .OrderBy(c => c.EscalationDueAt)
+        var items = await (sortBy switch
+        {
+            "filed_oldest" => query.OrderBy(c => c.CreatedAt),
+            "due_soonest"  => query.OrderBy(c => c.EscalationDueAt == null ? DateTime.MaxValue : c.EscalationDueAt.Value),
+            "due_latest"   => query.OrderByDescending(c => c.EscalationDueAt),
+            _              => query.OrderByDescending(c => c.CreatedAt),
+        })
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
